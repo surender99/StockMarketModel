@@ -18,6 +18,14 @@ from athena_core.domain.strategy.config import StrategyConfig
 
 log = structlog.get_logger(__name__)
 
+try:
+    import optuna
+
+    _OPTUNA_AVAILABLE = True
+except ImportError:  # pragma: no cover - exercised via fallback path in tests without optuna
+    optuna = None  # type: ignore[assignment,misc]
+    _OPTUNA_AVAILABLE = False
+
 OBJECTIVE_DIRECTION: dict[str, str] = {
     "sharpe": "maximize",
     "profit_factor": "maximize",
@@ -70,33 +78,35 @@ class StrategyOptimizer:
         end: date | None = None,
     ) -> OptimizerResult:
         """Evaluate parameter combinations and return ranked trials."""
-        param_sets = self._generate_parameter_sets()
-        trials: list[OptimizerTrial] = []
-
-        for trial_id, overrides in enumerate(param_sets):
-            trial_strategy = apply_strategy_overrides(strategy, overrides)
-            summary = self._validator.run(
-                trial_strategy,
+        if (
+            self._config.method == "bayesian"
+            and self._config.use_optuna
+            and _OPTUNA_AVAILABLE
+        ):
+            return self._run_optuna(
+                strategy,
                 backtest,
                 symbols=symbols,
                 dataset_version=dataset_version,
                 start=start,
                 end=end,
             )
-            composite = self._composite_score(summary.aggregate_metrics)
-            trial = OptimizerTrial(
-                trial_id=trial_id,
-                parameters=overrides,
-                aggregate_metrics=summary.aggregate_metrics,
-                composite_score=composite,
+
+        param_sets = self._generate_parameter_sets()
+        trials: list[OptimizerTrial] = []
+
+        for trial_id, overrides in enumerate(param_sets):
+            trial = self._evaluate_trial(
+                trial_id,
+                overrides,
+                strategy,
+                backtest,
+                symbols=symbols,
+                dataset_version=dataset_version,
+                start=start,
+                end=end,
             )
             trials.append(trial)
-            log.info(
-                "optimizer.trial_complete",
-                trial_id=trial_id,
-                composite=round(composite, 6),
-                params=overrides,
-            )
 
         trials.sort(key=lambda t: t.composite_score, reverse=True)
         best = trials[0] if trials else None
@@ -105,6 +115,104 @@ class StrategyOptimizer:
             best_trial=best,
             method=self._config.method,
         )
+
+    def _evaluate_trial(
+        self,
+        trial_id: int,
+        overrides: dict[str, Any],
+        strategy: StrategyConfig,
+        backtest: BacktestConfig,
+        *,
+        symbols: list[str] | None,
+        dataset_version: str,
+        start: date | None,
+        end: date | None,
+    ) -> OptimizerTrial:
+        trial_strategy = apply_strategy_overrides(strategy, overrides)
+        summary = self._validator.run(
+            trial_strategy,
+            backtest,
+            symbols=symbols,
+            dataset_version=dataset_version,
+            start=start,
+            end=end,
+        )
+        composite = self._composite_score(summary.aggregate_metrics)
+        log.info(
+            "optimizer.trial_complete",
+            trial_id=trial_id,
+            composite=round(composite, 6),
+            params=overrides,
+        )
+        return OptimizerTrial(
+            trial_id=trial_id,
+            parameters=overrides,
+            aggregate_metrics=summary.aggregate_metrics,
+            composite_score=composite,
+        )
+
+    def _run_optuna(
+        self,
+        strategy: StrategyConfig,
+        backtest: BacktestConfig,
+        *,
+        symbols: list[str] | None,
+        dataset_version: str,
+        start: date | None,
+        end: date | None,
+    ) -> OptimizerResult:
+        """Bayesian search via Optuna TPE sampler — REQ-OPT-001."""
+        assert optuna is not None
+        optuna.logging.set_verbosity(optuna.logging.WARNING)
+        trials: list[OptimizerTrial] = []
+
+        def objective(study_trial: optuna.Trial) -> float:
+            overrides = self._suggest_overrides(study_trial)
+            trial = self._evaluate_trial(
+                len(trials),
+                overrides,
+                strategy,
+                backtest,
+                symbols=symbols,
+                dataset_version=dataset_version,
+                start=start,
+                end=end,
+            )
+            trials.append(trial)
+            return trial.composite_score
+
+        sampler = optuna.samplers.TPESampler(seed=self._config.random_seed)
+        study = optuna.create_study(direction="maximize", sampler=sampler)
+        study.optimize(objective, n_trials=self._config.max_trials, show_progress_bar=False)
+
+        ranked = sorted(trials, key=lambda t: t.composite_score, reverse=True)
+        best = ranked[0] if ranked else None
+        return OptimizerResult(trials=ranked, best_trial=best, method="bayesian+optuna")
+
+    def _suggest_overrides(self, trial: Any) -> dict[str, Any]:
+        overrides: dict[str, Any] = {}
+        for spec in self._config.parameters:
+            if spec.type == "choice":
+                values = self._values_for_spec(spec)
+                overrides[spec.path] = trial.suggest_categorical(spec.path, values)
+            elif spec.type == "int":
+                assert spec.min is not None and spec.max is not None
+                step = int(spec.step or 1)
+                overrides[spec.path] = trial.suggest_int(
+                    spec.path,
+                    int(spec.min),
+                    int(spec.max),
+                    step=step,
+                )
+            else:
+                assert spec.min is not None and spec.max is not None
+                overrides[spec.path] = trial.suggest_float(
+                    spec.path,
+                    float(spec.min),
+                    float(spec.max),
+                    step=spec.step,
+                )
+        return overrides
 
     def _generate_parameter_sets(self) -> list[dict[str, Any]]:
         if self._config.method == "grid":

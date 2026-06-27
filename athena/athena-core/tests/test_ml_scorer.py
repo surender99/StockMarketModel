@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import date
+from pathlib import Path
 
 import pytest
 
@@ -85,3 +86,16 @@ def test_ml_scorer_insufficient_samples_raises() -> None:
     scorer = MLSignalScorer(MLScorerConfig(min_training_samples=20))
     with pytest.raises(ValueError, match="need at least"):
         scorer.fit(_samples(5))
+
+
+def test_ml_scorer_save_and_load_model(tmp_path: Path) -> None:
+    path = tmp_path / "models" / "signal_scorer.joblib"
+    config = MLScorerConfig(min_training_samples=10, model_path=path)
+    scorer = MLSignalScorer(config)
+    scorer.fit(_samples(20))
+    assert path.exists()
+
+    reloaded = MLSignalScorer(MLScorerConfig(model_path=path))
+    assert reloaded.is_trained
+    score = reloaded.score(SignalFeatures(breakout_score=0.9, rs_score=0.8, momentum_score=0.85))
+    assert score.source == "ml"

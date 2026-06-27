@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install workspace packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e "athena/athena-core[dev]"
+          pip install -e "athena/athena-sdk[dev]"
+          pip install -e "athena/athena-ai[dev]"
+          pip install -e "athena/athena-cli[dev]"
+          pip install -e "athena/athena-dashboard[dev]"
+
+      - name: Run full test suite
+        run: |
+          cd athena/athena-core && python -m pytest -q
+          cd ../athena-sdk && python -m pytest -q
+          cd ../athena-ai && python -m pytest -q
+          cd ../athena-cli && python -m pytest -q
+          cd ../athena-dashboard && python -m pytest -q
+
+      - name: Lint (ruff)
+        run: ruff check athena/athena-core/src athena/athena-core/tests

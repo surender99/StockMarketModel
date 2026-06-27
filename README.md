@@ -8,6 +8,14 @@ This repository hosts the Athena monorepo under [`athena/`](athena/).
 
 **Requirements:** Python 3.11+
 
+**One-command install (Windows):**
+
+```powershell
+.\athena\scripts\install.ps1
+```
+
+**Manual install:**
+
 ```bash
 cd athena/athena-core
 python -m venv .venv
@@ -60,7 +68,9 @@ Specifications live in [`athena/athena-spec/`](athena/athena-spec/README.md):
 | [ATH-002 Engineering Standards](athena/athena-spec/ATH-002-Engineering-Standards.md) | Code quality rules |
 | [ATH-003 Repository Architecture](athena/athena-spec/ATH-003-Repository-Architecture.md) | Monorepo layout |
 | [Requirements backlog](athena/athena-spec/requirements/) | Traceable REQ specs |
-| [Phase 6 Validation](athena/athena-spec/PHASE-6-VALIDATION.md) | Latest validation report |
+| [Platform Complete](athena/athena-spec/PLATFORM-COMPLETE.md) | Master sign-off checklist |
+| [Phase 6 Validation](athena/athena-spec/PHASE-6-VALIDATION.md) | Latest phase validation report |
+| [CHANGELOG](CHANGELOG.md) | Release history |
 
 Legacy copy: [`Documents/`](Documents/README.md) (prefer `athena/athena-spec/`).
 
@@ -88,6 +98,7 @@ athena/
 | **4** | Regime, ML scorer, scanner, explainability | Complete |
 | **5** | Polished CLI, SDK, Streamlit dashboard | Complete |
 | **6** | AI research assistant (`athena-ai`) | Complete |
+| **7** | CI, install scripts, platform sign-off | Complete |
 
 ## MVP Defaults
 
@@ -102,7 +113,12 @@ athena/
 # Lint & test (from athena-core venv)
 ruff check src tests
 pytest
+
+# Live integration tests (yfinance network)
+pytest -m integration -v
 ```
+
+CI runs on push/PR via GitHub Actions (`.github/workflows/ci.yml`).
 
 Pre-commit (optional):
 

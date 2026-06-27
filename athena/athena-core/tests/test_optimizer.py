@@ -185,3 +185,4 @@ def test_optimizer_bayesian_search_runs() -> None:
     bt = BacktestConfig(start=date(2023, 1, 2), end=date(2024, 6, 1))
     result = optimizer.run(_strategy(), bt, symbols=["TEST"])
     assert len(result.trials) == 4
+    assert result.method in {"bayesian", "bayesian+optuna"}

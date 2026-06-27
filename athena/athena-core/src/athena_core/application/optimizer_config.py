@@ -41,6 +41,10 @@ class OptimizerConfig(BaseModel):
     method: Literal["grid", "random", "bayesian"] = "grid"
     max_trials: int = Field(default=50, ge=1)
     random_seed: int = 42
+    use_optuna: bool = Field(
+        default=True,
+        description="Use Optuna TPE for bayesian method when installed; else lightweight proxy",
+    )
     parameters: list[ParameterSpec] = Field(default_factory=list)
     objectives: list[str] = Field(
         default_factory=lambda: ["sharpe", "max_drawdown", "profit_factor"],

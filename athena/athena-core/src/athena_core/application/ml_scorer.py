@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any
 
+import joblib
 import numpy as np
 import structlog
 from sklearn.ensemble import RandomForestClassifier
@@ -66,6 +68,8 @@ class MLSignalScorer:
         self._config = config or MLScorerConfig()
         self._model: Pipeline | None = None
         self._model_version = "untrained"
+        if self._config.model_path is not None and self._config.model_path.exists():
+            self.load_model(self._config.model_path)
 
     @property
     def is_trained(self) -> bool:
@@ -110,6 +114,8 @@ class MLSignalScorer:
         self._model.fit(x, y)
         self._model_version = f"{self._config.model_type}_v1"
         log.info("ml_scorer.trained", samples=len(samples), model=self._model_version)
+        if self._config.model_path is not None:
+            self.save_model(self._config.model_path)
 
     def fit_from_trades(
         self,
@@ -175,6 +181,28 @@ class MLSignalScorer:
             momentum_score=momentum,
             volume_ratio=volume_ratio,
         )
+
+    def save_model(self, path: Path | str) -> None:
+        """Persist trained model pipeline to disk — REQ-ML-SCORER-001."""
+        if self._model is None:
+            msg = "cannot save untrained model"
+            raise ValueError(msg)
+        target = Path(path)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        payload = {"model": self._model, "model_version": self._model_version}
+        joblib.dump(payload, target)
+        log.info("ml_scorer.saved", path=str(target), model=self._model_version)
+
+    def load_model(self, path: Path | str) -> None:
+        """Load persisted model pipeline from disk — REQ-ML-SCORER-001."""
+        target = Path(path)
+        if not target.exists():
+            msg = f"model file not found: {target}"
+            raise FileNotFoundError(msg)
+        payload = joblib.load(target)
+        self._model = payload["model"]
+        self._model_version = payload.get("model_version", "loaded_v1")
+        log.info("ml_scorer.loaded", path=str(target), model=self._model_version)
 
     @staticmethod
     def features_from_trade(trade: TradeRecord, *, volume_ratio: float = 1.0) -> SignalFeatures:
