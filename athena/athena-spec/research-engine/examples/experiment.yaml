@@ -1,0 +1,5 @@
+id: EXP-0001
+strategy: ema_trend
+dataset: nifty500_daily
+walk_forward: true
+monte_carlo: true

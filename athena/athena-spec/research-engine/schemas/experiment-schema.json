@@ -1,0 +1,10 @@
+{
+ "title":"Experiment",
+ "type":"object",
+ "properties":{
+   "id":{"type":"string"},
+   "strategy":{"type":"string"},
+   "dataset":{"type":"string"},
+   "parameters":{"type":"object"}
+ }
+}
