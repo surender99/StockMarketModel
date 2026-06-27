@@ -10,9 +10,13 @@ Start reading in this order:
 4. [ATH-002-Engineering-Standards.md](ATH-002-Engineering-Standards.md)
 5. [ATH-003-Repository-Architecture.md](ATH-003-Repository-Architecture.md)
 6. [ATH-004-Requirement-Standard.md](ATH-004-Requirement-Standard.md)
-7. [requirements/](requirements/) — traceable REQ backlog
-8. [PHASE-0-VALIDATION.md](PHASE-0-VALIDATION.md) — Phase 0 master validation
-9. [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) — **Platform sign-off (Phases 0–7)**
+7. [governance/](governance/) — AES constitution, execution plan, quant & AI standards
+8. [requirements/](requirements/) — traceable REQ backlog
+9. [checklists/Definition-of-Done.md](checklists/Definition-of-Done.md)
+10. [templates/](templates/) — ADR, RFC, Requirement templates
+11. [REFERENCES-INDEX.md](REFERENCES-INDEX.md) — References package integration status
+12. [PHASE-0-VALIDATION.md](PHASE-0-VALIDATION.md) — Phase 0 master validation
+13. [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) — **Platform sign-off (Phases 0–7)**
 
 The specification is the single source of truth for implementation by both humans and AI coding agents.
 

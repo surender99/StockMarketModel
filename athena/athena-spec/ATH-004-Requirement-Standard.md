@@ -42,3 +42,5 @@ Acceptance:
 | `REQ-ML-*` | Machine learning (future) |
 
 All REQ documents live in [requirements/](requirements/).
+
+**New requirements:** copy [templates/Requirement-Template.md](templates/Requirement-Template.md).

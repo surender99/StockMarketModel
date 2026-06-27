@@ -11,6 +11,9 @@ Build an AI-powered Quantitative Research Operating System focused on discoverin
 - Plugin-first architecture
 - Configuration over hardcoding
 - Scientific validation before deployment
+- Human approves final trading decisions
+
+> Governance traceability: [governance/AES-0001-Constitution.md](governance/AES-0001-Constitution.md)
 
 ## What Athena is NOT
 - Just a trading bot

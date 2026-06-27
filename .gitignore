@@ -20,3 +20,6 @@ htmlcov/
 dist/
 *.egg-info/
 uv.lock
+
+# References package archives (source trees are tracked; zips are local-only)
+References/*.zip
