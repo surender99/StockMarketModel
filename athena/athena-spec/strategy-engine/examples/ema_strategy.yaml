@@ -1,0 +1,6 @@
+name: EMA Trend
+entry:
+  ema3_gt_ema5: true
+  ema5_gt_ema9: true
+exit:
+  ema3_lt_ema5: true
