@@ -25,6 +25,8 @@ dev = [
     "mypy>=1.10",
     "pandas-stubs>=2.2",
     "types-PyYAML>=6.0",
+    "pandas-ta-classic>=0.3.14; python_version<'3.12'",
+    "pandas-ta>=0.4.67b0; python_version>='3.12'",
 ]
 
 [build-system]
@@ -37,7 +39,10 @@ packages = ["src/athena_core"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
-addopts = "-ra"
+addopts = "-ra -m 'not integration'"
+markers = [
+    "integration: live network tests (yfinance)",
+]
 
 [tool.ruff]
 target-version = "py312"
@@ -58,5 +63,8 @@ packages = ["athena_core"]
 mypy_path = "src"
 
 [[tool.mypy.overrides]]
-module = ["yfinance.*"]
+module = ["yfinance.*", "pandas_ta.*"]
 ignore_missing_imports = true
+
+[project.scripts]
+athena-core = "athena_core.interfaces.cli:main"

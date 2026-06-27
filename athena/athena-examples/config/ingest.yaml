@@ -1,0 +1,34 @@
+# Sample ingest configuration — REQ-DATA-INGEST-001
+# Usage: athena-core ingest --config ingest.yaml --symbols-file ../symbols/nifty500_sample.csv --start 2023-01-01 --end 2024-12-31
+
+calendar:
+  exchange: NSE
+  timezone: Asia/Kolkata
+  holidays_file: ../athena-core/config/nse_holidays.yaml
+  weekend_days: [Saturday, Sunday]
+
+data_ingest:
+  source: yfinance
+  base_path: ./data/ohlcv
+  symbol_suffix: .NS
+  bar_frequency: 1d
+  max_attempts: 3
+  backoff_seconds: 2.0
+  schema_columns:
+    - date
+    - open
+    - high
+    - low
+    - close
+    - volume
+    - symbol
+
+feature_store:
+  base_path: ./data/features
+  compression: snappy
+  data_version: v1
+
+indicators:
+  ema_periods: [9, 21, 50, 200]
+  sma_periods: [20, 50, 200]
+  price_column: close

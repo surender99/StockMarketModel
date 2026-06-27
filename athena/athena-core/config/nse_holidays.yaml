@@ -1,0 +1,36 @@
+# NSE trading holidays — REQ-DATA-CALENDAR-001
+# Source: NSE published holiday calendar (2024–2025). Maintain manually.
+exchange: NSE
+timezone: Asia/Kolkata
+holidays:
+  - "2024-01-22"  # Special holiday (Ram Mandir)
+  - "2024-01-26"  # Republic Day
+  - "2024-03-08"  # Mahashivratri
+  - "2024-03-25"  # Holi
+  - "2024-03-29"  # Good Friday
+  - "2024-04-11"  # Id-Ul-Fitr
+  - "2024-04-17"  # Ram Navami
+  - "2024-05-01"  # Maharashtra Day
+  - "2024-05-20"  # General Election
+  - "2024-06-17"  # Bakri Id
+  - "2024-07-17"  # Moharram
+  - "2024-08-15"  # Independence Day
+  - "2024-10-02"  # Gandhi Jayanti
+  - "2024-11-01"  # Diwali Laxmi Pujan
+  - "2024-11-15"  # Gurunanak Jayanti
+  - "2024-12-25"  # Christmas
+  - "2025-01-26"  # Republic Day
+  - "2025-02-26"  # Mahashivratri
+  - "2025-03-14"  # Holi
+  - "2025-03-31"  # Id-Ul-Fitr
+  - "2025-04-10"  # Mahavir Jayanti
+  - "2025-04-14"  # Dr. Ambedkar Jayanti
+  - "2025-04-18"  # Good Friday
+  - "2025-05-01"  # Maharashtra Day
+  - "2025-08-15"  # Independence Day
+  - "2025-08-27"  # Janmashtami
+  - "2025-10-02"  # Gandhi Jayanti
+  - "2025-10-21"  # Diwali Laxmi Pujan
+  - "2025-10-22"  # Diwali Balipratipada
+  - "2025-11-05"  # Gurunanak Jayanti
+  - "2025-12-25"  # Christmas
