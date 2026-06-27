@@ -18,6 +18,7 @@ def test_parser_includes_all_commands() -> None:
         "walk-forward",
         "optimize",
         "compare-experiments",
+        "research",
     }
 
 
@@ -27,3 +28,7 @@ def test_health_command() -> None:
 
 def test_profiles_without_config() -> None:
     assert main(["profiles"]) == 0
+
+
+def test_research_dry_run() -> None:
+    assert main(["research", "Find the best EMA strategy for sideways markets", "--dry-run"]) == 0

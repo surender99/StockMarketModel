@@ -6,25 +6,47 @@ This repository hosts the Athena monorepo under [`athena/`](athena/).
 
 ## Quick Start
 
-**Requirements:** Python 3.12+
+**Requirements:** Python 3.11+
 
 ```bash
 cd athena/athena-core
-pip install -e ".[dev]"
-pytest
-```
-
-Optional (uv workspace):
-
-```bash
-uv sync
-uv run --directory athena/athena-core pytest
+python -m venv .venv
+.venv/Scripts/pip install -e ".[dev]"
+.venv/Scripts/pip install -e "../athena-sdk[dev]" -e "../athena-cli[dev]" -e "../athena-dashboard[dev]" -e "../athena-ai[dev]"
+.venv/Scripts/python -m pytest -q
 ```
 
 Verify installation:
 
 ```bash
-python -m athena_core.interfaces.cli health
+athena health
+athena-ai "Find the best EMA strategy for sideways markets" --dry-run
+```
+
+### Phase-by-Phase Commands
+
+| Phase | Package | Example |
+|-------|---------|---------|
+| **0–4** Core | `athena-core` | `pytest` in `athena-core` |
+| **5** CLI / SDK / Dashboard | `athena-cli`, `athena-sdk`, `athena-dashboard` | `athena scan --strategy ... --as-of 2024-06-01` |
+| **6** AI Assistant | `athena-ai` | `athena research "optimize ema parameters" --dry-run` |
+
+```bash
+# Scan with profile
+athena scan --strategy athena/athena-examples/config/ema_crossover.yaml \
+  --as-of 2024-06-01 --config athena/athena-examples/config/backtest.yaml \
+  --profile paper --output scan.json
+
+# Compare experiments
+athena compare-experiments --latest 3 \
+  --config athena/athena-examples/config/backtest.yaml --output-format table
+
+# AI research (propose plan)
+athena research "Find the best EMA strategy for sideways markets" \
+  --config athena/athena-examples/config/backtest.yaml --dry-run
+
+# Dashboard
+athena-dashboard
 ```
 
 ## Documentation
@@ -35,12 +57,10 @@ Specifications live in [`athena/athena-spec/`](athena/athena-spec/README.md):
 |----------|---------|
 | [ATH-000 Philosophy](athena/athena-spec/ATH-000-Philosophy.md) | Mission and principles |
 | [ATH-001 Vision & PRD](athena/athena-spec/ATH-001-Vision-PRD.md) | Product vision |
-| [ATH-001 MVP Scope](athena/athena-spec/ATH-001-MVP-Scope.md) | Phase 1–2 scope |
 | [ATH-002 Engineering Standards](athena/athena-spec/ATH-002-Engineering-Standards.md) | Code quality rules |
 | [ATH-003 Repository Architecture](athena/athena-spec/ATH-003-Repository-Architecture.md) | Monorepo layout |
-| [ATH-004 Requirement Standard](athena/athena-spec/ATH-004-Requirement-Standard.md) | REQ template |
 | [Requirements backlog](athena/athena-spec/requirements/) | Traceable REQ specs |
-| [Phase 0 Validation](athena/athena-spec/PHASE-0-VALIDATION.md) | Master validation report |
+| [Phase 6 Validation](athena/athena-spec/PHASE-6-VALIDATION.md) | Latest validation report |
 
 Legacy copy: [`Documents/`](Documents/README.md) (prefer `athena/athena-spec/`).
 
@@ -48,26 +68,26 @@ Legacy copy: [`Documents/`](Documents/README.md) (prefer `athena/athena-spec/`).
 
 ```
 athena/
-├── athena-spec/       # Specs, REQ backlog, validation
+├── athena-spec/       # Specs, REQ backlog, validation reports
 ├── athena-core/       # Core library (Clean Architecture)
-├── athena-ai/         # Future: AI research assistant
-├── athena-docs/       # Future: documentation site
-├── athena-sdk/        # Future: public SDK
-├── athena-cli/        # Future: CLI package
-└── athena-examples/   # Future: examples & notebooks
+├── athena-ai/         # AI research assistant (NL experiment orchestration)
+├── athena-sdk/        # Python SDK (AthenaClient)
+├── athena-cli/        # Unified CLI (`athena`, `athena research`)
+├── athena-dashboard/  # Streamlit MVP dashboard
+└── athena-examples/   # Example strategies and config YAML
 ```
 
 ## Phase Roadmap
 
 | Phase | Focus | Status |
 |-------|-------|--------|
-| **0** | Monorepo scaffold, specs, REQ backlog, engineering bootstrap | Complete |
-| **1** | Data ingest, NSE calendar, EMA/SMA, feature store | Next |
-| **2** | Strategy YAML, backtest engine, experiment tracking | Planned |
-| **3** | Extended indicators, portfolio, optimization | Planned |
-| **4+** | Regime, ML, scanner, dashboard | Planned |
-
-See [PHASE-0-VALIDATION.md](athena/athena-spec/PHASE-0-VALIDATION.md) for Phase 1 handoff details.
+| **0** | Monorepo scaffold, specs, REQ backlog | Complete |
+| **1** | Data ingest, NSE calendar, EMA/SMA, feature store | Complete |
+| **2** | Strategy YAML, backtest engine, experiment tracking | Complete |
+| **3** | Walk-forward, optimizer, experiment comparison | Complete |
+| **4** | Regime, ML scorer, scanner, explainability | Complete |
+| **5** | Polished CLI, SDK, Streamlit dashboard | Complete |
+| **6** | AI research assistant (`athena-ai`) | Complete |
 
 ## MVP Defaults
 
@@ -79,9 +99,8 @@ See [PHASE-0-VALIDATION.md](athena/athena-spec/PHASE-0-VALIDATION.md) for Phase 
 ## Development
 
 ```bash
-# Lint & type-check (from athena-core)
+# Lint & test (from athena-core venv)
 ruff check src tests
-mypy src
 pytest
 ```
 

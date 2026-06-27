@@ -11,6 +11,8 @@ from athena_core.infrastructure.logging import configure_logging, get_logger
 from athena_sdk import AthenaClient
 from athena_sdk.client import StrategyLoadError
 
+from athena_ai.application.research_assistant import ResearchAssistant
+
 from athena_cli import __version__
 from athena_cli.formatting import emit_output, render_payload
 
@@ -161,6 +163,36 @@ def _cmd_optimize(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_research(args: argparse.Namespace) -> int:
+    log = get_logger("athena.cli.research")
+    if not args.query:
+        log.error("research.missing_query")
+        return 1
+    dry_run = args.dry_run or args.propose
+    assistant = ResearchAssistant(
+        config_path=args.ai_config,
+        athena_config_path=args.config,
+        profile=args.profile,
+    )
+    result = assistant.research(
+        args.query,
+        dry_run=dry_run,
+        use_openai=False if args.no_openai else None,
+    )
+    payload = assistant.to_dict(result)
+    emit_output(
+        render_payload(payload, output_format=args.output_format),
+        output_path=getattr(args, "output", None),
+    )
+    log.info(
+        "research.complete",
+        session_id=result.session_id,
+        dry_run=dry_run,
+        experiment_ids=result.experiment_ids,
+    )
+    return 0
+
+
 def _cmd_compare_experiments(args: argparse.Namespace) -> int:
     log = get_logger("athena.cli.compare")
     client = _client(args)
@@ -248,6 +280,25 @@ def build_parser() -> argparse.ArgumentParser:
     compare.add_argument("experiment_id", nargs="*", help="Experiment IDs")
     compare.add_argument("--latest", type=int, help="Compare N most recent experiments")
     compare.add_argument("--output", help="Output path")
+
+    research = subparsers.add_parser(
+        "research",
+        help="Natural-language experiment orchestration (AI assistant)",
+    )
+    research.add_argument("query", help="Research question in plain English")
+    research.add_argument("--ai-config", type=Path, help="Research assistant YAML config")
+    research.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Propose plan only; do not execute backtests",
+    )
+    research.add_argument("--propose", action="store_true", help="Alias for --dry-run")
+    research.add_argument(
+        "--no-openai",
+        action="store_true",
+        help="Force rule-based intent parser",
+    )
+    research.add_argument("--output", help="JSON output path")
     return parser
 
 
@@ -265,6 +316,7 @@ def main(argv: list[str] | None = None) -> int:
         "walk-forward": _cmd_walk_forward,
         "optimize": _cmd_optimize,
         "compare-experiments": _cmd_compare_experiments,
+        "research": _cmd_research,
     }
     handler = handlers.get(args.command)
     if handler is None:

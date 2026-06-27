@@ -1,7 +1,7 @@
 [project]
-name = "athena-cli"
+name = "athena-ai"
 version = "0.1.0"
-description = "Polished command-line interface for Athena"
+description = "AI research assistant for natural-language experiment orchestration"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -10,13 +10,18 @@ authors = [{ name = "Athena Contributors" }]
 dependencies = [
     "athena-core @ file:../athena-core",
     "athena-sdk @ file:../athena-sdk",
-    "athena-ai @ file:../athena-ai",
+    "pydantic>=2.0",
+    "structlog>=24.0",
+    "pyyaml>=6.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
     "ruff>=0.4",
+]
+openai = [
+    "openai>=1.0",
 ]
 
 [build-system]
@@ -27,7 +32,7 @@ build-backend = "hatchling.build"
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/athena_cli"]
+packages = ["src/athena_ai"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -43,4 +48,4 @@ src = ["src", "tests"]
 select = ["E", "F", "I", "UP", "B", "SIM"]
 
 [project.scripts]
-athena = "athena_cli.main:main"
+athena-ai = "athena_ai.interfaces.cli:main"

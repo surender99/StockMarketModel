@@ -1,0 +1,14 @@
+research_assistant:
+  athena_config_path: null
+  default_strategy_path: ../athena-examples/config/ema_crossover.yaml
+  strategy_paths:
+    ema: ../athena-examples/config/ema_crossover.yaml
+    sma: ../athena-examples/config/ema_crossover.yaml
+    crossover: ../athena-examples/config/ema_crossover.yaml
+  default_start: "2022-01-01"
+  default_end: "2024-06-01"
+  default_compare_latest: 3
+  full_research_include_optimize: false
+  ai_session_log_path: ./experiments/ai_sessions
+  use_openai_when_available: true
+  openai_model: gpt-4o-mini
