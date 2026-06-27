@@ -1,0 +1,9 @@
+{
+ "title":"PortfolioConfig",
+ "type":"object",
+ "properties":{
+   "initial_capital":{"type":"number"},
+   "max_positions":{"type":"integer"},
+   "risk_per_trade":{"type":"number"}
+ }
+}

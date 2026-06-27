@@ -1,0 +1,4 @@
+initial_capital: 1000000
+max_positions: 15
+risk_per_trade: 0.01
+rebalance: monthly
