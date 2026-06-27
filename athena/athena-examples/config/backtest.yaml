@@ -53,6 +53,36 @@ walk_forward:
   mode: rolling
   min_train_days: 126
 
+optimizer:
+  method: grid
+  max_trials: 50
+  random_seed: 42
+  parameters:
+    - path: risk.stop_loss_pct
+      type: choice
+      values: [0.03, 0.05, 0.07]
+    - path: risk.take_profit_pct
+      type: choice
+      values: [0.10, 0.15, 0.20]
+  objectives:
+    - sharpe
+    - max_drawdown
+    - profit_factor
+  objective_weights:
+    sharpe: 0.4
+    max_drawdown: 0.3
+    profit_factor: 0.3
+
+ml_scorer:
+  enabled: false
+  model_type: logistic
+  min_training_samples: 20
+  use_heuristic_fallback: true
+
+explainability:
+  enabled: true
+  top_features: 3
+
 data_ingest:
   base_path: ./data/ohlcv
 

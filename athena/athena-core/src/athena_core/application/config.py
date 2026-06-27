@@ -7,6 +7,9 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 
 from athena_core.application.backtest_config import BacktestSettings, ExperimentTrackingConfig
+from athena_core.application.explainability_config import ExplainabilityConfig
+from athena_core.application.ml_scorer_config import MLScorerConfig
+from athena_core.application.optimizer_config import OptimizerConfig
 from athena_core.application.regime_config import RegimeConfig
 from athena_core.application.scanner_config import ScannerConfig
 from athena_core.application.walk_forward_config import WalkForwardConfig
@@ -63,3 +66,6 @@ class AthenaConfig(BaseModel):
     regime: RegimeConfig = Field(default_factory=RegimeConfig)
     scanner: ScannerConfig = Field(default_factory=ScannerConfig)
     walk_forward: WalkForwardConfig = Field(default_factory=WalkForwardConfig)
+    optimizer: OptimizerConfig = Field(default_factory=OptimizerConfig)
+    ml_scorer: MLScorerConfig = Field(default_factory=MLScorerConfig)
+    explainability: ExplainabilityConfig = Field(default_factory=ExplainabilityConfig)

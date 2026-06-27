@@ -8,6 +8,8 @@ from typing import Any
 import pandas as pd
 
 from athena_core.application.backtest_engine import FeatureProviderPort
+from athena_core.application.explainability import ShapExplainer
+from athena_core.application.ml_scorer import MLSignalScorer, TrainingSample, SignalFeatures
 from athena_core.application.scanner import DailyScanner
 from athena_core.application.scanner_config import ScannerConfig
 from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
@@ -121,3 +123,34 @@ def test_scanner_empty_universe() -> None:
     result = scanner.scan(_strategy(), [], date(2024, 3, 1))
     assert result.candidates == []
     assert result.scanned_count == 0
+
+
+def test_scanner_ml_scorer_augmented_signal_score() -> None:
+    as_of = date(2024, 1, 2) + timedelta(days=79)
+    bench = _series("^NSEI", 100, 0.1)
+    strong = _series("STRONG", 100, 1.0)
+    scorer = MLSignalScorer()
+    samples = [
+        TrainingSample(
+            features=SignalFeatures(breakout_score=0.9, rs_score=0.8, momentum_score=0.85),
+            label=1,
+        ),
+        TrainingSample(
+            features=SignalFeatures(breakout_score=0.3, rs_score=0.4, momentum_score=0.35),
+            label=0,
+        ),
+    ] * 12
+    scorer.fit(samples)
+    scanner = DailyScanner(
+        _Repo({"^NSEI": bench, "STRONG": strong}),
+        _Features(),
+        ScannerConfig(top_n=1, use_ml_scorer=True),
+        ml_scorer=scorer,
+        explainer=ShapExplainer(),
+    )
+    result = scanner.scan(_strategy(), ["STRONG"], as_of)
+    assert len(result.candidates) == 1
+    candidate = result.candidates[0]
+    assert candidate.has_entry_signal
+    assert candidate.ml_probability is not None
+    assert candidate.ml_rationale

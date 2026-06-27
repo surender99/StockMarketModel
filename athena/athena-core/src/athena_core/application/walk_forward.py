@@ -22,6 +22,7 @@ METRIC_KEYS = (
     "max_drawdown",
     "sharpe",
     "win_rate",
+    "profit_factor",
     "trade_count",
 )
 

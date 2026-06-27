@@ -1,4 +1,4 @@
-"""Athena core CLI — REQ-DATA-INGEST-001, REQ-BT-ENGINE-001, REQ-EXP-TRACK-001, REQ-SCANNER-001, REQ-WALK-FORWARD-001, REQ-EXP-COMPARE-001."""
+"""Athena core CLI — REQ-DATA-INGEST-001, REQ-BT-ENGINE-001, REQ-EXP-TRACK-001, REQ-SCANNER-001, REQ-WALK-FORWARD-001, REQ-EXP-COMPARE-001, REQ-OPT-001, REQ-ML-SCORER-001, REQ-EXPLAIN-001."""
 
 from __future__ import annotations
 
@@ -23,6 +23,12 @@ from athena_core.application.config import (
     FeatureStoreConfig,
 )
 from athena_core.application.errors import IngestError
+from athena_core.application.explainability import ShapExplainer
+from athena_core.application.explainability_config import ExplainabilityConfig
+from athena_core.application.ml_scorer import MLSignalScorer
+from athena_core.application.ml_scorer_config import MLScorerConfig
+from athena_core.application.optimizer import StrategyOptimizer
+from athena_core.application.optimizer_config import OptimizerConfig
 from athena_core.application.experiment_tracker import ExperimentTracker
 from athena_core.application.feature_service import FeatureService
 from athena_core.application.ingest_ohlcv import IngestOHLCVUseCase
@@ -54,6 +60,9 @@ def _load_config(path: Path | None) -> AthenaConfig:
         regime=RegimeConfig.model_validate(raw.get("regime", {})),
         scanner=ScannerConfig.model_validate(raw.get("scanner", {})),
         walk_forward=WalkForwardConfig.model_validate(raw.get("walk_forward", {})),
+        optimizer=OptimizerConfig.model_validate(raw.get("optimizer", {})),
+        ml_scorer=MLScorerConfig.model_validate(raw.get("ml_scorer", {})),
+        explainability=ExplainabilityConfig.model_validate(raw.get("explainability", {})),
     )
 
 
@@ -216,11 +225,18 @@ def _cmd_scan(args: argparse.Namespace) -> int:
 
     as_of = _parse_date(args.as_of)
     _, ohlcv_store, feature_service, regime_engine = _build_services(config)
+    ml_scorer: MLSignalScorer | None = None
+    explainer: ShapExplainer | None = None
+    if config.scanner.use_ml_scorer or config.ml_scorer.enabled:
+        ml_scorer = MLSignalScorer(config.ml_scorer)
+        explainer = ShapExplainer(config.explainability)
     scanner = DailyScanner(
         ohlcv_store,
         FeatureServiceProvider(feature_service),
         config=config.scanner,
         regime_engine=regime_engine,
+        ml_scorer=ml_scorer,
+        explainer=explainer,
     )
     result = scanner.scan(strategy, symbols, as_of)
     payload = scanner.candidates_to_dict(result)
@@ -290,6 +306,78 @@ def _cmd_walk_forward(args: argparse.Namespace) -> int:
         ],
     }
     log.info("walk_forward.complete", folds=output["fold_count"])
+
+    if args.output:
+        Path(args.output).write_text(json.dumps(output, indent=2), encoding="utf-8")
+    else:
+        print(json.dumps(output, indent=2))
+    return 0
+
+
+def _cmd_optimize(args: argparse.Namespace) -> int:
+    log = get_logger("athena_core.cli.optimize")
+    config = _load_config(args.config)
+
+    try:
+        strategy = load_strategy_yaml(args.strategy)
+    except StrategyLoadError as exc:
+        log.error("optimize.strategy_load_failed", error=str(exc))
+        return 1
+
+    symbols: list[str] = list(strategy.universe.symbols)
+    if args.symbols_file:
+        symbols.extend(_load_symbols(Path(args.symbols_file)))
+    if args.symbol:
+        symbols.append(args.symbol)
+    symbols = list(dict.fromkeys(symbols))
+    if not symbols:
+        log.error("optimize.no_symbols")
+        return 1
+
+    start = _parse_date(args.start)
+    end = _parse_date(args.end)
+    bt_config = BacktestConfig(**config.backtest.model_dump(), start=start, end=end)
+
+    calendar, ohlcv_store, feature_service, regime_engine = _build_services(config)
+    engine = BacktestEngine(
+        calendar,
+        ohlcv_store,
+        FeatureServiceProvider(feature_service),
+        regime_engine=regime_engine,
+    )
+    validator = WalkForwardValidator(calendar, engine, config.walk_forward)
+    optimizer = StrategyOptimizer(validator, config.optimizer)
+    result = optimizer.run(
+        strategy,
+        bt_config,
+        symbols=symbols,
+        dataset_version=config.feature_store.data_version,
+        start=start,
+        end=end,
+    )
+
+    output = {
+        "method": result.method,
+        "trial_count": len(result.trials),
+        "best_trial": None
+        if result.best_trial is None
+        else {
+            "trial_id": result.best_trial.trial_id,
+            "parameters": result.best_trial.parameters,
+            "composite_score": result.best_trial.composite_score,
+            "aggregate_metrics": result.best_trial.aggregate_metrics,
+        },
+        "trials": [
+            {
+                "trial_id": t.trial_id,
+                "parameters": t.parameters,
+                "composite_score": t.composite_score,
+                "aggregate_metrics": t.aggregate_metrics,
+            }
+            for t in result.trials
+        ],
+    }
+    log.info("optimize.complete", trials=output["trial_count"], best=output["best_trial"])
 
     if args.output:
         Path(args.output).write_text(json.dumps(output, indent=2), encoding="utf-8")
@@ -384,6 +472,15 @@ def main(argv: list[str] | None = None) -> int:
     wf_parser.add_argument("--config", type=Path, help="YAML config path")
     wf_parser.add_argument("--output", type=Path, help="JSON output path")
 
+    opt_parser = subparsers.add_parser("optimize", help="Parameter search — REQ-OPT-001")
+    opt_parser.add_argument("--strategy", type=Path, required=True, help="Strategy YAML path")
+    opt_parser.add_argument("--start", required=True, help="Start date ISO (YYYY-MM-DD)")
+    opt_parser.add_argument("--end", required=True, help="End date ISO (YYYY-MM-DD)")
+    opt_parser.add_argument("--symbol", help="Single symbol override")
+    opt_parser.add_argument("--symbols-file", help="CSV with symbol column")
+    opt_parser.add_argument("--config", type=Path, help="YAML config path")
+    opt_parser.add_argument("--output", type=Path, help="JSON output path")
+
     compare_parser = subparsers.add_parser(
         "compare-experiments",
         help="Side-by-side experiment metrics — REQ-EXP-COMPARE-001",
@@ -409,6 +506,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_scan(args)
     if args.command == "walk-forward":
         return _cmd_walk_forward(args)
+    if args.command == "optimize":
+        return _cmd_optimize(args)
     if args.command == "compare-experiments":
         return _cmd_compare_experiments(args)
 

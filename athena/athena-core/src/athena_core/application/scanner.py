@@ -1,4 +1,4 @@
-"""Daily universe scanner — REQ-SCANNER-001."""
+"""Daily universe scanner — REQ-SCANNER-001, REQ-ML-SCORER-001, REQ-EXPLAIN-001."""
 
 from __future__ import annotations
 
@@ -10,6 +10,8 @@ import pandas as pd
 import structlog
 
 from athena_core.application.backtest_engine import FeatureProviderPort
+from athena_core.application.explainability import ShapExplainer
+from athena_core.application.ml_scorer import MLSignalScorer, SignalFeatures
 from athena_core.application.regime_engine import RegimeEngine
 from athena_core.application.scanner_config import ScannerConfig
 from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
@@ -32,6 +34,9 @@ class ScanCandidate:
     momentum_score: float = 0.0
     signal_score: float = 0.0
     has_entry_signal: bool = False
+    ml_probability: float | None = None
+    ml_confidence: float | None = None
+    ml_rationale: str | None = None
 
 
 @dataclass(frozen=True)
@@ -53,11 +58,15 @@ class DailyScanner:
         feature_provider: FeatureProviderPort,
         config: ScannerConfig | None = None,
         regime_engine: RegimeEngine | None = None,
+        ml_scorer: MLSignalScorer | None = None,
+        explainer: ShapExplainer | None = None,
     ) -> None:
         self._ohlcv = ohlcv_repo
         self._features = feature_provider
         self._config = config or ScannerConfig()
         self._regime = regime_engine
+        self._ml_scorer = ml_scorer
+        self._explainer = explainer
 
     def scan(
         self,
@@ -88,10 +97,35 @@ class DailyScanner:
                 continue
 
             has_signal = self._has_entry_signal(strategy, frame, idx)
+            if self._config.require_entry_signal and not has_signal:
+                filtered += 1
+                continue
+
             breakout = self._breakout_score(frame, idx)
             rs = self._relative_strength_score(frame, benchmark, as_of)
             momentum = self._momentum_score(frame, idx)
-            signal_score = 1.0 if has_signal else 0.0
+            volume_ratio = self._volume_ratio(frame, idx)
+
+            ml_probability: float | None = None
+            ml_confidence: float | None = None
+            ml_rationale: str | None = None
+
+            if has_signal and self._config.use_ml_scorer and self._ml_scorer is not None:
+                feat = MLSignalScorer.features_from_scanner_scores(
+                    breakout=breakout,
+                    rs=rs,
+                    momentum=momentum,
+                    volume_ratio=volume_ratio,
+                )
+                ml_score = self._ml_scorer.score(feat)
+                ml_probability = round(ml_score.probability, 4)
+                ml_confidence = round(ml_score.confidence, 4)
+                signal_score = ml_score.probability
+                if self._explainer is not None:
+                    explanation = self._explainer.explain(self._ml_scorer, feat)
+                    ml_rationale = explanation.rationale
+            else:
+                signal_score = 1.0 if has_signal else 0.0
             composite = (
                 weights["breakout"] * breakout
                 + weights["relative_strength"] * rs
@@ -107,6 +141,7 @@ class DailyScanner:
                 rs=rs,
                 momentum=momentum,
                 has_signal=has_signal,
+                ml_rationale=ml_rationale,
             )
             candidates.append(
                 ScanCandidate(
@@ -118,6 +153,9 @@ class DailyScanner:
                     momentum_score=round(momentum, 4),
                     signal_score=round(signal_score, 4),
                     has_entry_signal=has_signal,
+                    ml_probability=ml_probability,
+                    ml_confidence=ml_confidence,
+                    ml_rationale=ml_rationale,
                 )
             )
 
@@ -269,14 +307,29 @@ class DailyScanner:
         return min(max(0.5 + roc, 0.0), 1.0)
 
     @staticmethod
+    def _volume_ratio(frame: pd.DataFrame, idx: int) -> float:
+        if "volume" not in frame.columns:
+            return 1.0
+        window = frame["volume"].iloc[max(0, idx - 19) : idx + 1].astype(float)
+        if window.empty:
+            return 1.0
+        avg = float(window.mean())
+        if avg <= 0:
+            return 1.0
+        return min(float(window.iloc[-1]) / avg, 3.0)
+
+    @staticmethod
     def _build_reasons(
         *,
         breakout: float,
         rs: float,
         momentum: float,
         has_signal: bool,
+        ml_rationale: str | None = None,
     ) -> list[str]:
         reasons: list[str] = []
+        if ml_rationale:
+            reasons.append(ml_rationale)
         if breakout >= 0.95:
             reasons.append(f"near {breakout:.0%} of lookback high (breakout)")
         elif breakout >= 0.85:
@@ -307,6 +360,9 @@ class DailyScanner:
                     "momentum_score": c.momentum_score,
                     "signal_score": c.signal_score,
                     "has_entry_signal": c.has_entry_signal,
+                    "ml_probability": c.ml_probability,
+                    "ml_confidence": c.ml_confidence,
+                    "ml_rationale": c.ml_rationale,
                 }
                 for c in result.candidates
             ],
