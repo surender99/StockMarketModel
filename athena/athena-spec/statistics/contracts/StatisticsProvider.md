@@ -1,0 +1,1 @@
+evaluate(backtest)->StatisticsReport

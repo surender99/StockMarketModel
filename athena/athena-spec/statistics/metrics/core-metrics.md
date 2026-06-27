@@ -1,0 +1,12 @@
+Required Metrics
+- CAGR
+- Profit Factor
+- Win Rate
+- Expectancy
+- Sharpe
+- Sortino
+- Calmar
+- Max Drawdown
+- Recovery Factor
+- Ulcer Index
+- Exposure
