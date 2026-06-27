@@ -5,3 +5,18 @@ __pycache__/
 venv/
 .env
 .env.*
+
+# Data & experiments (runtime artifacts)
+data/
+experiments/
+*.parquet
+
+# Tooling
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+htmlcov/
+.coverage
+dist/
+*.egg-info/
+uv.lock

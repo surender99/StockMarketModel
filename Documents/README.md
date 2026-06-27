@@ -1,6 +1,8 @@
-# Athena-Spec
+# Athena-Spec (legacy path)
 
-This repository contains the engineering specification for **Athena – AI Quantitative Research Operating System**.
+> **Canonical location:** [`athena/athena-spec/`](../athena/athena-spec/README.md)
+
+This directory contains a legacy copy of the Athena engineering specification.
 
 Start reading in this order:
 
@@ -10,4 +12,4 @@ Start reading in this order:
 4. ATH-003-Repository-Architecture.md
 5. ATH-004-Requirement-Standard.md
 
-The specification is intended to be the single source of truth for implementation by both humans and AI coding agents.
+Prefer `athena/athena-spec/` for enriched docs, MVP scope, REQ backlog, and validation reports.
