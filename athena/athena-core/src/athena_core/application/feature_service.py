@@ -11,6 +11,8 @@ import structlog
 
 from athena_core.application.config import FeatureStoreConfig
 from athena_core.domain.indicators.ema import compute_ema_from_ohlcv
+from athena_core.domain.indicators.macd import compute_macd_from_ohlcv
+from athena_core.domain.indicators.rsi import compute_rsi_from_ohlcv
 from athena_core.domain.indicators.sma import compute_sma_from_ohlcv
 from athena_core.domain.ports.feature_store import FeatureCacheMiss, FeatureStorePort
 from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
@@ -25,6 +27,16 @@ _INDICATOR_REGISTRY: dict[str, IndicatorFn] = {
     ),
     "sma": lambda df, params: compute_sma_from_ohlcv(
         df, int(params["period"]), price_column=params.get("price_column", "close")
+    ),
+    "macd": lambda df, params: compute_macd_from_ohlcv(
+        df,
+        fast=int(params.get("fast", 12)),
+        slow=int(params.get("slow", 26)),
+        signal=int(params.get("signal", 9)),
+        price_column=params.get("price_column", "close"),
+    ),
+    "rsi": lambda df, params: compute_rsi_from_ohlcv(
+        df, int(params.get("period", 14)), price_column=params.get("price_column", "close")
     ),
 }
 

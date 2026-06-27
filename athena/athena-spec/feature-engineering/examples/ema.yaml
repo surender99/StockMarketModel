@@ -1,0 +1,3 @@
+name: EMA
+period: 20
+source: close

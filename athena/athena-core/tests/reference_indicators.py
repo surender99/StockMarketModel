@@ -31,3 +31,32 @@ def pandas_ta_sma(series: pd.Series, period: int) -> pd.Series | None:
     except ImportError:
         return None
     return ta.sma(series, length=period)
+
+
+def pandas_ta_rsi(series: pd.Series, period: int) -> pd.Series | None:
+    """Return pandas-ta RSI when the library is installed."""
+    try:
+        import pandas_ta as ta
+    except ImportError:
+        return None
+    return ta.rsi(series, length=period)
+
+
+def pandas_ta_macd(series: pd.Series, fast: int = 12, slow: int = 26, signal: int = 9) -> pd.DataFrame | None:
+    """Return pandas-ta MACD when the library is installed."""
+    try:
+        import pandas_ta as ta
+    except ImportError:
+        return None
+    result = ta.macd(series, fast=fast, slow=slow, signal=signal)
+    if result is None:
+        return None
+    cols = result.columns.tolist()
+    return pd.DataFrame(
+        {
+            "macd": result[cols[0]],
+            "histogram": result[cols[1]],
+            "signal": result[cols[2]],
+        },
+        index=series.index,
+    )
