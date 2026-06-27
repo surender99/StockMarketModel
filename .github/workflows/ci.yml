@@ -38,5 +38,20 @@ jobs:
           cd ../athena-cli && python -m pytest -q
           cd ../athena-dashboard && python -m pytest -q
 
-      - name: Lint (ruff)
-        run: ruff check athena/athena-core/src athena/athena-core/tests
+      - name: Test coverage (athena-core)
+        run: |
+          cd athena/athena-core
+          python -m pytest --cov=athena_core --cov-report=term-missing -q
+
+      - name: Lint (ruff, all packages)
+        run: |
+          for pkg in athena-core athena-sdk athena-ai athena-cli athena-dashboard; do
+            echo "ruff: $pkg"
+            (cd "athena/$pkg" && ruff check src tests)
+          done
+
+      - name: Type check (mypy, athena-core)
+        continue-on-error: true
+        run: |
+          cd athena/athena-core
+          python -m mypy

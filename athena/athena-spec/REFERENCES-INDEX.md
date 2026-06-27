@@ -64,5 +64,8 @@ This index tracks integration of the Athena References package series into the m
 ## Related Documents
 
 - [README.md](README.md) — spec reading order
-- [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) — platform sign-off
-- [REFERENCES-INTEGRATION-COMPLETE.md](REFERENCES-INTEGRATION-COMPLETE.md) — master sign-off
+- [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) — MVP code sign-off (Phases 0–7)
+- [REFERENCES-INTEGRATION-COMPLETE.md](REFERENCES-INTEGRATION-COMPLETE.md) — spec integration sign-off
+- [SPEC-VS-CODE-STATUS.md](SPEC-VS-CODE-STATUS.md) — spec vs implementation gaps
+- [adrs/](adrs/) — architecture decision records
+- [decision-log/](decision-log/) — delivery and process decisions

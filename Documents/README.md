@@ -1,16 +1,13 @@
-# Athena-Spec (legacy path)
+# Documents (redirect)
 
-> **Canonical location:** [`athena/athena-spec/`](../athena/athena-spec/README.md)  
-> **Platform sign-off:** [`athena/athena-spec/PLATFORM-COMPLETE.md`](../athena/athena-spec/PLATFORM-COMPLETE.md)
+> **Canonical specification:** [`athena/athena-spec/`](../athena/athena-spec/README.md)
 
-This directory contains a **legacy copy** of the Athena engineering specification. **Do not edit here** — all updates belong in `athena/athena-spec/`.
+This directory no longer holds duplicate ATH documents. All engineering specs, ADRs, decision log, REQ backlog, and validation reports live under **`athena/athena-spec/`**.
 
-Start reading in this order (in canonical path):
+| Need | Go to |
+|------|-------|
+| Philosophy, vision, standards | [athena/athena-spec/](../athena/athena-spec/README.md) |
+| Architecture decisions | [athena/athena-spec/adrs/](../athena/athena-spec/adrs/) |
+| Platform sign-off | [PLATFORM-COMPLETE.md](../athena/athena-spec/PLATFORM-COMPLETE.md) |
 
-1. ATH-000-Philosophy.md
-2. ATH-001-Vision-PRD.md
-3. ATH-002-Engineering-Standards.md
-4. ATH-003-Repository-Architecture.md
-5. ATH-004-Requirement-Standard.md
-
-Prefer `athena/athena-spec/` for enriched docs, MVP scope, REQ backlog, phase validation reports, and platform completion checklist.
+Do not add or edit spec files here.

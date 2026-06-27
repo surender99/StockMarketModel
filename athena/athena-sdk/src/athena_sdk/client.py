@@ -1,4 +1,8 @@
-"""AthenaClient — REQ-SDK-001."""
+"""AthenaClient — REQ-SDK-001.
+
+Public facade over Athena core use cases. Internal imports from ``athena_core``
+are implementation details; external callers should use only ``AthenaClient``.
+"""
 
 from __future__ import annotations
 
@@ -8,6 +12,7 @@ from typing import Any
 
 from athena_core.application.config import AthenaConfig
 from athena_core.application.config_loader import list_profile_names, load_athena_config
+from athena_core.application.optimizer import OptimizerResult
 from athena_core.application.runtime import (
     AthenaRuntime,
     BacktestRunResult,
@@ -18,7 +23,6 @@ from athena_core.application.runtime import (
     scan_result_to_dict,
     walk_forward_to_dict,
 )
-from athena_core.application.optimizer import OptimizerResult
 from athena_core.application.scanner import ScanResult
 from athena_core.application.walk_forward import WalkForwardSummary
 from athena_core.domain.strategy.config import StrategyConfig

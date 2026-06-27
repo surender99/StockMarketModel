@@ -9,7 +9,9 @@
 
 ## Executive Summary
 
-The Athena Quantitative Research Operating System MVP is **complete**. All phases (0–6) deliverables are implemented, tested, documented, and CI-gated. The platform supports the full research loop: ingest → feature store → backtest → walk-forward → optimize → scan → explain → compare → AI-assisted research → dashboard visualization.
+The Athena Quantitative Research Operating System **MVP (Phases 0–7) is code-complete**. All phase deliverables are implemented, tested, documented, and CI-gated. The platform supports the full research loop: ingest → feature store → backtest → walk-forward → optimize → scan → explain → compare → AI-assisted research → dashboard visualization.
+
+**Spec vs code:** References packages 01–15 are [spec-integrated](REFERENCES-INTEGRATION-COMPLETE.md). Packages **06** (pattern stub), **09** (portfolio spec-only), and **11** (statistics spec-only) do not yet have full implementations — see [SPEC-VS-CODE-STATUS.md](SPEC-VS-CODE-STATUS.md).
 
 ---
 
@@ -61,15 +63,21 @@ The Athena Quantitative Research Operating System MVP is **complete**. All phase
 
 ## References Package Integration (01–15)
 
-All References packages integrated into `athena/athena-spec/` — see [REFERENCES-INTEGRATION-COMPLETE.md](REFERENCES-INTEGRATION-COMPLETE.md).
+All References packages are **spec-integrated** into `athena/athena-spec/` — see [REFERENCES-INTEGRATION-COMPLETE.md](REFERENCES-INTEGRATION-COMPLETE.md).
 
-| Packages | Key deliverables |
-|----------|------------------|
-| 01–02 | Governance, architecture, contracts, PluginRegistry |
-| 03–06 | Data platform, market intelligence, indicators (MACD/RSI), pattern stub |
-| 07–11 | Strategy, backtest, portfolio, research, statistics specs |
-| 12–14 | ML lifecycle, AI research scientist, platform ops |
-| 15 | Handbook → `athena-docs/handbook/` |
+| Packages | Spec | Code (MVP) |
+|----------|------|------------|
+| 01–02 | Governance, architecture, contracts | PluginRegistry stub |
+| 03–05 | Data, market intelligence, indicators | Ingest, quality, EMA/SMA/MACD/RSI |
+| **06** | Pattern recognition specs | **Stub only** (`PatternDetector`) |
+| 07–08 | Strategy, backtest | Full engine |
+| **09** | Portfolio specs | **Spec only** (no portfolio service) |
+| 10 | Research engine | Experiment tracker |
+| **11** | Statistics specs | **Spec only** (no statistics module) |
+| 12–14 | ML, AI scientist, platform | ML scorer, athena-ai, CI |
+| 15 | Handbook | `athena-docs/handbook/` |
+
+Detail: [SPEC-VS-CODE-STATUS.md](SPEC-VS-CODE-STATUS.md).
 
 ---
 
@@ -260,7 +268,9 @@ GitHub Actions workflow `.github/workflows/ci.yml` runs on push/PR to `master`/`
 - Python 3.11 and 3.12 matrix
 - Editable install of all workspace packages
 - Full pytest suite (unit tests)
-- Ruff lint on athena-core
+- Ruff lint on all workspace packages
+- mypy on athena-core
+- pytest coverage report for athena-core
 
 ---
 
@@ -277,7 +287,7 @@ GitHub Actions workflow `.github/workflows/ci.yml` runs on push/PR to `master`/`
 | **SHAP** | LinearExplainer deprecation warnings on sklearn ≥1.4; functional |
 | **AI assistant** | Rule-based NL parser by default; OpenAI optional via `OPENAI_API_KEY` |
 | **Production** | No live trading, broker integration, or production deployment stack |
-| **License** | MIT intended; formal LICENSE file pending |
+| **License** | MIT — see root [LICENSE](../../LICENSE) |
 
 ---
 
@@ -301,7 +311,7 @@ GitHub Actions workflow `.github/workflows/ci.yml` runs on push/PR to `master`/`
 
 1. Independent data vendor with corporate-action adjustment
 2. Paper trading integration and slippage calibration
-3. Formal LICENSE and security review
+3. Security review and extended integration tests
 4. Extended integration tests on full NIFTY 500 universe
 
 ---
@@ -319,7 +329,7 @@ GitHub Actions workflow `.github/workflows/ci.yml` runs on push/PR to `master`/`
 | [Root README](../../README.md) | Quick start |
 | [CHANGELOG](../../CHANGELOG.md) | Release history |
 
-Legacy spec copy: [`Documents/`](../../Documents/README.md) → prefer `athena/athena-spec/`.
+Redirect only: [`Documents/`](../../Documents/README.md) → canonical `athena/athena-spec/`.
 
 ---
 

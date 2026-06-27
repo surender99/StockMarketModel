@@ -3,27 +3,29 @@
 > **Completed:** 2026-06-27  
 > **Scope:** References packages 01–15 integrated into `athena/athena-spec/` and `athena/athena-docs/`
 
+**Important:** "Complete" here means **spec integration complete** — References markdown, contracts, and validation reports are in the monorepo. It does **not** mean every package has full code implementation. See [SPEC-VS-CODE-STATUS.md](SPEC-VS-CODE-STATUS.md) and [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) for code status.
+
 ---
 
-## Status Summary
+## Status Summary (Spec Integration)
 
-| Pkg | Name | Status | Validation Report |
-|-----|------|--------|-------------------|
-| **01** | Governance | ✅ | [PACKAGE-01-COMPLETE.md](packages/PACKAGE-01-COMPLETE.md) |
-| **02** | Architecture | ✅ | [PACKAGE-02-COMPLETE.md](packages/PACKAGE-02-COMPLETE.md) |
-| **03** | Data Platform | ✅ | [PACKAGE-03-COMPLETE.md](packages/PACKAGE-03-COMPLETE.md) |
-| **04** | Market Intelligence | ✅ | [PACKAGE-04-COMPLETE.md](packages/PACKAGE-04-COMPLETE.md) |
-| **05** | Feature Engineering | ✅ | [PACKAGE-05-COMPLETE.md](packages/PACKAGE-05-COMPLETE.md) |
-| **06** | Pattern Recognition | ✅ | [PACKAGE-06-COMPLETE.md](packages/PACKAGE-06-COMPLETE.md) |
-| **07** | Strategy Engine | ✅ | [PACKAGE-07-COMPLETE.md](packages/PACKAGE-07-COMPLETE.md) |
-| **08** | Backtesting | ✅ | [PACKAGE-08-COMPLETE.md](packages/PACKAGE-08-COMPLETE.md) |
-| **09** | Portfolio Engine | ✅ | [PACKAGE-09-COMPLETE.md](packages/PACKAGE-09-COMPLETE.md) |
-| **10** | Research Engine | ✅ | [PACKAGE-10-COMPLETE.md](packages/PACKAGE-10-COMPLETE.md) |
-| **11** | Statistics | ✅ | [PACKAGE-11-COMPLETE.md](packages/PACKAGE-11-COMPLETE.md) |
-| **12** | Machine Learning | ✅ | [PACKAGE-12-COMPLETE.md](packages/PACKAGE-12-COMPLETE.md) |
-| **13** | AI Research Scientist | ✅ | [PACKAGE-13-COMPLETE.md](packages/PACKAGE-13-COMPLETE.md) |
-| **14** | Platform | ✅ | [PACKAGE-14-COMPLETE.md](packages/PACKAGE-14-COMPLETE.md) |
-| **15** | Handbook | ✅ | [PACKAGE-15-COMPLETE.md](packages/PACKAGE-15-COMPLETE.md) |
+| Pkg | Name | Spec | Code (MVP) | Validation Report |
+|-----|------|------|------------|-------------------|
+| **01** | Governance | ✅ | N/A (docs) | [PACKAGE-01-COMPLETE.md](packages/PACKAGE-01-COMPLETE.md) |
+| **02** | Architecture | ✅ | ✅ PluginRegistry stub | [PACKAGE-02-COMPLETE.md](packages/PACKAGE-02-COMPLETE.md) |
+| **03** | Data Platform | ✅ | ✅ Quality checks | [PACKAGE-03-COMPLETE.md](packages/PACKAGE-03-COMPLETE.md) |
+| **04** | Market Intelligence | ✅ | ✅ Regime engine | [PACKAGE-04-COMPLETE.md](packages/PACKAGE-04-COMPLETE.md) |
+| **05** | Feature Engineering | ✅ | ✅ EMA/SMA/MACD/RSI | [PACKAGE-05-COMPLETE.md](packages/PACKAGE-05-COMPLETE.md) |
+| **06** | Pattern Recognition | ✅ | ⚠️ Stub only | [PACKAGE-06-COMPLETE.md](packages/PACKAGE-06-COMPLETE.md) |
+| **07** | Strategy Engine | ✅ | ✅ YAML + engine | [PACKAGE-07-COMPLETE.md](packages/PACKAGE-07-COMPLETE.md) |
+| **08** | Backtesting | ✅ | ✅ Backtest engine | [PACKAGE-08-COMPLETE.md](packages/PACKAGE-08-COMPLETE.md) |
+| **09** | Portfolio Engine | ✅ | ❌ Spec only | [PACKAGE-09-COMPLETE.md](packages/PACKAGE-09-COMPLETE.md) |
+| **10** | Research Engine | ✅ | ✅ Experiment tracker | [PACKAGE-10-COMPLETE.md](packages/PACKAGE-10-COMPLETE.md) |
+| **11** | Statistics | ✅ | ❌ Spec only | [PACKAGE-11-COMPLETE.md](packages/PACKAGE-11-COMPLETE.md) |
+| **12** | Machine Learning | ✅ | ✅ ML scorer | [PACKAGE-12-COMPLETE.md](packages/PACKAGE-12-COMPLETE.md) |
+| **13** | AI Research Scientist | ✅ | ✅ athena-ai | [PACKAGE-13-COMPLETE.md](packages/PACKAGE-13-COMPLETE.md) |
+| **14** | Platform | ✅ | ✅ CI / install | [PACKAGE-14-COMPLETE.md](packages/PACKAGE-14-COMPLETE.md) |
+| **15** | Handbook | ✅ | ✅ athena-docs | [PACKAGE-15-COMPLETE.md](packages/PACKAGE-15-COMPLETE.md) |
 
 ---
 
@@ -76,4 +78,4 @@ athena/athena-docs/handbook/  # Pkg 15
 
 ## Sign-off
 
-All 15 References packages are integrated. See [REFERENCES-INDEX.md](REFERENCES-INDEX.md) for artifact mapping.
+All 15 References packages are **spec-integrated**. MVP **code** sign-off is in [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md). See [REFERENCES-INDEX.md](REFERENCES-INDEX.md) for artifact mapping and [adrs/](adrs/) for architectural decisions.

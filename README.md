@@ -70,14 +70,17 @@ Specifications live in [`athena/athena-spec/`](athena/athena-spec/README.md):
 | [Governance (AES)](athena/athena-spec/governance/) | Constitution, execution plan, quant & AI standards |
 | [Definition of Done](athena/athena-spec/checklists/Definition-of-Done.md) | Deliverable checklist |
 | [References Index](athena/athena-spec/REFERENCES-INDEX.md) | Package integration status (01–15 ✅) |
-| [References Integration Complete](athena/athena-spec/REFERENCES-INTEGRATION-COMPLETE.md) | All 15 packages integrated |
+| [References Integration Complete](athena/athena-spec/REFERENCES-INTEGRATION-COMPLETE.md) | All 15 packages spec-integrated |
+| [Spec vs Code Status](athena/athena-spec/SPEC-VS-CODE-STATUS.md) | Spec integration vs code implementation |
+| [ADRs](athena/athena-spec/adrs/) | Architecture decision records |
+| [Decision Log](athena/athena-spec/decision-log/) | Delivery and process decisions |
 | [Athena Handbook](athena/athena-docs/handbook/) | Operator volumes (Package 15) |
-| [Requirements backlog](athena/athena-spec/requirements/) | Traceable REQ specs |
-| [Platform Complete](athena/athena-spec/PLATFORM-COMPLETE.md) | Master sign-off checklist |
+| [Requirements backlog](athena/athena-spec/requirements/) | Traceable REQ specs (hybrid layout) |
+| [Platform Complete](athena/athena-spec/PLATFORM-COMPLETE.md) | MVP code sign-off (Phases 0–7) |
 | [Phase 6 Validation](athena/athena-spec/PHASE-6-VALIDATION.md) | Latest phase validation report |
 | [CHANGELOG](CHANGELOG.md) | Release history |
 
-Legacy copy: [`Documents/`](Documents/README.md) (prefer `athena/athena-spec/`).
+Redirect: [`Documents/`](Documents/README.md) → canonical [`athena/athena-spec/`](athena/athena-spec/README.md).
 
 ## Monorepo Layout
 
@@ -136,4 +139,4 @@ pre-commit run --all-files
 
 ## License
 
-MIT (pending formal LICENSE file)
+MIT — see [LICENSE](LICENSE).
