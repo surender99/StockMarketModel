@@ -51,8 +51,25 @@ The Athena Quantitative Research Operating System MVP is **complete**. All phase
 | REQ-SDK-001 | Python SDK (`AthenaClient`) | 5 | ✅ Implemented |
 | REQ-DASH-001 | Streamlit dashboard MVP | 5 | ✅ Implemented |
 | REQ-AI-ASSISTANT-001 | AI research assistant | 6 | ✅ Implemented |
+| REQ-DATA-QUALITY-001 | OHLCV data quality checks | Ref Pkg 03 | ✅ Implemented |
+| REQ-IND-MACD-001 | MACD indicator | Ref Pkg 05 | ✅ Implemented |
+| REQ-IND-RSI-001 | RSI indicator | Ref Pkg 05 | ✅ Implemented |
 
-**Total:** 19 / 19 REQ specs implemented.
+**Total:** 22 / 22 REQ specs implemented.
+
+---
+
+## References Package Integration (01–15)
+
+All References packages integrated into `athena/athena-spec/` — see [REFERENCES-INTEGRATION-COMPLETE.md](REFERENCES-INTEGRATION-COMPLETE.md).
+
+| Packages | Key deliverables |
+|----------|------------------|
+| 01–02 | Governance, architecture, contracts, PluginRegistry |
+| 03–06 | Data platform, market intelligence, indicators (MACD/RSI), pattern stub |
+| 07–11 | Strategy, backtest, portfolio, research, statistics specs |
+| 12–14 | ML lifecycle, AI research scientist, platform ops |
+| 15 | Handbook → `athena-docs/handbook/` |
 
 ---
 
@@ -83,7 +100,7 @@ flowchart TB
 
     subgraph domain["Domain Layer"]
         ENT["Entities / Strategy AST"]
-        IND["Indicators EMA/SMA"]
+        IND["Indicators EMA/SMA/MACD/RSI"]
         PORTS["Ports"]
     end
 

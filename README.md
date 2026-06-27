@@ -69,7 +69,9 @@ Specifications live in [`athena/athena-spec/`](athena/athena-spec/README.md):
 | [ATH-003 Repository Architecture](athena/athena-spec/ATH-003-Repository-Architecture.md) | Monorepo layout |
 | [Governance (AES)](athena/athena-spec/governance/) | Constitution, execution plan, quant & AI standards |
 | [Definition of Done](athena/athena-spec/checklists/Definition-of-Done.md) | Deliverable checklist |
-| [References Index](athena/athena-spec/REFERENCES-INDEX.md) | Package integration status (01 ✅, 02–15 pending) |
+| [References Index](athena/athena-spec/REFERENCES-INDEX.md) | Package integration status (01–15 ✅) |
+| [References Integration Complete](athena/athena-spec/REFERENCES-INTEGRATION-COMPLETE.md) | All 15 packages integrated |
+| [Athena Handbook](athena/athena-docs/handbook/) | Operator volumes (Package 15) |
 | [Requirements backlog](athena/athena-spec/requirements/) | Traceable REQ specs |
 | [Platform Complete](athena/athena-spec/PLATFORM-COMPLETE.md) | Master sign-off checklist |
 | [Phase 6 Validation](athena/athena-spec/PHASE-6-VALIDATION.md) | Latest phase validation report |
@@ -87,7 +89,8 @@ athena/
 ├── athena-sdk/        # Python SDK (AthenaClient)
 ├── athena-cli/        # Unified CLI (`athena`, `athena research`)
 ├── athena-dashboard/  # Streamlit MVP dashboard
-└── athena-examples/   # Example strategies and config YAML
+├── athena-examples/   # Example strategies and configs
+└── athena-docs/       # Handbook and documentation (Package 15)
 ```
 
 ## Phase Roadmap

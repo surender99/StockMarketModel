@@ -16,9 +16,10 @@ Start reading in this order:
 10. [requirements/](requirements/) — traceable REQ backlog
 11. [checklists/Definition-of-Done.md](checklists/Definition-of-Done.md)
 12. [templates/](templates/) — ADR, RFC, Requirement templates
-13. [REFERENCES-INDEX.md](REFERENCES-INDEX.md) — References package integration status
-14. [PHASE-0-VALIDATION.md](PHASE-0-VALIDATION.md) — Phase 0 master validation
-15. [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) — **Platform sign-off (Phases 0–7)**
+13. [REFERENCES-INDEX.md](REFERENCES-INDEX.md) — References package integration status (01–15 ✅)
+14. [REFERENCES-INTEGRATION-COMPLETE.md](REFERENCES-INTEGRATION-COMPLETE.md) — master integration sign-off
+15. [PHASE-0-VALIDATION.md](PHASE-0-VALIDATION.md) — Phase 0 master validation
+16. [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) — **Platform sign-off (Phases 0–7)**
 
 The specification is the single source of truth for implementation by both humans and AI coding agents.
 
