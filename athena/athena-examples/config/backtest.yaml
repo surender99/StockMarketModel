@@ -89,3 +89,15 @@ data_ingest:
 feature_store:
   base_path: ./data/features
   data_version: v1
+
+profiles:
+  local:
+    data_ingest:
+      base_path: ./data/ohlcv
+    feature_store:
+      base_path: ./data/features
+  paper:
+    backtest:
+      initial_capital: 500000
+    experiment_tracking:
+      base_path: ./experiments/paper

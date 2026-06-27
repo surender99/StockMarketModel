@@ -1,5 +1,31 @@
 # athena-cli
 
-**Placeholder** — Future command-line interface wrapping athena-core use cases.
+Polished command-line interface for Athena — **REQ-CLI-001**.
 
-A minimal CLI stub exists in `athena-core/src/athena_core/interfaces/cli.py` until this package is implemented.
+## Install
+
+```bash
+cd athena/athena-core && pip install -e ".[dev]"
+cd ../athena-sdk && pip install -e ".[dev]"
+cd ../athena-cli && pip install -e ".[dev]"
+```
+
+## Usage
+
+```bash
+# List config profiles
+athena profiles --config ../athena-examples/config/backtest.yaml
+
+# Scan with profile overlay
+athena scan --strategy ../athena-examples/config/ema_crossover.yaml \
+  --as-of 2024-06-01 --config ../athena-examples/config/backtest.yaml \
+  --profile paper --output scan.json
+
+# Compare experiments as table
+athena compare-experiments --latest 3 \
+  --config ../athena-examples/config/backtest.yaml --output-format table
+```
+
+Global flags: `--config`, `--profile`, `--output-format json|table`, `-v`.
+
+Legacy entrypoint `athena-core` remains available in the core package.

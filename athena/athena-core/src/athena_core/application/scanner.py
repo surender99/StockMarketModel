@@ -37,6 +37,7 @@ class ScanCandidate:
     ml_probability: float | None = None
     ml_confidence: float | None = None
     ml_rationale: str | None = None
+    ml_attributions: list[dict[str, Any]] | None = None
 
 
 @dataclass(frozen=True)
@@ -109,6 +110,7 @@ class DailyScanner:
             ml_probability: float | None = None
             ml_confidence: float | None = None
             ml_rationale: str | None = None
+            ml_attributions: list[dict[str, Any]] | None = None
 
             if has_signal and self._config.use_ml_scorer and self._ml_scorer is not None:
                 feat = MLSignalScorer.features_from_scanner_scores(
@@ -124,6 +126,16 @@ class DailyScanner:
                 if self._explainer is not None:
                     explanation = self._explainer.explain(self._ml_scorer, feat)
                     ml_rationale = explanation.rationale
+                    if explanation.attributions:
+                        ml_attributions = [
+                            {
+                                "feature": attr.feature,
+                                "label": attr.label,
+                                "shap_value": round(attr.shap_value, 6),
+                                "feature_value": round(attr.feature_value, 4),
+                            }
+                            for attr in explanation.attributions
+                        ]
             else:
                 signal_score = 1.0 if has_signal else 0.0
             composite = (
@@ -156,6 +168,7 @@ class DailyScanner:
                     ml_probability=ml_probability,
                     ml_confidence=ml_confidence,
                     ml_rationale=ml_rationale,
+                    ml_attributions=ml_attributions,
                 )
             )
 
@@ -346,24 +359,30 @@ class DailyScanner:
 
     def candidates_to_dict(self, result: ScanResult) -> dict[str, Any]:
         """Serialize scan result for CLI/JSON output."""
-        return {
-            "as_of": result.as_of.isoformat(),
-            "scanned_count": result.scanned_count,
-            "filtered_count": result.filtered_count,
-            "candidates": [
-                {
-                    "symbol": c.symbol,
-                    "score": c.score,
-                    "reasons": c.reasons,
-                    "breakout_score": c.breakout_score,
-                    "rs_score": c.rs_score,
-                    "momentum_score": c.momentum_score,
-                    "signal_score": c.signal_score,
-                    "has_entry_signal": c.has_entry_signal,
-                    "ml_probability": c.ml_probability,
-                    "ml_confidence": c.ml_confidence,
-                    "ml_rationale": c.ml_rationale,
-                }
-                for c in result.candidates
-            ],
-        }
+        return scan_result_to_dict(result)
+
+
+def scan_result_to_dict(result: ScanResult) -> dict[str, Any]:
+    """Serialize scan result for CLI, SDK, and dashboard."""
+    return {
+        "as_of": result.as_of.isoformat(),
+        "scanned_count": result.scanned_count,
+        "filtered_count": result.filtered_count,
+        "candidates": [
+            {
+                "symbol": c.symbol,
+                "score": c.score,
+                "reasons": c.reasons,
+                "breakout_score": c.breakout_score,
+                "rs_score": c.rs_score,
+                "momentum_score": c.momentum_score,
+                "signal_score": c.signal_score,
+                "has_entry_signal": c.has_entry_signal,
+                "ml_probability": c.ml_probability,
+                "ml_confidence": c.ml_confidence,
+                "ml_rationale": c.ml_rationale,
+                "ml_attributions": c.ml_attributions,
+            }
+            for c in result.candidates
+        ],
+    }
