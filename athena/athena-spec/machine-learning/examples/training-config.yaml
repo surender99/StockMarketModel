@@ -1,0 +1,3 @@
+target: next_10d_return
+validation: walk_forward
+probability_threshold: 0.7

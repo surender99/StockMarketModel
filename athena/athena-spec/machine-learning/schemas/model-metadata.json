@@ -1,0 +1,1 @@
+{"title":"ModelMetadata","type":"object","properties":{"model_name":{"type":"string"},"version":{"type":"string"},"dataset_version":{"type":"string"}}}
