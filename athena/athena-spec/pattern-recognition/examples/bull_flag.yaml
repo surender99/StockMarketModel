@@ -1,0 +1,3 @@
+pattern: bull_flag
+min_pole_pct: 5
+max_pullback_pct: 50
