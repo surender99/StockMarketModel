@@ -1,0 +1,4 @@
+initial_capital: 1000000
+commission: 0.0003
+slippage: 0.0005
+benchmark: NIFTY500

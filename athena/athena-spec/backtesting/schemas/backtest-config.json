@@ -1,0 +1,9 @@
+{
+ "title":"BacktestConfig",
+ "type":"object",
+ "properties":{
+   "initial_capital":{"type":"number"},
+   "commission":{"type":"number"},
+   "slippage":{"type":"number"}
+ }
+}

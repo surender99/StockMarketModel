@@ -1,0 +1,13 @@
+Required Metrics
+- CAGR
+- Profit Factor
+- Win Rate
+- Expectancy
+- Max Drawdown
+- Sharpe
+- Sortino
+- Calmar
+- Recovery Factor
+- Exposure
+- Average Trade
+- Equity Curve
