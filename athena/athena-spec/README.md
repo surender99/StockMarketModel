@@ -9,14 +9,16 @@ Start reading in this order:
 3. [ATH-001-MVP-Scope.md](ATH-001-MVP-Scope.md)
 4. [ATH-002-Engineering-Standards.md](ATH-002-Engineering-Standards.md)
 5. [ATH-003-Repository-Architecture.md](ATH-003-Repository-Architecture.md)
-6. [ATH-004-Requirement-Standard.md](ATH-004-Requirement-Standard.md)
-7. [governance/](governance/) — AES constitution, execution plan, quant & AI standards
-8. [requirements/](requirements/) — traceable REQ backlog
-9. [checklists/Definition-of-Done.md](checklists/Definition-of-Done.md)
-10. [templates/](templates/) — ADR, RFC, Requirement templates
-11. [REFERENCES-INDEX.md](REFERENCES-INDEX.md) — References package integration status
-12. [PHASE-0-VALIDATION.md](PHASE-0-VALIDATION.md) — Phase 0 master validation
-13. [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) — **Platform sign-off (Phases 0–7)**
+6. [architecture/](architecture/) — AES-0200–0203 system, clean, plugin, repo structure
+7. [contracts/](contracts/) — IndicatorProvider, StrategyProvider
+8. [ATH-004-Requirement-Standard.md](ATH-004-Requirement-Standard.md)
+9. [governance/](governance/) — AES constitution, execution plan, quant & AI standards
+10. [requirements/](requirements/) — traceable REQ backlog
+11. [checklists/Definition-of-Done.md](checklists/Definition-of-Done.md)
+12. [templates/](templates/) — ADR, RFC, Requirement templates
+13. [REFERENCES-INDEX.md](REFERENCES-INDEX.md) — References package integration status
+14. [PHASE-0-VALIDATION.md](PHASE-0-VALIDATION.md) — Phase 0 master validation
+15. [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) — **Platform sign-off (Phases 0–7)**
 
 The specification is the single source of truth for implementation by both humans and AI coding agents.
 
