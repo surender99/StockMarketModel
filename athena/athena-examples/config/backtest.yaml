@@ -14,6 +14,44 @@ backtest:
 experiment_tracking:
   base_path: ./experiments
   auto_capture_git: true
+  compare_metrics:
+    - total_return
+    - cagr
+    - max_drawdown
+    - sharpe
+    - win_rate
+    - trade_count
+
+regime:
+  benchmark_symbol: ^NSEI
+  ema_fast_period: 50
+  ema_slow_period: 200
+  adx_period: 14
+  adx_sideways_threshold: 20
+  atr_period: 14
+  rolling_vol_window: 20
+  vol_high_percentile: 0.75
+  vol_lookback_days: 252
+
+scanner:
+  top_n: 20
+  min_score: 0.0
+  weights:
+    breakout: 0.25
+    relative_strength: 0.25
+    momentum: 0.25
+    signal_probability: 0.25
+  breakout_lookback_days: 252
+  momentum_lookback_days: 20
+  rs_lookback_days: 63
+  benchmark_symbol: ^NSEI
+
+walk_forward:
+  train_days: 252
+  test_days: 63
+  step_days: 63
+  mode: rolling
+  min_train_days: 126
 
 data_ingest:
   base_path: ./data/ohlcv

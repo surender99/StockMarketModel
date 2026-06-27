@@ -1,4 +1,4 @@
-"""Experiment metadata tracking — REQ-EXP-TRACK-001."""
+"""Experiment metadata tracking — REQ-EXP-TRACK-001, REQ-EXP-COMPARE-001."""
 
 from __future__ import annotations
 
@@ -6,6 +6,7 @@ import hashlib
 import json
 import platform
 import subprocess
+import uuid
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -92,7 +93,7 @@ class ExperimentTracker:
             ).encode()
         ).hexdigest()[:8]
         stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%S%f")
-        experiment_id = f"{stamp}_{strategy.strategy.id}_{short_hash}"
+        experiment_id = f"{stamp}_{strategy.strategy.id}_{short_hash}_{uuid.uuid4().hex[:6]}"
 
         record = ExperimentRecord(
             experiment_id=experiment_id,
@@ -134,6 +135,67 @@ class ExperimentTracker:
             raw = json.loads(path.read_text(encoding="utf-8"))
             records.append(ExperimentRecord.model_validate(raw))
         return records
+
+    def load_record(self, experiment_id: str) -> ExperimentRecord:
+        """Load a single experiment by ID — REQ-EXP-COMPARE-001."""
+        path = self._base / f"{experiment_id}.json"
+        if not path.is_file():
+            msg = f"experiment not found: {experiment_id}"
+            raise FileNotFoundError(msg)
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        return ExperimentRecord.model_validate(raw)
+
+    def load_latest(self, count: int) -> list[ExperimentRecord]:
+        """Load most recent experiments from index — REQ-EXP-COMPARE-001."""
+        index_path = self._base / "index.json"
+        if index_path.is_file():
+            entries = json.loads(index_path.read_text(encoding="utf-8"))
+            records: list[ExperimentRecord] = []
+            for entry in entries[:count]:
+                try:
+                    records.append(self.load_record(entry["experiment_id"]))
+                except FileNotFoundError:
+                    log.warning("experiment.index_stale", experiment_id=entry["experiment_id"])
+            if records:
+                return records
+        return self.list_records(limit=count)
+
+    def compare_experiments(
+        self,
+        experiment_ids: list[str] | None = None,
+        *,
+        latest: int | None = None,
+        metric_keys: list[str] | None = None,
+    ) -> dict[str, Any]:
+        """Build side-by-side comparison payload — REQ-EXP-COMPARE-001."""
+        keys = metric_keys or self._config.compare_metrics
+        if latest is not None:
+            records = self.load_latest(latest)
+        elif experiment_ids:
+            records = [self.load_record(eid) for eid in experiment_ids]
+        else:
+            msg = "compare requires experiment_ids or latest"
+            raise ValueError(msg)
+
+        if len(records) < 1:
+            msg = "no experiments to compare"
+            raise ValueError(msg)
+
+        rows: list[dict[str, Any]] = []
+        for record in records:
+            row: dict[str, Any] = {
+                "experiment_id": record.experiment_id,
+                "strategy_id": record.strategy_id,
+                "strategy_version": record.strategy_version,
+                "train_start": record.train_start,
+                "train_end": record.train_end,
+                "created_at": record.created_at,
+            }
+            for key in keys:
+                row[key] = record.metrics.get(key)
+            rows.append(row)
+
+        return {"metric_keys": keys, "experiments": rows}
 
     def _append_index(self, record: ExperimentRecord) -> None:
         index_path = self._base / "index.json"

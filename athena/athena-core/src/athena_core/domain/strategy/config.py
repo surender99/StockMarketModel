@@ -1,10 +1,12 @@
-"""Strategy configuration schema — REQ-STRAT-CONFIG-001."""
+"""Strategy configuration schema — REQ-STRAT-CONFIG-001, REQ-REGIME-001."""
 
 from __future__ import annotations
 
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field, field_validator, model_validator
+
+from athena_core.domain.regime.models import TrendRegime, VolatilityRegime
 
 
 class StrategyMeta(BaseModel):
@@ -65,10 +67,31 @@ class ExitConfig(BaseModel):
 
 
 class FilterSpec(BaseModel):
-    """Pre-entry filter."""
+    """Pre-entry filter — REQ-STRAT-CONFIG-001, REQ-REGIME-001."""
 
     type: str
     params: dict[str, Any] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def validate_regime_filter(self) -> FilterSpec:
+        if self.type != "regime":
+            return self
+        trends = self.params.get("allowed_trends", [])
+        vols = self.params.get("allowed_volatility", [])
+        valid_trends = {r.value for r in TrendRegime}
+        valid_vols = {r.value for r in VolatilityRegime}
+        for trend in trends:
+            if trend not in valid_trends:
+                msg = f"invalid trend in regime filter: {trend}"
+                raise ValueError(msg)
+        for vol in vols:
+            if vol not in valid_vols:
+                msg = f"invalid volatility in regime filter: {vol}"
+                raise ValueError(msg)
+        if not trends and not vols:
+            msg = "regime filter requires allowed_trends and/or allowed_volatility"
+            raise ValueError(msg)
+        return self
 
 
 class PositionSizingConfig(BaseModel):

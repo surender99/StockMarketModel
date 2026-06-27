@@ -12,6 +12,7 @@ import structlog
 from athena_core.application.backtest_config import BacktestConfig
 from athena_core.application.backtest_metrics import compute_benchmark_metrics, compute_metrics
 from athena_core.application.costs import apply_slippage, compute_trade_costs
+from athena_core.application.regime_engine import RegimeEngine
 from athena_core.domain.backtest import OpenPosition, PortfolioState, TradeRecord
 from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
 from athena_core.domain.ports.trading_calendar import TradingCalendarPort
@@ -54,10 +55,12 @@ class BacktestEngine:
         calendar: TradingCalendarPort,
         ohlcv_repo: OHLCVRepositoryPort,
         feature_provider: FeatureProviderPort,
+        regime_engine: RegimeEngine | None = None,
     ) -> None:
         self._calendar = calendar
         self._ohlcv = ohlcv_repo
         self._features = feature_provider
+        self._regime = regime_engine
 
     def run(
         self,
@@ -335,8 +338,7 @@ class BacktestEngine:
             return None
         return int(matches[0])
 
-    @staticmethod
-    def _passes_filters(strategy: StrategyConfig, frame: pd.DataFrame, session: date) -> bool:
+    def _passes_filters(self, strategy: StrategyConfig, frame: pd.DataFrame, session: date) -> bool:
         idx_matches = frame.index[frame["date"] == session].tolist()
         if not idx_matches:
             return False
@@ -348,6 +350,21 @@ class BacktestEngine:
                     return False
                 window = frame["volume"].iloc[max(0, idx - 19) : idx + 1]
                 if window.mean() < min_avg:
+                    return False
+            elif filt.type == "regime":
+                if self._regime is None:
+                    continue
+                state = self._regime.classify_as_of(
+                    self._regime._config.benchmark_symbol,
+                    session,
+                )
+                if state is None:
+                    return False
+                allowed_trends = filt.params.get("allowed_trends", [])
+                allowed_vols = filt.params.get("allowed_volatility", [])
+                if allowed_trends and state.trend.value not in allowed_trends:
+                    return False
+                if allowed_vols and state.volatility.value not in allowed_vols:
                     return False
         return True
 

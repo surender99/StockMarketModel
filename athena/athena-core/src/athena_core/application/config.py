@@ -7,6 +7,9 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 
 from athena_core.application.backtest_config import BacktestSettings, ExperimentTrackingConfig
+from athena_core.application.regime_config import RegimeConfig
+from athena_core.application.scanner_config import ScannerConfig
+from athena_core.application.walk_forward_config import WalkForwardConfig
 
 
 class CalendarConfig(BaseModel):
@@ -57,3 +60,6 @@ class AthenaConfig(BaseModel):
     feature_store: FeatureStoreConfig = Field(default_factory=FeatureStoreConfig)
     backtest: BacktestSettings = Field(default_factory=BacktestSettings)
     experiment_tracking: ExperimentTrackingConfig = Field(default_factory=ExperimentTrackingConfig)
+    regime: RegimeConfig = Field(default_factory=RegimeConfig)
+    scanner: ScannerConfig = Field(default_factory=ScannerConfig)
+    walk_forward: WalkForwardConfig = Field(default_factory=WalkForwardConfig)

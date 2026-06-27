@@ -36,10 +36,20 @@ class BacktestConfig(BacktestSettings):
 
 
 class ExperimentTrackingConfig(BaseModel):
-    """Experiment persistence settings — REQ-EXP-TRACK-001."""
+    """Experiment persistence settings — REQ-EXP-TRACK-001, REQ-EXP-COMPARE-001."""
 
     base_path: str = "./experiments"
     auto_capture_git: bool = True
+    compare_metrics: list[str] = Field(
+        default_factory=lambda: [
+            "total_return",
+            "cagr",
+            "max_drawdown",
+            "sharpe",
+            "win_rate",
+            "trade_count",
+        ]
+    )
     required_fields: list[str] = Field(
         default_factory=lambda: [
             "strategy_id",
