@@ -1,0 +1,23 @@
+backtest:
+  initial_capital: 1000000
+  currency: INR
+  costs:
+    brokerage_pct: 0.0003
+    brokerage_flat: 20
+    slippage_pct: 0.001
+    stt_pct: 0.001
+    gst_on_brokerage_pct: 0.18
+  benchmark: ^NSEI
+  fill_price: close
+  allow_fractional: false
+
+experiment_tracking:
+  base_path: ./experiments
+  auto_capture_git: true
+
+data_ingest:
+  base_path: ./data/ohlcv
+
+feature_store:
+  base_path: ./data/features
+  data_version: v1

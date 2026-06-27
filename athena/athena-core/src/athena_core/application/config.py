@@ -6,6 +6,8 @@ from pathlib import Path
 
 from pydantic import BaseModel, Field
 
+from athena_core.application.backtest_config import BacktestSettings, ExperimentTrackingConfig
+
 
 class CalendarConfig(BaseModel):
     """REQ-DATA-CALENDAR-001."""
@@ -53,3 +55,5 @@ class AthenaConfig(BaseModel):
     data_ingest: DataIngestConfig = Field(default_factory=DataIngestConfig)
     indicators: IndicatorConfig = Field(default_factory=IndicatorConfig)
     feature_store: FeatureStoreConfig = Field(default_factory=FeatureStoreConfig)
+    backtest: BacktestSettings = Field(default_factory=BacktestSettings)
+    experiment_tracking: ExperimentTrackingConfig = Field(default_factory=ExperimentTrackingConfig)
