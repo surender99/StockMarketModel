@@ -5,7 +5,6 @@ from __future__ import annotations
 import math
 from datetime import date
 
-import numpy as np
 import pandas as pd
 
 from athena_core.domain.backtest import TradeRecord

@@ -43,15 +43,42 @@ jobs:
           cd athena/athena-core
           python -m pytest --cov=athena_core --cov-report=term-missing -q
 
-      - name: Lint (ruff, all packages)
+      - name: Lint (ruff check, all packages)
         run: |
           for pkg in athena-core athena-sdk athena-ai athena-cli athena-dashboard; do
-            echo "ruff: $pkg"
+            echo "ruff check: $pkg"
             (cd "athena/$pkg" && ruff check src tests)
           done
 
+      - name: Format check (ruff format, all packages)
+        run: |
+          for pkg in athena-core athena-sdk athena-ai athena-cli athena-dashboard; do
+            echo "ruff format: $pkg"
+            (cd "athena/$pkg" && ruff format --check src tests)
+          done
+
       - name: Type check (mypy, athena-core)
-        continue-on-error: true
         run: |
           cd athena/athena-core
           python -m mypy
+
+  benchmark:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install athena-core
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e "athena/athena-core[dev]"
+
+      - name: Run performance benchmarks
+        run: |
+          cd athena/athena-core
+          python -m pytest -m benchmark -v

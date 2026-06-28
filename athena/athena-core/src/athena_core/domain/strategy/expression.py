@@ -109,9 +109,9 @@ def _eval_node(node: ast.AST, env: dict[str, Any]) -> Any:
         left = _eval_node(node.left, env)
         for op, comparator in zip(node.ops, node.comparators, strict=True):
             right = _eval_node(comparator, env)
-            if isinstance(op, ast.Eq) and not left == right:
+            if isinstance(op, ast.Eq) and left != right:
                 return False
-            if isinstance(op, ast.NotEq) and not left != right:
+            if isinstance(op, ast.NotEq) and left == right:
                 return False
             if isinstance(op, ast.Lt) and not left < right:
                 return False
@@ -127,7 +127,7 @@ def _eval_node(node: ast.AST, env: dict[str, Any]) -> Any:
         assert isinstance(node.func, ast.Attribute)
         assert isinstance(node.func.value, ast.Name)
         name = node.func.value.id
-        lag = int(node.args[0].value)  # type: ignore[arg-type]
+        lag = int(node.args[0].value)  # type: ignore[attr-defined]
         series = env[name]
         if not isinstance(series, pd.Series):
             msg = f"{name} is not a series in expression context"

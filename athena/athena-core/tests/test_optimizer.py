@@ -154,7 +154,9 @@ def test_optimizer_random_search_respects_max_trials() -> None:
             max_trials=5,
             random_seed=1,
             parameters=[
-                ParameterSpec(path="risk.stop_loss_pct", type="float", min=0.03, max=0.1, step=0.01),
+                ParameterSpec(
+                    path="risk.stop_loss_pct", type="float", min=0.03, max=0.1, step=0.01
+                ),
             ],
         ),
     )

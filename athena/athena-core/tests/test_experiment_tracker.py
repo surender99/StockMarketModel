@@ -40,7 +40,9 @@ def _strategy() -> StrategyConfig:
 def _result() -> BacktestResult:
     return BacktestResult(
         trades=[],
-        equity_curve=pd.DataFrame({"date": [date(2024, 1, 2)], "equity": [1_000_000.0], "cash": [1_000_000.0]}),
+        equity_curve=pd.DataFrame(
+            {"date": [date(2024, 1, 2)], "equity": [1_000_000.0], "cash": [1_000_000.0]}
+        ),
         metrics={"total_return": 0.0, "trade_count": 0},
         benchmark_metrics={"benchmark_total_return": 0.0},
     )
@@ -63,7 +65,9 @@ def test_record_serialization(tmp_path: Path) -> None:
 
 
 def test_git_commit_null_when_unavailable(tmp_path: Path) -> None:
-    tracker = ExperimentTracker(ExperimentTrackingConfig(base_path=str(tmp_path), auto_capture_git=False))
+    tracker = ExperimentTracker(
+        ExperimentTrackingConfig(base_path=str(tmp_path), auto_capture_git=False)
+    )
     record = tracker.create_record(
         _strategy(),
         BacktestConfig(start=date(2024, 1, 1), end=date(2024, 6, 1)),

@@ -9,7 +9,7 @@ import pandas as pd
 
 from athena_core.application.backtest_engine import FeatureProviderPort
 from athena_core.application.explainability import ShapExplainer
-from athena_core.application.ml_scorer import MLSignalScorer, TrainingSample, SignalFeatures
+from athena_core.application.ml_scorer import MLSignalScorer, SignalFeatures, TrainingSample
 from athena_core.application.scanner import DailyScanner
 from athena_core.application.scanner_config import ScannerConfig
 from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
@@ -99,7 +99,9 @@ def test_scanner_ranks_higher_momentum_first() -> None:
     scanner = DailyScanner(
         _Repo({"^NSEI": bench, "STRONG": strong, "WEAK": weak}),
         _Features(),
-        ScannerConfig(top_n=2, breakout_lookback_days=60, rs_lookback_days=20, momentum_lookback_days=20),
+        ScannerConfig(
+            top_n=2, breakout_lookback_days=60, rs_lookback_days=20, momentum_lookback_days=20
+        ),
     )
     result = scanner.scan(_strategy(), ["STRONG", "WEAK"], as_of)
     assert len(result.candidates) == 2

@@ -12,9 +12,9 @@ repos:
     hooks:
       - id: ruff
         args: [--fix]
-        files: ^athena/athena-core/
+        files: ^athena/(athena-core|athena-sdk|athena-ai|athena-cli|athena-dashboard)/
       - id: ruff-format
-        files: ^athena/athena-core/
+        files: ^athena/(athena-core|athena-sdk|athena-ai|athena-cli|athena-dashboard)/
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.16.0

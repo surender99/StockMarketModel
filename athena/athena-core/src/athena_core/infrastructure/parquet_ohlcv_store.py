@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
 import os
 import tempfile
-from datetime import date
+from datetime import UTC, date, datetime
 from pathlib import Path
+from typing import Any
 
 import pandas as pd
 
@@ -16,7 +19,7 @@ _SCHEMA = ["date", "open", "high", "low", "close", "volume", "symbol"]
 
 
 class ParquetOHLCVStore(OHLCVRepositoryPort):
-    """Local Parquet-backed OHLCV repository with atomic writes."""
+    """Local Parquet-backed OHLCV repository with atomic writes and metadata sidecar."""
 
     def __init__(self, base_path: Path | str) -> None:
         self._base = Path(base_path)
@@ -26,8 +29,23 @@ class ParquetOHLCVStore(OHLCVRepositoryPort):
         safe = symbol.replace("/", "_")
         return self._base / safe / "bars.parquet"
 
+    def _metadata_path(self, symbol: str) -> Path:
+        return self._path(symbol).with_name("metadata.json")
+
+    @staticmethod
+    def _checksum(df: pd.DataFrame) -> str:
+        payload = df[_SCHEMA].sort_values("date").to_csv(index=False).encode("utf-8")
+        return hashlib.sha256(payload).hexdigest()
+
     def exists(self, symbol: str) -> bool:
         return self._path(symbol).is_file()
+
+    def read_metadata(self, symbol: str) -> dict[str, Any] | None:
+        path = self._metadata_path(symbol)
+        if not path.is_file():
+            return None
+        data: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
+        return data
 
     def read(
         self,
@@ -45,7 +63,14 @@ class ParquetOHLCVStore(OHLCVRepositoryPort):
             df = df[df["date"] <= end]
         return df.reset_index(drop=True)
 
-    def write(self, symbol: str, df: pd.DataFrame) -> int:
+    def write(
+        self,
+        symbol: str,
+        df: pd.DataFrame,
+        *,
+        source: str | None = None,
+        ingestion_timestamp: datetime | None = None,
+    ) -> int:
         validate_ohlcv(df)
         out = df[_SCHEMA].copy()
         path = self._path(symbol)
@@ -65,4 +90,14 @@ class ParquetOHLCVStore(OHLCVRepositoryPort):
         finally:
             if tmp.exists():
                 tmp.unlink(missing_ok=True)
+
+        ts = ingestion_timestamp or datetime.now(UTC)
+        meta = {
+            "symbol": symbol,
+            "row_count": len(out),
+            "checksum_sha256": self._checksum(out),
+            "source": source or "unknown",
+            "ingestion_timestamp": ts.isoformat(),
+        }
+        self._metadata_path(symbol).write_text(json.dumps(meta, indent=2), encoding="utf-8")
         return len(out)

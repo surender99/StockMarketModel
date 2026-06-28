@@ -79,7 +79,9 @@ class WalkForwardValidator:
 
         while True:
             if self._config.mode == "expanding":
-                train_end_idx = train_start_idx + self._config.train_days + fold * self._config.step_days - 1
+                train_end_idx = (
+                    train_start_idx + self._config.train_days + fold * self._config.step_days - 1
+                )
             else:
                 train_end_idx = train_start_idx + self._config.train_days - 1
 

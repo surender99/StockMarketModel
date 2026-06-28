@@ -4,11 +4,11 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 
-class PluginType(str, Enum):
+class PluginType(StrEnum):
     """Registered plugin categories."""
 
     INDICATOR = "indicator"

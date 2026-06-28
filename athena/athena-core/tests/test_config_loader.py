@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from athena_core.application.config_loader import load_athena_config, list_profile_names
+from athena_core.application.config_loader import list_profile_names, load_athena_config
 
 
 def test_load_config_without_profile(tmp_path: Path) -> None:

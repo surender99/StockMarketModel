@@ -42,7 +42,9 @@ def pandas_ta_rsi(series: pd.Series, period: int) -> pd.Series | None:
     return ta.rsi(series, length=period)
 
 
-def pandas_ta_macd(series: pd.Series, fast: int = 12, slow: int = 26, signal: int = 9) -> pd.DataFrame | None:
+def pandas_ta_macd(
+    series: pd.Series, fast: int = 12, slow: int = 26, signal: int = 9
+) -> pd.DataFrame | None:
     """Return pandas-ta MACD when the library is installed."""
     try:
         import pandas_ta as ta

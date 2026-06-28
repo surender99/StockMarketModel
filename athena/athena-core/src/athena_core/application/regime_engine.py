@@ -8,9 +8,9 @@ import pandas as pd
 import structlog
 
 from athena_core.application.regime_config import RegimeConfig
+from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
 from athena_core.domain.regime.indicators import compute_regime_features
 from athena_core.domain.regime.models import RegimeState, TrendRegime, VolatilityRegime
-from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
 
 log = structlog.get_logger(__name__)
 
@@ -35,7 +35,9 @@ class RegimeEngine:
         """Return date-indexed regime labels using data ≤ each row's date."""
         ohlcv = self._ohlcv.read(symbol, start=start, end=end)
         if ohlcv.empty:
-            return pd.DataFrame(columns=["date", "trend", "volatility", "adx", "atr_pct", "rolling_vol"])
+            return pd.DataFrame(
+                columns=["date", "trend", "volatility", "adx", "atr_pct", "rolling_vol"]
+            )
 
         features = compute_regime_features(
             ohlcv,

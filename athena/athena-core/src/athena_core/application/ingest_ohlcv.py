@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 
 import structlog
 
@@ -62,13 +62,18 @@ class IngestOHLCVUseCase:
         validate_ohlcv(df)
         if df.empty:
             raise EmptyDataError(ticker, start, end, "no rows after normalization")
-        row_count = self._repo.write(ticker, df)
+        row_count = self._repo.write(
+            ticker,
+            df,
+            source=self._config.source,
+            ingestion_timestamp=datetime.now(UTC),
+        )
         result = IngestResult(
             symbol=ticker,
             start=start,
             end=end,
             row_count=row_count,
-            timestamp=datetime.now(timezone.utc),
+            timestamp=datetime.now(UTC),
             source=self._config.source,
         )
         log.info(

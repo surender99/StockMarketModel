@@ -93,7 +93,9 @@ def test_volatility_high_on_spike() -> None:
 
 
 def test_regime_filter_validation() -> None:
-    filt = FilterSpec(type="regime", params={"allowed_trends": ["bull"], "allowed_volatility": ["low"]})
+    filt = FilterSpec(
+        type="regime", params={"allowed_trends": ["bull"], "allowed_volatility": ["low"]}
+    )
     assert filt.type == "regime"
 
 

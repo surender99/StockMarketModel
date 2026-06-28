@@ -39,7 +39,9 @@ def _strategy() -> StrategyConfig:
 def _result(metrics: dict) -> BacktestResult:
     return BacktestResult(
         trades=[],
-        equity_curve=pd.DataFrame({"date": [date(2024, 1, 2)], "equity": [1_000_000.0], "cash": [1_000_000.0]}),
+        equity_curve=pd.DataFrame(
+            {"date": [date(2024, 1, 2)], "equity": [1_000_000.0], "cash": [1_000_000.0]}
+        ),
         metrics=metrics,
         benchmark_metrics={},
     )
@@ -49,10 +51,18 @@ def test_compare_two_experiments(tmp_path: Path) -> None:
     tracker = ExperimentTracker(ExperimentTrackingConfig(base_path=str(tmp_path)))
     bt = BacktestConfig(start=date(2024, 1, 1), end=date(2024, 6, 1))
     r1 = tracker.create_record(
-        _strategy(), bt, _result({"total_return": 0.1, "trade_count": 5}), dataset_version="v1", git_commit="a"
+        _strategy(),
+        bt,
+        _result({"total_return": 0.1, "trade_count": 5}),
+        dataset_version="v1",
+        git_commit="a",
     )
     r2 = tracker.create_record(
-        _strategy(), bt, _result({"total_return": 0.2, "trade_count": 8}), dataset_version="v1", git_commit="b"
+        _strategy(),
+        bt,
+        _result({"total_return": 0.2, "trade_count": 8}),
+        dataset_version="v1",
+        git_commit="b",
     )
     tracker.save(r1)
     tracker.save(r2)

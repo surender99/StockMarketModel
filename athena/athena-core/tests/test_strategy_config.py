@@ -23,7 +23,10 @@ MINIMAL = {
     "indicators": [{"id": "ema_fast", "type": "ema", "params": {"period": 9}}],
     "entry": {"rules": [{"condition": "ema_fast > 0", "side": "long"}]},
     "exit": {"rules": [{"condition": "ema_fast < 0", "reason": "x"}]},
-    "position_sizing": {"method": "fixed_fraction", "params": {"fraction": 0.1, "max_positions": 5}},
+    "position_sizing": {
+        "method": "fixed_fraction",
+        "params": {"fraction": 0.1, "max_positions": 5},
+    },
 }
 
 
@@ -49,7 +52,10 @@ def test_missing_entry_fails() -> None:
 
 def test_invalid_position_sizing_fraction() -> None:
     bad = dict(MINIMAL)
-    bad["position_sizing"] = {"method": "fixed_fraction", "params": {"fraction": 1.5, "max_positions": 1}}
+    bad["position_sizing"] = {
+        "method": "fixed_fraction",
+        "params": {"fraction": 1.5, "max_positions": 1},
+    }
     with pytest.raises(ValidationError):
         StrategyConfig.model_validate(bad)
 

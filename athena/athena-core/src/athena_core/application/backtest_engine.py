@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import date, timedelta
-from typing import Any
+from datetime import date
+from typing import Any, cast
 
 import pandas as pd
 import structlog
@@ -12,8 +12,12 @@ import structlog
 from athena_core.application.backtest_config import BacktestConfig
 from athena_core.application.backtest_metrics import compute_benchmark_metrics, compute_metrics
 from athena_core.application.costs import apply_slippage, compute_trade_costs
+from athena_core.application.portfolio_engine import PortfolioEngine
 from athena_core.application.regime_engine import RegimeEngine
-from athena_core.domain.backtest import OpenPosition, PortfolioState, TradeRecord
+from athena_core.application.statistics_engine import StatisticsEngine
+from athena_core.domain.backtest import TradeRecord
+from athena_core.domain.portfolio import PortfolioEvaluation, PortfolioState
+from athena_core.domain.portfolio.positions import OpenPosition
 from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
 from athena_core.domain.ports.trading_calendar import TradingCalendarPort
 from athena_core.domain.strategy.config import StrategyConfig
@@ -31,6 +35,8 @@ class BacktestResult:
     equity_curve: pd.DataFrame
     metrics: dict[str, Any]
     benchmark_metrics: dict[str, Any]
+    portfolio_evaluation: PortfolioEvaluation | None = None
+    statistics_report: dict[str, Any] | None = None
 
 
 class FeatureProviderPort:
@@ -116,7 +122,11 @@ class BacktestEngine:
         if portfolio.positions and trading_days:
             last_day = trading_days[-1]
             marks = {
-                sym: float(symbol_frames[sym].loc[symbol_frames[sym]["date"] == last_day, config.fill_price].iloc[0])
+                sym: float(
+                    symbol_frames[sym]
+                    .loc[symbol_frames[sym]["date"] == last_day, config.fill_price]
+                    .iloc[0]
+                )
                 for sym in list(portfolio.positions)
                 if sym in symbol_frames
                 and not symbol_frames[sym].loc[symbol_frames[sym]["date"] == last_day].empty
@@ -136,7 +146,7 @@ class BacktestEngine:
                 equity_rows[-1]["cash"] = portfolio.cash
 
         equity_curve = pd.DataFrame(equity_rows)
-        metrics = compute_metrics(
+        metrics: dict[str, Any] = compute_metrics(
             equity_curve,
             trades,
             initial_capital=config.initial_capital,
@@ -145,11 +155,29 @@ class BacktestEngine:
         metrics.update(benchmark_metrics)
         metrics["dataset_version"] = dataset_version
 
+        final_marks = self._final_marks(symbol_frames, portfolio, trading_days, config)
+        portfolio_eval = PortfolioEngine().evaluate(portfolio, final_marks)
+        stats_engine = StatisticsEngine()
+        perf = stats_engine.compute_performance(
+            equity_curve, trades, initial_capital=config.initial_capital
+        )
+        bootstrap = stats_engine.bootstrap_sharpe(equity_curve)
+        statistics_report = stats_engine.to_report_dict(perf, bootstrap)
+        metrics.update(
+            {
+                "expectancy": statistics_report.get("expectancy"),
+                "portfolio_heat": portfolio_eval.metrics.portfolio_heat,
+                "gross_exposure": portfolio_eval.metrics.gross_exposure,
+            }
+        )
+
         return BacktestResult(
             trades=trades,
             equity_curve=equity_curve,
             metrics=metrics,
             benchmark_metrics=benchmark_metrics,
+            portfolio_evaluation=portfolio_eval,
+            statistics_report=statistics_report,
         )
 
     def _build_symbol_frames(
@@ -188,7 +216,7 @@ class BacktestEngine:
         matches = frame.index[frame["date"] == session]
         if len(matches) == 0:
             return None
-        return frame.loc[matches[0]]
+        return cast(pd.Series, frame.loc[matches[0]])
 
     def _process_exits(
         self,
@@ -213,11 +241,19 @@ class BacktestEngine:
 
             exit_reason: str | None = force_reason
             bar = frame.iloc[idx]
-            close_price = float(bar[config.fill_price])
+            float(bar[config.fill_price])
 
-            if exit_reason is None and position.stop_price is not None and bar["low"] <= position.stop_price:
+            if (
+                exit_reason is None
+                and position.stop_price is not None
+                and bar["low"] <= position.stop_price
+            ):
                 exit_reason = "stop_loss"
-            elif exit_reason is None and position.target_price is not None and bar["high"] >= position.target_price:
+            elif (
+                exit_reason is None
+                and position.target_price is not None
+                and bar["high"] >= position.target_price
+            ):
                 exit_reason = "take_profit"
             elif exit_reason is None and strategy.risk.max_holding_days is not None:
                 held = (session - position.entry_date).days
@@ -225,7 +261,9 @@ class BacktestEngine:
                     exit_reason = "max_holding_days"
 
             if exit_reason is None:
-                indicator_map = {spec.id: indicator_column_name(spec) for spec in strategy.indicators}
+                indicator_map = {
+                    spec.id: indicator_column_name(spec) for spec in strategy.indicators
+                }
                 for rule in strategy.exit.rules:
                     if evaluate_condition_at_index(rule.condition, frame, indicator_map, idx):
                         exit_reason = rule.reason
@@ -392,6 +430,27 @@ class BacktestEngine:
             amount = float(params.get("amount", 0))
             return int(amount / price)
         return 0
+
+    @staticmethod
+    def _final_marks(
+        symbol_frames: dict[str, pd.DataFrame],
+        portfolio: PortfolioState,
+        trading_days: list[date],
+        config: BacktestConfig,
+    ) -> dict[str, float]:
+        if not trading_days:
+            return {}
+        last_day = trading_days[-1]
+        marks: dict[str, float] = {}
+        symbols = set(portfolio.positions) | set(symbol_frames)
+        for sym in symbols:
+            frame = symbol_frames.get(sym)
+            if frame is None:
+                continue
+            rows = frame.loc[frame["date"] == last_day]
+            if not rows.empty:
+                marks[sym] = float(rows.iloc[0][config.fill_price])
+        return marks
 
     def _benchmark_metrics(self, config: BacktestConfig) -> dict[str, Any]:
         benchmark = self._ohlcv.read(config.benchmark, start=config.start, end=config.end)

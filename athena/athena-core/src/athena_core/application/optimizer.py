@@ -23,7 +23,7 @@ try:
 
     _OPTUNA_AVAILABLE = True
 except ImportError:  # pragma: no cover - exercised via fallback path in tests without optuna
-    optuna = None  # type: ignore[assignment,misc]
+    optuna = None  # type: ignore[assignment]
     _OPTUNA_AVAILABLE = False
 
 OBJECTIVE_DIRECTION: dict[str, str] = {
@@ -78,11 +78,7 @@ class StrategyOptimizer:
         end: date | None = None,
     ) -> OptimizerResult:
         """Evaluate parameter combinations and return ranked trials."""
-        if (
-            self._config.method == "bayesian"
-            and self._config.use_optuna
-            and _OPTUNA_AVAILABLE
-        ):
+        if self._config.method == "bayesian" and self._config.use_optuna and _OPTUNA_AVAILABLE:
             return self._run_optuna(
                 strategy,
                 backtest,
@@ -268,14 +264,14 @@ class StrategyOptimizer:
             return list(spec.values)
         assert spec.min is not None and spec.max is not None
         if spec.type == "int":
-            step = int(spec.step or 1)
-            return list(range(int(spec.min), int(spec.max) + 1, step))
-        step = spec.step or (spec.max - spec.min) / 10.0
+            int_step = int(spec.step or 1)
+            return list(range(int(spec.min), int(spec.max) + 1, int_step))
+        float_step: float = float(spec.step) if spec.step is not None else (spec.max - spec.min) / 10.0
         values: list[float] = []
-        current = spec.min
+        current: float = float(spec.min)
         while current <= spec.max + 1e-9:
             values.append(round(current, 6))
-            current += step
+            current += float_step
         return values or [spec.min]
 
     def _composite_score(self, metrics: dict[str, Any]) -> float:

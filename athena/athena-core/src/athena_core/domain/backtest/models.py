@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date
 from typing import Literal
+
+from athena_core.domain.portfolio import OpenPosition, PortfolioState
+
+__all__ = ["OpenPosition", "PortfolioState", "TradeRecord"]
 
 
 @dataclass(frozen=True)
@@ -23,34 +27,3 @@ class TradeRecord:
     gross_pnl: float
     net_pnl: float
     exit_reason: str
-
-
-@dataclass
-class OpenPosition:
-    """Active position during simulation."""
-
-    symbol: str
-    side: Literal["long"]
-    entry_date: date
-    entry_price: float
-    quantity: int
-    entry_fees: float
-    stop_price: float | None = None
-    target_price: float | None = None
-
-
-@dataclass
-class PortfolioState:
-    """Mutable portfolio snapshot."""
-
-    cash: float
-    positions: dict[str, OpenPosition] = field(default_factory=dict)
-
-    def position_count(self) -> int:
-        return len(self.positions)
-
-    def equity(self, marks: dict[str, float]) -> float:
-        mtm = sum(
-            pos.quantity * marks.get(sym, pos.entry_price) for sym, pos in self.positions.items()
-        )
-        return self.cash + mtm

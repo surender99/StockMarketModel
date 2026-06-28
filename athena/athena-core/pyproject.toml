@@ -46,9 +46,10 @@ packages = ["src/athena_core"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
-addopts = "-ra -m 'not integration'"
+addopts = "-ra -m 'not integration and not benchmark'"
 markers = [
     "integration: live network tests (yfinance)",
+    "benchmark: performance benchmark tests (optional in CI)",
 ]
 
 [tool.ruff]
@@ -58,7 +59,7 @@ src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
-ignore = ["B008"]
+ignore = ["B008", "E501"]
 
 [tool.mypy]
 python_version = "3.11"

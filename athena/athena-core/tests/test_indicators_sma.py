@@ -5,9 +5,9 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 import pytest
+from tests.reference_indicators import pandas_ta_sma, reference_sma
 
 from athena_core.domain.indicators.sma import compute_sma, compute_sma_from_ohlcv
-from tests.reference_indicators import pandas_ta_sma, reference_sma
 
 
 @pytest.fixture

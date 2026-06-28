@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import cast
+
 import numpy as np
 import pandas as pd
 
@@ -47,16 +49,25 @@ def compute_adx(ohlcv: pd.DataFrame, period: int = 14) -> pd.Series:
     ).max(axis=1)
 
     atr = tr.rolling(window=period, min_periods=period).mean()
-    plus_di = 100 * pd.Series(plus_dm, index=ohlcv.index).rolling(period, min_periods=period).sum() / atr
-    minus_di = 100 * pd.Series(minus_dm, index=ohlcv.index).rolling(period, min_periods=period).sum() / atr
+    plus_di = (
+        100 * pd.Series(plus_dm, index=ohlcv.index).rolling(period, min_periods=period).sum() / atr
+    )
+    minus_di = (
+        100 * pd.Series(minus_dm, index=ohlcv.index).rolling(period, min_periods=period).sum() / atr
+    )
     dx = (plus_di - minus_di).abs() / (plus_di + minus_di).replace(0, np.nan) * 100
-    return dx.rolling(window=period, min_periods=period).mean()
+    adx: pd.Series = dx.rolling(window=period, min_periods=period).mean()
+    return adx
 
 
 def compute_rolling_volatility(close: pd.Series, window: int = 20) -> pd.Series:
     """Annualized rolling volatility from log returns — REQ-REGIME-001."""
-    log_ret = np.log(close.astype(float) / close.astype(float).shift(1))
-    return log_ret.rolling(window=window, min_periods=window).std() * np.sqrt(252)
+    log_ret = pd.Series(
+        np.log(close.astype(float) / close.astype(float).shift(1)),
+        index=close.index,
+    )
+    vol = log_ret.rolling(window=window, min_periods=window).std() * np.sqrt(252)
+    return cast(pd.Series, vol)
 
 
 def compute_regime_features(

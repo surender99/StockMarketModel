@@ -6,7 +6,6 @@ from datetime import date, timedelta
 from typing import Any
 
 import pandas as pd
-import pytest
 
 from athena_core.application.backtest_config import BacktestConfig, BacktestCostsConfig
 from athena_core.application.backtest_engine import BacktestEngine, FeatureProviderPort
@@ -114,8 +113,12 @@ def _synthetic_crossover_series() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFr
             "symbol": ["TEST"] * len(dates),
         }
     )
-    ema_fast = pd.DataFrame({"date": dates, "ema_9": [98, 99, 100, 101, 103, 102, 101, 100, 99, 98]})
-    ema_slow = pd.DataFrame({"date": dates, "ema_21": [99, 99, 99, 100, 101, 102, 102, 101, 100, 99]})
+    ema_fast = pd.DataFrame(
+        {"date": dates, "ema_9": [98, 99, 100, 101, 103, 102, 101, 100, 99, 98]}
+    )
+    ema_slow = pd.DataFrame(
+        {"date": dates, "ema_21": [99, 99, 99, 100, 101, 102, 102, 101, 100, 99]}
+    )
     return ohlcv, ema_fast, ema_slow
 
 
@@ -145,7 +148,9 @@ def _strategy(max_positions: int = 1) -> StrategyConfig:
 
 
 def test_cost_calculation_spot_check() -> None:
-    costs = BacktestCostsConfig(brokerage_pct=0.001, brokerage_flat=20, slippage_pct=0.001, stt_pct=0.001)
+    costs = BacktestCostsConfig(
+        brokerage_pct=0.001, brokerage_flat=20, slippage_pct=0.001, stt_pct=0.001
+    )
     fees = compute_trade_costs(100_000, costs, is_sell=True)
     assert fees > 20
     buy_fill = apply_slippage(100.0, costs, is_buy=True)
@@ -262,3 +267,17 @@ def test_lookahead_shifted_signal_not_early() -> None:
     result = engine.run(strategy, config)
     if result.trades:
         assert result.trades[0].entry_date >= dates[3]
+
+
+def test_backtest_portfolio_and_statistics_integration() -> None:
+    """Vertical slice: backtest returns portfolio evaluation and statistics — Rev 2."""
+    ohlcv, fast, slow = _synthetic_crossover_series()
+    repo = _Repo({"TEST": ohlcv, "^NSEI": ohlcv})
+    features = _Features({"TEST:ema:9": fast, "TEST:ema:21": slow})
+    engine = BacktestEngine(_Calendar(), repo, features)
+    config = BacktestConfig(start=date(2024, 1, 2), end=date(2024, 1, 15), initial_capital=100_000)
+    result = engine.run(_strategy(), config)
+    assert result.portfolio_evaluation is not None
+    assert result.statistics_report is not None
+    assert "expectancy" in result.statistics_report
+    assert "portfolio_heat" in result.metrics

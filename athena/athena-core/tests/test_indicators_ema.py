@@ -5,9 +5,9 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 import pytest
+from tests.reference_indicators import pandas_ta_ema, reference_ema
 
 from athena_core.domain.indicators.ema import compute_ema, compute_ema_from_ohlcv
-from tests.reference_indicators import pandas_ta_ema, reference_ema
 
 
 @pytest.fixture

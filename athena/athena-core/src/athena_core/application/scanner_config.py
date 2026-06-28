@@ -24,7 +24,9 @@ class ScannerConfig(BaseModel):
     momentum_lookback_days: int = Field(default=20, ge=2)
     rs_lookback_days: int = Field(default=63, ge=5)
     benchmark_symbol: str = "^NSEI"
-    use_ml_scorer: bool = Field(default=False, description="Use ML scorer for signal_probability weight")
+    use_ml_scorer: bool = Field(
+        default=False, description="Use ML scorer for signal_probability weight"
+    )
     require_entry_signal: bool = Field(
         default=False,
         description="Only rank symbols with active strategy entry signals",

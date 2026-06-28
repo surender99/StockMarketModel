@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
-from enum import Enum
+from enum import StrEnum
 
 
-class TrendRegime(str, Enum):
+class TrendRegime(StrEnum):
     """Directional market trend label."""
 
     BULL = "bull"
@@ -15,7 +15,7 @@ class TrendRegime(str, Enum):
     SIDEWAYS = "sideways"
 
 
-class VolatilityRegime(str, Enum):
+class VolatilityRegime(StrEnum):
     """Volatility level label."""
 
     HIGH = "high"

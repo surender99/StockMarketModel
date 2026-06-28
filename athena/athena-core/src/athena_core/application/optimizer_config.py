@@ -10,7 +10,9 @@ from pydantic import BaseModel, Field, model_validator
 class ParameterSpec(BaseModel):
     """One tunable strategy parameter — REQ-OPT-001."""
 
-    path: str = Field(description="Dot path, e.g. risk.stop_loss_pct or indicators.ema_fast.params.period")
+    path: str = Field(
+        description="Dot path, e.g. risk.stop_loss_pct or indicators.ema_fast.params.period"
+    )
     type: Literal["int", "float", "choice"] = "float"
     values: list[Any] | None = Field(default=None, description="Grid/choice values")
     min: float | None = None

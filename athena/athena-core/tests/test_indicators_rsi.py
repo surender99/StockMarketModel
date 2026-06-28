@@ -5,9 +5,9 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 import pytest
+from tests.reference_indicators import pandas_ta_rsi
 
 from athena_core.domain.indicators.rsi import compute_rsi
-from tests.reference_indicators import pandas_ta_rsi
 
 
 @pytest.fixture

@@ -90,9 +90,7 @@ class MLSignalScorer:
     def fit(self, samples: list[TrainingSample]) -> None:
         """Train classifier on labeled strategy signal samples."""
         if len(samples) < self._config.min_training_samples:
-            msg = (
-                f"need at least {self._config.min_training_samples} samples, got {len(samples)}"
-            )
+            msg = f"need at least {self._config.min_training_samples} samples, got {len(samples)}"
             raise ValueError(msg)
 
         x = np.vstack([s.features.to_vector(self._config.feature_names) for s in samples])
@@ -107,10 +105,12 @@ class MLSignalScorer:
         else:
             classifier = LogisticRegression(max_iter=500, random_state=self._config.random_state)
 
-        self._model = Pipeline([
-            ("scaler", StandardScaler()),
-            ("clf", classifier),
-        ])
+        self._model = Pipeline(
+            [
+                ("scaler", StandardScaler()),
+                ("clf", classifier),
+            ]
+        )
         self._model.fit(x, y)
         self._model_version = f"{self._config.model_type}_v1"
         log.info("ml_scorer.trained", samples=len(samples), model=self._model_version)

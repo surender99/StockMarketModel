@@ -98,7 +98,9 @@ def test_metadata_sidecar(tmp_path: Path) -> None:
     assert "created_at" in meta
 
 
-def test_feature_service_cache_hit_skips_recompute(tmp_path: Path, ohlcv_sample: pd.DataFrame) -> None:
+def test_feature_service_cache_hit_skips_recompute(
+    tmp_path: Path, ohlcv_sample: pd.DataFrame
+) -> None:
     ohlcv_store = ParquetOHLCVStore(tmp_path / "ohlcv")
     feature_store = ParquetFeatureStore(tmp_path / "features")
     ohlcv_store.write("TEST.NS", ohlcv_sample)

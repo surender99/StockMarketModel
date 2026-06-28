@@ -6,7 +6,7 @@ import hashlib
 import json
 import os
 import tempfile
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -101,7 +101,7 @@ class ParquetFeatureStore(FeatureStorePort):
         os.close(fd)
         tmp = Path(tmp_name)
         try:
-            out.to_parquet(tmp, compression=self._compression, index=False)
+            out.to_parquet(str(tmp), compression=self._compression, index=False)  # type: ignore[call-overload]
             tmp.replace(parquet_path)
         finally:
             if tmp.exists() and tmp != parquet_path:
@@ -111,7 +111,7 @@ class ParquetFeatureStore(FeatureStorePort):
             "feature_id": feature_id,
             "params": params,
             "data_version": data_version,
-            "created_at": datetime.now(timezone.utc).isoformat(),
+            "created_at": datetime.now(UTC).isoformat(),
             "row_count": len(out),
         }
         meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")

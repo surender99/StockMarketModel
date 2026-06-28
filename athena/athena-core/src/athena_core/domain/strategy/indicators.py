@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from athena_core.domain.strategy.config import IndicatorSpec
 
 INDICATOR_TYPES: frozenset[str] = frozenset({"ema", "sma"})

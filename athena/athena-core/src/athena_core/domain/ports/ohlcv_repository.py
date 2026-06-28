@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from datetime import date
+from datetime import date, datetime
 
 import pandas as pd
 
@@ -16,7 +16,14 @@ class OHLCVRepositoryPort(ABC):
         """Load bars for *symbol*, optionally filtered by date range."""
 
     @abstractmethod
-    def write(self, symbol: str, df: pd.DataFrame) -> int:
+    def write(
+        self,
+        symbol: str,
+        df: pd.DataFrame,
+        *,
+        source: str | None = None,
+        ingestion_timestamp: datetime | None = None,
+    ) -> int:
         """Merge and persist bars; return final row count."""
 
     @abstractmethod

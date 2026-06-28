@@ -4,6 +4,8 @@
 
 This repository hosts the Athena monorepo under [`athena/`](athena/).
 
+**Status:** MVP research loop complete (Phases 0–7). Rev 2 implementation adds portfolio, statistics, and pattern recognition MVPs — see [REV-2-IMPLEMENTATION-STATUS](athena/athena-spec/REV-2-IMPLEMENTATION-STATUS.md) and [Spec vs Code Status](athena/athena-spec/SPEC-VS-CODE-STATUS.md).
+
 ## Quick Start
 
 **Requirements:** Python 3.11+
@@ -72,6 +74,7 @@ Specifications live in [`athena/athena-spec/`](athena/athena-spec/README.md):
 | [References Index](athena/athena-spec/REFERENCES-INDEX.md) | Package integration status (01–15 ✅) |
 | [References Integration Complete](athena/athena-spec/REFERENCES-INTEGRATION-COMPLETE.md) | All 15 packages spec-integrated |
 | [Spec vs Code Status](athena/athena-spec/SPEC-VS-CODE-STATUS.md) | Spec integration vs code implementation |
+| [Rev 2 Implementation Status](athena/athena-spec/REV-2-IMPLEMENTATION-STATUS.md) | Portfolio, statistics, patterns MVPs |
 | [ADRs](athena/athena-spec/adrs/) | Architecture decision records |
 | [Decision Log](athena/athena-spec/decision-log/) | Delivery and process decisions |
 | [Athena Handbook](athena/athena-docs/handbook/) | Operator volumes (Package 15) |

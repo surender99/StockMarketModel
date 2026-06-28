@@ -22,13 +22,13 @@ from athena_core.application.ingest_ohlcv import IngestOHLCVUseCase, IngestResul
 from athena_core.application.ml_scorer import MLSignalScorer
 from athena_core.application.optimizer import OptimizerResult, StrategyOptimizer
 from athena_core.application.regime_engine import RegimeEngine
-from athena_core.application.scanner import ScanResult, scan_result_to_dict
+from athena_core.application.scanner import DailyScanner, ScanResult, scan_result_to_dict
 from athena_core.application.walk_forward import WalkForwardSummary, WalkForwardValidator
+from athena_core.domain.strategy.config import StrategyConfig
 from athena_core.infrastructure.nse_calendar import NSETradingCalendar
 from athena_core.infrastructure.parquet_feature_store import ParquetFeatureStore
 from athena_core.infrastructure.parquet_ohlcv_store import ParquetOHLCVStore
 from athena_core.infrastructure.strategy_yaml_loader import StrategyLoadError, load_strategy_yaml
-from athena_core.domain.strategy.config import StrategyConfig
 
 
 @dataclass(frozen=True)
@@ -176,7 +176,14 @@ class AthenaRuntime:
                 }
                 for t in result.trades
             ]
-            (output_dir / "trades.json").write_text(json.dumps(trades_payload, indent=2), encoding="utf-8")
+            (output_dir / "trades.json").write_text(
+                json.dumps(trades_payload, indent=2), encoding="utf-8"
+            )
+            if result.statistics_report is not None:
+                (output_dir / "statistics.json").write_text(
+                    json.dumps(result.statistics_report, indent=2),
+                    encoding="utf-8",
+                )
 
         if track_experiment:
             tracker = ExperimentTracker(self.config.experiment_tracking)

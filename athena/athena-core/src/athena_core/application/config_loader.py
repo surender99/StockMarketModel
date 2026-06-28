@@ -39,7 +39,11 @@ def load_config_bundle(path: Path | None) -> tuple[dict[str, Any], ConfigProfile
     default_profile = raw.pop("default_profile", None)
     profiles: dict[str, dict[str, Any]] = {}
     if isinstance(profiles_raw, dict):
-        profiles = {str(name): dict(value) for name, value in profiles_raw.items() if isinstance(value, dict)}
+        profiles = {
+            str(name): dict(value)
+            for name, value in profiles_raw.items()
+            if isinstance(value, dict)
+        }
     bundle = ConfigProfileBundle(
         profiles=profiles,
         default_profile=str(default_profile) if default_profile else None,

@@ -74,15 +74,28 @@ def test_validate_rejects_duplicates() -> None:
 def test_incremental_merge_deduplication(tmp_path: Path) -> None:
     store = ParquetOHLCVStore(tmp_path)
     df1 = normalize_yfinance_frame(_sample_raw(), "RELIANCE.NS")
-    store.write("RELIANCE.NS", df1)
+    store.write("RELIANCE.NS", df1, source="yfinance")
     df2 = df1.copy()
     df2.loc[1, "close"] = 999.0
     df2.loc[1, "high"] = 1000.0
-    count = store.write("RELIANCE.NS", df2)
+    count = store.write("RELIANCE.NS", df2, source="yfinance")
     loaded = store.read("RELIANCE.NS")
     assert count == 2
     assert len(loaded) == 2
     assert loaded.loc[loaded["date"] == date(2024, 1, 3), "close"].iloc[0] == 999.0
+
+
+def test_metadata_roundtrip(tmp_path: Path) -> None:
+    store = ParquetOHLCVStore(tmp_path)
+    df = normalize_yfinance_frame(_sample_raw(), "RELIANCE.NS")
+    store.write("RELIANCE.NS", df, source="yfinance")
+    meta = store.read_metadata("RELIANCE.NS")
+    assert meta is not None
+    assert meta["symbol"] == "RELIANCE.NS"
+    assert meta["source"] == "yfinance"
+    assert meta["row_count"] == 2
+    assert len(meta["checksum_sha256"]) == 64
+    assert "ingestion_timestamp" in meta
 
 
 def test_empty_response_raises_structured_error(tmp_path: Path) -> None:

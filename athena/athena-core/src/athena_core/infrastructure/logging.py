@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 import sys
-from typing import Any
+from typing import Any, cast
 
 import structlog
 
@@ -52,4 +52,4 @@ def configure_logging(*, level: int = logging.INFO, json_logs: bool = False) -> 
 
 def get_logger(name: str, **initial_context: Any) -> structlog.stdlib.BoundLogger:
     """Return a bound structlog logger."""
-    return structlog.get_logger(name).bind(**initial_context)
+    return cast(structlog.stdlib.BoundLogger, structlog.get_logger(name).bind(**initial_context))

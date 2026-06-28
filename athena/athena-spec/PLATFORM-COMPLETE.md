@@ -9,9 +9,11 @@
 
 ## Executive Summary
 
-The Athena Quantitative Research Operating System **MVP (Phases 0–7) is code-complete**. All phase deliverables are implemented, tested, documented, and CI-gated. The platform supports the full research loop: ingest → feature store → backtest → walk-forward → optimize → scan → explain → compare → AI-assisted research → dashboard visualization.
+The Athena Quantitative Research Operating System **MVP research loop (Phases 0–7) is code-complete**. All phase deliverables are implemented, tested, documented, and CI-gated. The platform supports the full research loop: ingest → feature store → backtest → walk-forward → optimize → scan → explain → compare → AI-assisted research → dashboard visualization.
 
-**Spec vs code:** References packages 01–15 are [spec-integrated](REFERENCES-INTEGRATION-COMPLETE.md). Packages **06** (pattern stub), **09** (portfolio spec-only), and **11** (statistics spec-only) do not yet have full implementations — see [SPEC-VS-CODE-STATUS.md](SPEC-VS-CODE-STATUS.md).
+**Rev 2 implementation phase** (portfolio, statistics, patterns) delivers minimal MVPs for Packages 06, 09, and 11 — see [REV-2-IMPLEMENTATION-STATUS.md](REV-2-IMPLEMENTATION-STATUS.md).
+
+**Spec vs code:** References packages 01–15 are [spec-integrated](REFERENCES-INTEGRATION-COMPLETE.md). Packages **06**, **09**, and **11** now have **MVP implementations** with remaining backlog — see [SPEC-VS-CODE-STATUS.md](SPEC-VS-CODE-STATUS.md).
 
 ---
 
@@ -69,11 +71,11 @@ All References packages are **spec-integrated** into `athena/athena-spec/` — s
 |----------|------|------------|
 | 01–02 | Governance, architecture, contracts | PluginRegistry stub |
 | 03–05 | Data, market intelligence, indicators | Ingest, quality, EMA/SMA/MACD/RSI |
-| **06** | Pattern recognition specs | **Stub only** (`PatternDetector`) |
+| **06** | Pattern recognition specs | **MVP** (`bullish_engulfing`, `hammer`, `bull_flag`) |
 | 07–08 | Strategy, backtest | Full engine |
-| **09** | Portfolio specs | **Spec only** (no portfolio service) |
+| **09** | Portfolio specs | **MVP** (`PortfolioEngine`, backtest integration) |
 | 10 | Research engine | Experiment tracker |
-| **11** | Statistics specs | **Spec only** (no statistics module) |
+| **11** | Statistics specs | **MVP** (core metrics + bootstrap Sharpe) |
 | 12–14 | ML, AI scientist, platform | ML scorer, athena-ai, CI |
 | 15 | Handbook | `athena-docs/handbook/` |
 

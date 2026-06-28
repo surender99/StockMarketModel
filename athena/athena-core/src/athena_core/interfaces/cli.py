@@ -41,7 +41,9 @@ def _cmd_ingest(args: argparse.Namespace) -> int:
         return 1
     batch = runtime.ingest(symbols, _parse_date(args.start), _parse_date(args.end))
     for result in batch.results:
-        log.info("ingest.symbol_ok", symbol=result.symbol, rows=result.row_count, source=result.source)
+        log.info(
+            "ingest.symbol_ok", symbol=result.symbol, rows=result.row_count, source=result.source
+        )
     for symbol, error in batch.failures:
         log.error("ingest.failed", symbol=symbol, error=error)
     return 1 if batch.failures else 0
@@ -179,7 +181,11 @@ def _cmd_compare_experiments(args: argparse.Namespace) -> int:
     except (FileNotFoundError, ValueError) as exc:
         log.error("compare.failed", error=str(exc))
         return 1
-    text = json.dumps(comparison, indent=2) if args.format == "json" else format_comparison_table(comparison)
+    text = (
+        json.dumps(comparison, indent=2)
+        if args.format == "json"
+        else format_comparison_table(comparison)
+    )
     if args.output:
         Path(args.output).write_text(text, encoding="utf-8")
     else:
@@ -236,7 +242,9 @@ def build_parser() -> argparse.ArgumentParser:
     _add_symbol_args(scan_parser)
     _add_output_args(scan_parser)
 
-    wf_parser = subparsers.add_parser("walk-forward", help="Walk-forward validation — REQ-WALK-FORWARD-001")
+    wf_parser = subparsers.add_parser(
+        "walk-forward", help="Walk-forward validation — REQ-WALK-FORWARD-001"
+    )
     wf_parser.add_argument("--strategy", type=Path, required=True, help="Strategy YAML path")
     wf_parser.add_argument("--start", required=True, help="Start date ISO (YYYY-MM-DD)")
     wf_parser.add_argument("--end", required=True, help="End date ISO (YYYY-MM-DD)")

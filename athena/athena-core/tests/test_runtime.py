@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
+from athena_core.application.optimizer import OptimizerResult
 from athena_core.application.runtime import (
     AthenaRuntime,
     format_comparison_table,
     optimizer_to_dict,
     walk_forward_to_dict,
 )
-from athena_core.application.optimizer import OptimizerResult
 
 
 def test_format_comparison_table() -> None:
@@ -38,7 +38,9 @@ def test_optimizer_to_dict_empty() -> None:
 def test_walk_forward_to_dict_empty() -> None:
     from athena_core.application.walk_forward import WalkForwardSummary
 
-    payload = walk_forward_to_dict(WalkForwardSummary(folds=[], aggregate_metrics={"fold_count": 0}))
+    payload = walk_forward_to_dict(
+        WalkForwardSummary(folds=[], aggregate_metrics={"fold_count": 0})
+    )
     assert payload["fold_count"] == 0
 
 

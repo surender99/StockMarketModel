@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import time
 from datetime import date
-from typing import Protocol
+from typing import Protocol, cast
 
 import pandas as pd
 import yfinance as yf
@@ -53,7 +53,7 @@ class YFinanceClient:
                 )
                 if raw.empty:
                     raise EmptyDataError(ticker, start, end, "yfinance returned empty DataFrame")
-                return raw
+                return cast(pd.DataFrame, raw)
             except EmptyDataError:
                 raise
             except Exception as exc:  # noqa: BLE001 — retry boundary

@@ -11,7 +11,7 @@ import structlog
 
 from athena_core.application.backtest_engine import FeatureProviderPort
 from athena_core.application.explainability import ShapExplainer
-from athena_core.application.ml_scorer import MLSignalScorer, SignalFeatures
+from athena_core.application.ml_scorer import MLSignalScorer
 from athena_core.application.regime_engine import RegimeEngine
 from athena_core.application.scanner_config import ScannerConfig
 from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort

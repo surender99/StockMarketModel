@@ -5,9 +5,9 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 import pytest
+from tests.reference_indicators import pandas_ta_macd
 
 from athena_core.domain.indicators.macd import compute_macd
-from tests.reference_indicators import pandas_ta_macd
 
 
 @pytest.fixture
