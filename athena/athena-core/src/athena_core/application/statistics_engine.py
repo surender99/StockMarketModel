@@ -75,10 +75,10 @@ class StatisticsEngine:
             total_return=float(raw["total_return"] or 0.0),
             cagr=float(raw["cagr"] or 0.0),
             max_drawdown=float(raw["max_drawdown"] or 0.0),
-            sharpe=raw["sharpe"] if isinstance(raw["sharpe"], (int, float)) else None,
-            win_rate=raw["win_rate"] if isinstance(raw["win_rate"], (int, float)) else None,
+            sharpe=raw["sharpe"] if isinstance(raw["sharpe"], int | float) else None,
+            win_rate=raw["win_rate"] if isinstance(raw["win_rate"], int | float) else None,
             profit_factor=raw["profit_factor"]
-            if isinstance(raw["profit_factor"], (int, float))
+            if isinstance(raw["profit_factor"], int | float)
             else None,
             expectancy=expectancy,
             trade_count=int(trade_count) if isinstance(trade_count, int) else 0,

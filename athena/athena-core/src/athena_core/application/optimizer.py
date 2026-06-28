@@ -266,7 +266,9 @@ class StrategyOptimizer:
         if spec.type == "int":
             int_step = int(spec.step or 1)
             return list(range(int(spec.min), int(spec.max) + 1, int_step))
-        float_step: float = float(spec.step) if spec.step is not None else (spec.max - spec.min) / 10.0
+        float_step: float = (
+            float(spec.step) if spec.step is not None else (spec.max - spec.min) / 10.0
+        )
         values: list[float] = []
         current: float = float(spec.min)
         while current <= spec.max + 1e-9:

@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 from pydantic import BaseModel, Field
 
 
-class WorkflowAction(str, Enum):
+class WorkflowAction(StrEnum):
     """High-level workflow the assistant should run."""
 
     SCAN = "scan"
@@ -18,7 +18,7 @@ class WorkflowAction(str, Enum):
     FULL_RESEARCH = "full_research"
 
 
-class StrategyHint(str, Enum):
+class StrategyHint(StrEnum):
     """Strategy family inferred from user language."""
 
     EMA = "ema"
@@ -27,7 +27,7 @@ class StrategyHint(str, Enum):
     ANY = "any"
 
 
-class MarketRegime(str, Enum):
+class MarketRegime(StrEnum):
     """Market regime filter inferred from user language."""
 
     SIDEWAYS = "sideways"

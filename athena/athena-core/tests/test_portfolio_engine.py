@@ -110,7 +110,9 @@ def test_correlation_limit_blocks_entry() -> None:
         entry_fees=0.0,
     )
     evaluation = PortfolioEngine().evaluate(portfolio, {"A": 100.0})
-    returns = pd.DataFrame({"A": [0.01, 0.02, 0.01, 0.02, 0.01], "B": [0.01, 0.02, 0.01, 0.02, 0.01]})
+    returns = pd.DataFrame(
+        {"A": [0.01, 0.02, 0.01, 0.02, 0.01], "B": [0.01, 0.02, 0.01, 0.02, 0.01]}
+    )
     from athena_core.application.portfolio_risk import PortfolioLimits
 
     allowed = PortfolioEngine().passes_entry_limits(

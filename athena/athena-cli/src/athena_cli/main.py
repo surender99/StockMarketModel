@@ -7,11 +7,10 @@ import sys
 from datetime import date
 from pathlib import Path
 
+from athena_ai.application.research_assistant import ResearchAssistant
 from athena_core.infrastructure.logging import configure_logging, get_logger
 from athena_sdk import AthenaClient
 from athena_sdk.client import StrategyLoadError
-
-from athena_ai.application.research_assistant import ResearchAssistant
 
 from athena_cli import __version__
 from athena_cli.formatting import emit_output, render_payload
@@ -94,7 +93,9 @@ def _cmd_backtest(args: argparse.Namespace) -> int:
     log.info("backtest.complete", metrics=run.result.metrics, trades=len(run.result.trades))
     if args.output and args.track_experiment:
         payload["artifacts_dir"] = str(args.output)
-    emit_output(render_payload(payload, output_format=args.output_format), output_path=args.metrics_output)
+    emit_output(
+        render_payload(payload, output_format=args.output_format), output_path=args.metrics_output
+    )
     return 0
 
 

@@ -22,8 +22,14 @@ class RuleBasedIntentParser:
         (re.compile(r"\bcompare\b", re.I), WorkflowAction.COMPARE),
         (re.compile(r"\b(scan|screener|screen)\b", re.I), WorkflowAction.SCAN),
         (re.compile(r"\b(backtest|back\s*test)\b", re.I), WorkflowAction.BACKTEST),
-        (re.compile(r"\b(walk[- ]?forward|out[- ]?of[- ]?sample|oos)\b", re.I), WorkflowAction.WALK_FORWARD),
-        (re.compile(r"\b(optimize|optimi[sz]e|tune|grid\s*search)\b", re.I), WorkflowAction.OPTIMIZE),
+        (
+            re.compile(r"\b(walk[- ]?forward|out[- ]?of[- ]?sample|oos)\b", re.I),
+            WorkflowAction.WALK_FORWARD,
+        ),
+        (
+            re.compile(r"\b(optimize|optimi[sz]e|tune|grid\s*search)\b", re.I),
+            WorkflowAction.OPTIMIZE,
+        ),
         (
             re.compile(r"\b(find|discover|best|recommend|suggest|top)\b", re.I),
             WorkflowAction.FULL_RESEARCH,
@@ -37,7 +43,10 @@ class RuleBasedIntentParser:
     ]
 
     _REGIME_PATTERNS: list[tuple[re.Pattern[str], MarketRegime]] = [
-        (re.compile(r"\b(sideways|ranging|range[- ]?bound|choppy|consolidat)", re.I), MarketRegime.SIDEWAYS),
+        (
+            re.compile(r"\b(sideways|ranging|range[- ]?bound|choppy|consolidat)", re.I),
+            MarketRegime.SIDEWAYS,
+        ),
         (re.compile(r"\b(trending|trend|bull|bear|momentum)\b", re.I), MarketRegime.TRENDING),
         (re.compile(r"\b(volatile|volatility|high\s*vol)\b", re.I), MarketRegime.VOLATILE),
     ]
@@ -47,7 +56,9 @@ class RuleBasedIntentParser:
         action = self._detect_action(text)
         strategy_hint = self._detect_strategy(text)
         regime = self._detect_regime(text)
-        compare_latest = self._detect_compare_latest(text) if action == WorkflowAction.COMPARE else None
+        compare_latest = (
+            self._detect_compare_latest(text) if action == WorkflowAction.COMPARE else None
+        )
         if action == WorkflowAction.FULL_RESEARCH and compare_latest is None:
             compare_latest = 3
         confidence = self._score_confidence(text, action, strategy_hint, regime)

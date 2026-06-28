@@ -107,9 +107,7 @@ class PortfolioEngine:
         limits: PortfolioLimits | None = None,
     ) -> list[RebalanceOrder]:
         """Rebalancing orders when drift exceeds threshold — REQ-PF-002."""
-        return self._risk.suggest_rebalance(
-            portfolio, marks, target_weights, limits=limits
-        )
+        return self._risk.suggest_rebalance(portfolio, marks, target_weights, limits=limits)
 
     def apply_rebalance(
         self,

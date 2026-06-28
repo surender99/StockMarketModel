@@ -1,10 +1,10 @@
 # References Package Integration Index
 
-> **Canonical spec:** `athena/athena-spec/`  
-> **Read-only source:** `References/Athena-Package-NN-*/`  
+> **Canonical spec:** `athena/athena-spec/`
+> **Read-only source:** `References/Athena-Package-NN-*/`
 > **Integration complete:** [REFERENCES-INTEGRATION-COMPLETE.md](REFERENCES-INTEGRATION-COMPLETE.md)
 
-This index tracks integration of the Athena References package series into the monorepo specification.
+This index tracks integration of the Athena References package series and Release-00 artifacts into the monorepo specification.
 
 ---
 
@@ -12,6 +12,7 @@ This index tracks integration of the Athena References package series into the m
 
 | Package | Name | Scope | Status |
 |---------|------|-------|--------|
+| **REL-000** | Engineering Standards (Release-00) | Master standards taxonomy, quality gates, section index | ✅ Complete |
 | **01** | Governance | Constitution, execution plan, quant & AI standards, templates, DoD | ✅ Complete |
 | **02** | Architecture | System architecture, clean architecture, plugin model, repo structure | ✅ Complete |
 | **03** | Data Platform | DataProvider contract, OHLCV schema, data quality | ✅ Complete |
@@ -34,6 +35,7 @@ This index tracks integration of the Athena References package series into the m
 
 | Pkg | Canonical Path | Validation |
 |-----|----------------|------------|
+| REL-000 | [ATH-REL-000-Engineering-Standards.md](ATH-REL-000-Engineering-Standards.md), [engineering-standards/](engineering-standards/) | [PACKAGE-REL-000-COMPLETE.md](packages/PACKAGE-REL-000-COMPLETE.md) |
 | 01 | [governance/](governance/), [templates/](templates/), [checklists/](checklists/) | [PACKAGE-01-COMPLETE.md](packages/PACKAGE-01-COMPLETE.md) |
 | 02 | [architecture/](architecture/), [contracts/](contracts/), [diagrams/](diagrams/) | [PACKAGE-02-COMPLETE.md](packages/PACKAGE-02-COMPLETE.md) |
 | 03 | [data/](data/), [schemas/ohlcv-schema.json](schemas/ohlcv-schema.json), [DataProvider](contracts/DataProvider.md) | [PACKAGE-03-COMPLETE.md](packages/PACKAGE-03-COMPLETE.md) |

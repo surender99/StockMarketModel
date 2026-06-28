@@ -23,7 +23,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "query",
         nargs="?",
-        help='Natural-language research query, e.g. "Find the best EMA strategy for sideways markets"',
+        help=(
+            "Natural-language research query, e.g. "
+            '"Find the best EMA strategy for sideways markets"'
+        ),
     )
     parser.add_argument("--config", type=Path, help="Athena YAML config path")
     parser.add_argument("--ai-config", type=Path, help="Research assistant YAML config path")

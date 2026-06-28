@@ -11,7 +11,12 @@ import structlog
 from athena_sdk import AthenaClient
 
 from athena_ai.domain.intent import MarketRegime, ResearchIntent, WorkflowAction
-from athena_ai.domain.research_plan import Recommendation, ResearchPlan, ResearchResult, ResearchStep
+from athena_ai.domain.research_plan import (
+    Recommendation,
+    ResearchPlan,
+    ResearchResult,
+    ResearchStep,
+)
 from athena_ai.infrastructure.config import ResearchAssistantConfig
 from athena_ai.infrastructure.experiment_logger import AIExperimentLogger
 
@@ -82,7 +87,9 @@ class ResearchOrchestrator:
                     experiment_ids.append(eid)
 
         result.experiment_ids = experiment_ids
-        result.recommendations = self._build_recommendations(plan, result.step_outputs, experiment_ids)
+        result.recommendations = self._build_recommendations(
+            plan, result.step_outputs, experiment_ids
+        )
         self._logger.log_session(result)
         return result
 
@@ -227,7 +234,9 @@ class ResearchOrchestrator:
         msg = f"unsupported step action: {step.action}"
         raise ValueError(msg)
 
-    def _filter_scan_by_regime(self, payload: dict[str, Any], regime: MarketRegime) -> dict[str, Any]:
+    def _filter_scan_by_regime(
+        self, payload: dict[str, Any], regime: MarketRegime
+    ) -> dict[str, Any]:
         if regime == MarketRegime.ANY:
             return payload
         candidates = payload.get("candidates", [])
@@ -265,9 +274,7 @@ class ResearchOrchestrator:
         sharpe = aggregate.get("sharpe")
         max_dd = aggregate.get("max_drawdown")
         backtest_out = outputs.get(WorkflowAction.BACKTEST.value, {})
-        backtest_metrics = (
-            backtest_out.get("metrics", {}) if isinstance(backtest_out, dict) else {}
-        )
+        backtest_metrics = backtest_out.get("metrics", {}) if isinstance(backtest_out, dict) else {}
         validation_passed = bool(aggregate) and sharpe is not None
         if not validation_passed and experiment_ids and backtest_metrics:
             validation_passed = True
@@ -327,6 +334,7 @@ class ResearchOrchestrator:
         if intent.regime != MarketRegime.ANY:
             parts.append(f"Regime focus: {intent.regime.value}")
         parts.append(
-            "Safety: recommendations require backtest + walk-forward validation and cite experiment IDs."
+            "Safety: recommendations require backtest + walk-forward validation "
+            "and cite experiment IDs."
         )
         return "; ".join(parts)

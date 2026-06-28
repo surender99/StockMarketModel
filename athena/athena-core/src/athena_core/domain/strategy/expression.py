@@ -75,7 +75,7 @@ def _validate_ast(node: ast.AST) -> None:
         return
     if isinstance(node, ast.Name):
         return
-    if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+    if isinstance(node, ast.Constant) and isinstance(node.value, int | float):
         return
     raise ExpressionError(f"unsupported expression node: {type(node).__name__}")
 
@@ -168,8 +168,8 @@ def evaluate_condition_at_index(
     if "close" in frame.columns:
         env["close"] = frame["close"]
     result = _eval_node(tree, env)
-    if isinstance(result, (bool, np.bool_)):
+    if isinstance(result, bool | np.bool_):
         return bool(result)
-    if isinstance(result, (int, float, np.floating)) and (math.isnan(result) or pd.isna(result)):
+    if isinstance(result, int | float | np.floating) and (math.isnan(result) or pd.isna(result)):
         return False
     return bool(result)

@@ -7,7 +7,9 @@ from athena_cli.main import build_parser, main
 
 def test_parser_includes_all_commands() -> None:
     parser = build_parser()
-    commands = {action.dest: action.choices for action in parser._actions if action.dest == "command"}
+    commands = {
+        action.dest: action.choices for action in parser._actions if action.dest == "command"
+    }
     assert "command" in commands
     assert set(commands["command"]) >= {
         "health",

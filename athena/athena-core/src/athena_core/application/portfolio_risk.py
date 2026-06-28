@@ -47,7 +47,8 @@ class PortfolioRiskService:
         values = corr.where(np.triu(np.ones(corr.shape), k=1).astype(bool)).stack()
         if values.empty:
             return 0.0
-        return float(values.max())
+        arr = values.to_numpy(dtype=float)
+        return float(np.max(arr))
 
     def violates_correlation_limit(
         self,
@@ -65,7 +66,9 @@ class PortfolioRiskService:
         others = [c for c in corr.columns if c != candidate_symbol]
         if not others:
             return False
-        return float(corr.loc[candidate_symbol, others].abs().max()) > limits.max_correlation
+        subset = corr.loc[[candidate_symbol], others]
+        max_corr = float(subset.abs().to_numpy(dtype=float).max())
+        return max_corr > limits.max_correlation
 
     def passes_exposure_limits(
         self,
@@ -88,9 +91,7 @@ class PortfolioRiskService:
             sector_weights[candidate_sector] = (
                 sector_weights.get(candidate_sector, 0.0) + candidate_weight
             )
-        if sector_weights and max(sector_weights.values()) > limits.max_sector_weight:
-            return False
-        return True
+        return not (sector_weights and max(sector_weights.values()) > limits.max_sector_weight)
 
     def suggest_rebalance(
         self,

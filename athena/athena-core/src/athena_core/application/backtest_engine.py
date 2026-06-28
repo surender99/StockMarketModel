@@ -134,12 +134,9 @@ class BacktestEngine:
             )
 
             if config.enable_rebalance and marks:
-                evaluation = portfolio_engine.evaluate(portfolio, marks)
                 n_pos = max(len(portfolio.positions), 1)
                 target = {sym: 1.0 / n_pos for sym in portfolio.positions}
-                orders = portfolio_engine.suggest_rebalance(
-                    portfolio, marks, target, limits=limits
-                )
+                orders = portfolio_engine.suggest_rebalance(portfolio, marks, target, limits=limits)
                 if orders:
                     portfolio_engine.apply_rebalance(portfolio, marks, orders)
 

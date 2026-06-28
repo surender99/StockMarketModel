@@ -9,13 +9,14 @@ from typing import Any
 
 import pandas as pd
 import streamlit as st
-
 from athena_sdk import AthenaClient
 
 
 def render_scan_page(client: AthenaClient) -> None:
     st.header("Daily Scan")
-    strategy_path = st.text_input("Strategy YAML", value="../athena-examples/config/ema_crossover.yaml")
+    strategy_path = st.text_input(
+        "Strategy YAML", value="../athena-examples/config/ema_crossover.yaml"
+    )
     as_of = st.date_input("As-of date", value=date.today())
     symbols_file = st.text_input("Symbols CSV (optional)", value="")
     uploaded = st.file_uploader("Or upload scan JSON", type=["json"])

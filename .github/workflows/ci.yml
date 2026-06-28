@@ -24,11 +24,15 @@ jobs:
       - name: Install workspace packages
         run: |
           python -m pip install --upgrade pip
+          pip install pre-commit
           pip install -e "athena/athena-core[dev]"
           pip install -e "athena/athena-sdk[dev]"
           pip install -e "athena/athena-ai[dev]"
           pip install -e "athena/athena-cli[dev]"
           pip install -e "athena/athena-dashboard[dev]"
+
+      - name: Pre-commit quality gates
+        run: pre-commit run --all-files
 
       - name: Run full test suite
         run: |
