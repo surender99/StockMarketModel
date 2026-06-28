@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import date
+from typing import TYPE_CHECKING
 
 import pandas as pd
 import structlog
@@ -11,6 +12,9 @@ from athena_core.application.regime_config import RegimeConfig
 from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
 from athena_core.domain.regime.indicators import compute_regime_features
 from athena_core.domain.regime.models import RegimeState, TrendRegime, VolatilityRegime
+
+if TYPE_CHECKING:
+    from athena_core.application.breadth_engine import BreadthEngine, BreadthMetrics
 
 log = structlog.get_logger(__name__)
 
@@ -22,9 +26,12 @@ class RegimeEngine:
         self,
         ohlcv_repo: OHLCVRepositoryPort,
         config: RegimeConfig | None = None,
+        *,
+        breadth_engine: BreadthEngine | None = None,
     ) -> None:
         self._ohlcv = ohlcv_repo
         self._config = config or RegimeConfig()
+        self._breadth = breadth_engine
 
     def build_regime_series(
         self,
@@ -88,6 +95,12 @@ class RegimeEngine:
         """NIFTY/benchmark trend at as_of — REQ-REGIME-001."""
         state = self.classify_as_of(self._config.benchmark_symbol, as_of)
         return state.trend if state else None
+
+    def breadth_as_of(self, symbols: list[str], as_of: date) -> BreadthMetrics | None:
+        """Universe breadth when BreadthEngine is configured — REQ-MI-001."""
+        if self._breadth is None:
+            return None
+        return self._breadth.compute(symbols, as_of)
 
     def _classify_trend(self, row: pd.Series) -> TrendRegime:
         close = float(row["close"])

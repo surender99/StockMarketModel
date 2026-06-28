@@ -113,6 +113,27 @@ def test_feature_service_cache_hit_skips_recompute(
     pd.testing.assert_frame_equal(first, second)
 
 
+def test_feature_service_pattern_feature(tmp_path: Path, ohlcv_sample: pd.DataFrame) -> None:
+    ohlcv_store = ParquetOHLCVStore(tmp_path / "ohlcv")
+    feature_store = ParquetFeatureStore(tmp_path / "features")
+    ohlcv_store.write("TEST.NS", ohlcv_sample)
+    service = FeatureService(feature_store, ohlcv_store, FeatureStoreConfig(data_version="v1"))
+    frame = service.get_feature("TEST.NS", "pattern", {"pattern_id": "hammer"})
+    assert "signal" in frame.columns
+    assert "confidence" in frame.columns
+    assert len(frame) == len(ohlcv_sample)
+
+
+def test_feature_service_stoch_feature(tmp_path: Path, ohlcv_sample: pd.DataFrame) -> None:
+    ohlcv_store = ParquetOHLCVStore(tmp_path / "ohlcv")
+    feature_store = ParquetFeatureStore(tmp_path / "features")
+    ohlcv_store.write("TEST.NS", ohlcv_sample)
+    service = FeatureService(feature_store, ohlcv_store, FeatureStoreConfig(data_version="v1"))
+    frame = service.get_feature("TEST.NS", "stoch", {"k_period": 14, "d_period": 3})
+    assert "stoch_k" in frame.columns
+    assert "stoch_d" in frame.columns
+
+
 def test_different_params_separate_paths(tmp_path: Path, ohlcv_sample: pd.DataFrame) -> None:
     ohlcv_store = ParquetOHLCVStore(tmp_path / "ohlcv")
     feature_store = ParquetFeatureStore(tmp_path / "features")

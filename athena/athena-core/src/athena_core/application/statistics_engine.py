@@ -1,4 +1,4 @@
-"""Statistics engine — AES-1100, REQ-STAT-001, REQ-STAT-002."""
+"""Statistics engine — AES-1100, REQ-STAT-001, REQ-STAT-002, REQ-STAT-003."""
 
 from __future__ import annotations
 
@@ -36,6 +36,19 @@ class BootstrapResult:
     lower_bound: float
     upper_bound: float
     sample_count: int
+
+
+@dataclass(frozen=True)
+class MonteCarloResult:
+    """Monte Carlo robustness summary — REQ-STAT-003."""
+
+    metric_name: str
+    simulations: int
+    median_return: float
+    percentile_5: float
+    percentile_95: float
+    prob_positive: float
+    stability_score: float
 
 
 class StatisticsEngine:
@@ -125,8 +138,60 @@ class StatisticsEngine:
             sample_count=n_samples,
         )
 
+    def monte_carlo_returns(
+        self,
+        equity_curve: pd.DataFrame,
+        *,
+        n_simulations: int = 1000,
+        horizon_days: int | None = None,
+        seed: int = 42,
+    ) -> MonteCarloResult:
+        """Shuffle daily returns to estimate outcome distribution — REQ-STAT-003."""
+        if equity_curve.empty or len(equity_curve) < 3:
+            return MonteCarloResult(
+                metric_name="total_return",
+                simulations=0,
+                median_return=0.0,
+                percentile_5=0.0,
+                percentile_95=0.0,
+                prob_positive=0.0,
+                stability_score=0.0,
+            )
+
+        equity = equity_curve["equity"].astype(float)
+        daily_returns = equity.pct_change().dropna().to_numpy()
+        n = len(daily_returns)
+        horizon = horizon_days if horizon_days is not None else n
+        rng = np.random.default_rng(seed)
+        terminal_returns: list[float] = []
+        for _ in range(n_simulations):
+            sample = rng.choice(daily_returns, size=horizon, replace=True)
+            path_return = float(np.prod(1.0 + sample) - 1.0)
+            terminal_returns.append(path_return)
+
+        arr = np.array(terminal_returns)
+        median = float(np.median(arr))
+        p5 = float(np.quantile(arr, 0.05))
+        p95 = float(np.quantile(arr, 0.95))
+        prob_pos = float((arr > 0).mean())
+        spread = p95 - p5
+        stability = 1.0 - min(abs(spread), 1.0) if spread > 0 else 0.0
+
+        return MonteCarloResult(
+            metric_name="total_return",
+            simulations=n_simulations,
+            median_return=median,
+            percentile_5=p5,
+            percentile_95=p95,
+            prob_positive=prob_pos,
+            stability_score=round(stability, 4),
+        )
+
     def to_report_dict(
-        self, stats: PerformanceStatistics, bootstrap: BootstrapResult | None = None
+        self,
+        stats: PerformanceStatistics,
+        bootstrap: BootstrapResult | None = None,
+        monte_carlo: MonteCarloResult | None = None,
     ) -> dict[str, Any]:
         """Serialize statistics for experiment compare / backtest reports."""
         payload: dict[str, Any] = {
@@ -145,5 +210,14 @@ class StatisticsEngine:
                 "lower_bound": bootstrap.lower_bound,
                 "upper_bound": bootstrap.upper_bound,
                 "sample_count": bootstrap.sample_count,
+            }
+        if monte_carlo is not None:
+            payload["monte_carlo"] = {
+                "simulations": monte_carlo.simulations,
+                "median_return": monte_carlo.median_return,
+                "percentile_5": monte_carlo.percentile_5,
+                "percentile_95": monte_carlo.percentile_95,
+                "prob_positive": monte_carlo.prob_positive,
+                "stability_score": monte_carlo.stability_score,
             }
         return payload

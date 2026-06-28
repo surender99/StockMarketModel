@@ -47,6 +47,69 @@ def detect_bullish_engulfing(ohlcv: pd.DataFrame) -> list[PatternEvent]:
     return events
 
 
+def detect_doji(ohlcv: pd.DataFrame, *, body_ratio_max: float = 0.1) -> list[PatternEvent]:
+    """Detect doji candlestick — REQ-PAT-001."""
+    events: list[PatternEvent] = []
+    for i in range(len(ohlcv)):
+        row = ohlcv.iloc[i]
+        bar_range = _range(row)
+        if bar_range <= 0:
+            continue
+        body = _body(row)
+        if body / bar_range <= body_ratio_max:
+            events.append(
+                PatternEvent(
+                    pattern_id="doji",
+                    pattern_type=PatternType.CANDLESTICK,
+                    bar_index=i,
+                    confidence=0.7,
+                    metadata={"body_ratio": body / bar_range},
+                )
+            )
+    return events
+
+
+def detect_morning_star(ohlcv: pd.DataFrame) -> list[PatternEvent]:
+    """Detect morning star three-candle reversal — REQ-PAT-001."""
+    events: list[PatternEvent] = []
+    if len(ohlcv) < 3:
+        return events
+    for i in range(2, len(ohlcv)):
+        first = ohlcv.iloc[i - 2]
+        middle = ohlcv.iloc[i - 1]
+        third = ohlcv.iloc[i]
+        first_bearish = float(first["close"]) < float(first["open"])
+        third_bullish = float(third["close"]) > float(third["open"])
+        if not (first_bearish and third_bullish):
+            continue
+        middle_body = _body(middle)
+        middle_range = _range(middle)
+        if middle_range <= 0:
+            continue
+        if middle_body / middle_range > 0.35:
+            continue
+        if float(middle["close"]) >= float(first["close"]):
+            continue
+        if float(third["close"]) <= float(first["open"]):
+            continue
+        midpoint = (float(first["open"]) + float(first["close"])) / 2.0
+        if float(third["close"]) < midpoint:
+            continue
+        events.append(
+            PatternEvent(
+                pattern_id="morning_star",
+                pattern_type=PatternType.CANDLESTICK,
+                bar_index=i,
+                confidence=0.85,
+                metadata={
+                    "first_close": float(first["close"]),
+                    "third_close": float(third["close"]),
+                },
+            )
+        )
+    return events
+
+
 def detect_hammer(ohlcv: pd.DataFrame) -> list[PatternEvent]:
     """Detect hammer candlestick — REQ-PAT-001."""
     events: list[PatternEvent] = []

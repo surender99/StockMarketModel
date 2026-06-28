@@ -67,10 +67,21 @@ def test_bootstrap_sharpe_req_stat_002() -> None:
     assert result.lower_bound <= result.point_estimate <= result.upper_bound
 
 
+def test_monte_carlo_req_stat_003() -> None:
+    engine = StatisticsEngine()
+    result = engine.monte_carlo_returns(_equity_curve(), n_simulations=300, seed=11)
+    assert result.simulations == 300
+    assert result.percentile_5 <= result.median_return <= result.percentile_95
+    assert 0.0 <= result.prob_positive <= 1.0
+    assert 0.0 <= result.stability_score <= 1.0
+
+
 def test_statistics_report_dict() -> None:
     engine = StatisticsEngine()
     stats = engine.compute_performance(_equity_curve(), _trades(), initial_capital=100_000.0)
     bootstrap = engine.bootstrap_sharpe(_equity_curve(), n_samples=50, seed=1)
-    report = engine.to_report_dict(stats, bootstrap)
+    monte = engine.monte_carlo_returns(_equity_curve(), n_simulations=50, seed=2)
+    report = engine.to_report_dict(stats, bootstrap, monte)
     assert "expectancy" in report
     assert "bootstrap_sharpe" in report
+    assert "monte_carlo" in report

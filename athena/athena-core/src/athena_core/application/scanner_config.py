@@ -8,10 +8,11 @@ from pydantic import BaseModel, Field
 class ScannerWeightsConfig(BaseModel):
     """Scoring dimension weights — REQ-SCANNER-001."""
 
-    breakout: float = Field(default=0.25, ge=0)
-    relative_strength: float = Field(default=0.25, ge=0)
-    momentum: float = Field(default=0.25, ge=0)
-    signal_probability: float = Field(default=0.25, ge=0)
+    breakout: float = Field(default=0.2, ge=0)
+    relative_strength: float = Field(default=0.2, ge=0)
+    momentum: float = Field(default=0.2, ge=0)
+    signal_probability: float = Field(default=0.2, ge=0)
+    pattern: float = Field(default=0.2, ge=0)
 
 
 class ScannerConfig(BaseModel):
@@ -30,4 +31,14 @@ class ScannerConfig(BaseModel):
     require_entry_signal: bool = Field(
         default=False,
         description="Only rank symbols with active strategy entry signals",
+    )
+    pattern_ids: list[str] = Field(
+        default_factory=lambda: ["bullish_engulfing", "hammer", "morning_star"],
+        description="Patterns contributing to scan score",
+    )
+    min_breadth_score: float | None = Field(
+        default=None,
+        ge=0,
+        le=100,
+        description="Skip scan when universe breadth score is below threshold",
     )

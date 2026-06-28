@@ -21,11 +21,11 @@ A package can be **spec-complete** while **code-partial** or **code-absent**.
 
 | Pkg | Name | Spec | Code | Notes |
 |-----|------|------|------|-------|
-| **06** | Pattern Recognition | ✅ Integrated | ⚠️ **MVP** | `bullish_engulfing`, `hammer`, `bull_flag`; catalog backlog remains |
-| **09** | Portfolio Engine | ✅ Integrated | ⚠️ **MVP** | `PortfolioEngine` + backtest integration; rebalancing/correlation backlog |
-| **11** | Statistics | ✅ Integrated | ⚠️ **MVP** | Core metrics + bootstrap Sharpe; Monte Carlo backlog |
+| **06** | Pattern Recognition | ✅ Integrated | ✅ **Rev 2+** | Scanner + feature store wired; 5 patterns (`bullish_engulfing`, `hammer`, `doji`, `morning_star`, `bull_flag`); catalog backlog |
+| **09** | Portfolio Engine | ✅ Integrated | ✅ **Rev 2+** | Rebalancing + correlation/exposure limits in backtest; full AES-0901 backlog remains |
+| **11** | Statistics | ✅ Integrated | ✅ **Rev 2+** | Bootstrap Sharpe + Monte Carlo robustness; parameter sensitivity backlog |
 
-All other References packages (01–05, 07–08, 10, 12–15) are spec-integrated; MVP code exists where listed in PLATFORM-COMPLETE REQ table (22 REQs).
+All other References packages (01–05, 07–08, 10, 12–15) are spec-integrated; MVP code exists where listed in PLATFORM-COMPLETE REQ table (22 REQs). Package **04** breadth engine (`REQ-MI-001`) implemented; sector rotation backlog remains. Package **05** adds STOCH (`REQ-IND-STOCH-001`).
 
 ---
 

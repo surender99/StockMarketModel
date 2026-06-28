@@ -13,6 +13,7 @@ from athena_core.application.backtest_config import BacktestConfig
 from athena_core.application.backtest_metrics import compute_benchmark_metrics, compute_metrics
 from athena_core.application.costs import apply_slippage, compute_trade_costs
 from athena_core.application.portfolio_engine import PortfolioEngine
+from athena_core.application.portfolio_risk import PortfolioLimits
 from athena_core.application.regime_engine import RegimeEngine
 from athena_core.application.statistics_engine import StatisticsEngine
 from athena_core.domain.backtest import TradeRecord
@@ -87,6 +88,13 @@ class BacktestEngine:
         portfolio = PortfolioState(cash=config.initial_capital)
         trades: list[TradeRecord] = []
         equity_rows: list[dict[str, Any]] = []
+        portfolio_engine = PortfolioEngine()
+        limits = PortfolioLimits(
+            max_position_weight=config.max_position_weight,
+            max_correlation=config.max_correlation,
+            rebalance_threshold=config.rebalance_threshold,
+        )
+        return_history: dict[str, list[float]] = {sym: [] for sym in universe}
 
         max_positions = int(strategy.position_sizing.params.get("max_positions", 10))
 
@@ -96,6 +104,12 @@ class BacktestEngine:
                 row = self._row_for_date(frame, session)
                 if row is not None:
                     marks[symbol] = float(row[config.fill_price])
+                    idx = self._index_for_date(frame, session)
+                    if idx is not None and idx > 0:
+                        prev = float(frame.iloc[idx - 1][config.fill_price])
+                        cur = float(frame.iloc[idx][config.fill_price])
+                        if prev > 0:
+                            return_history.setdefault(symbol, []).append(cur / prev - 1.0)
 
             self._process_exits(
                 strategy,
@@ -114,7 +128,20 @@ class BacktestEngine:
                 symbol_frames,
                 session,
                 max_positions,
+                portfolio_engine=portfolio_engine,
+                limits=limits,
+                return_history=return_history,
             )
+
+            if config.enable_rebalance and marks:
+                evaluation = portfolio_engine.evaluate(portfolio, marks)
+                n_pos = max(len(portfolio.positions), 1)
+                target = {sym: 1.0 / n_pos for sym in portfolio.positions}
+                orders = portfolio_engine.suggest_rebalance(
+                    portfolio, marks, target, limits=limits
+                )
+                if orders:
+                    portfolio_engine.apply_rebalance(portfolio, marks, orders)
 
             equity = portfolio.equity(marks)
             equity_rows.append({"date": session, "equity": equity, "cash": portfolio.cash})
@@ -156,13 +183,14 @@ class BacktestEngine:
         metrics["dataset_version"] = dataset_version
 
         final_marks = self._final_marks(symbol_frames, portfolio, trading_days, config)
-        portfolio_eval = PortfolioEngine().evaluate(portfolio, final_marks)
+        portfolio_eval = portfolio_engine.evaluate(portfolio, final_marks)
         stats_engine = StatisticsEngine()
         perf = stats_engine.compute_performance(
             equity_curve, trades, initial_capital=config.initial_capital
         )
         bootstrap = stats_engine.bootstrap_sharpe(equity_curve)
-        statistics_report = stats_engine.to_report_dict(perf, bootstrap)
+        monte_carlo = stats_engine.monte_carlo_returns(equity_curve, n_simulations=500, seed=42)
+        statistics_report = stats_engine.to_report_dict(perf, bootstrap, monte_carlo)
         metrics.update(
             {
                 "expectancy": statistics_report.get("expectancy"),
@@ -305,12 +333,31 @@ class BacktestEngine:
         symbol_frames: dict[str, pd.DataFrame],
         session: date,
         max_positions: int,
+        *,
+        portfolio_engine: PortfolioEngine | None = None,
+        limits: PortfolioLimits | None = None,
+        return_history: dict[str, list[float]] | None = None,
     ) -> None:
         if portfolio.position_count() >= max_positions:
             return
 
         indicator_map = {spec.id: indicator_column_name(spec) for spec in strategy.indicators}
         candidates: list[str] = []
+        marks: dict[str, float] = {}
+        for symbol, frame in symbol_frames.items():
+            row = self._row_for_date(frame, session)
+            if row is not None:
+                marks[symbol] = float(row[config.fill_price])
+
+        evaluation = None
+        returns_df = pd.DataFrame()
+        if portfolio_engine is not None and portfolio.positions and return_history:
+            evaluation = portfolio_engine.evaluate(portfolio, marks)
+            min_len = min(len(v) for v in return_history.values() if v)
+            if min_len >= 5:
+                returns_df = pd.DataFrame(
+                    {sym: vals[-min_len:] for sym, vals in return_history.items() if vals}
+                )
 
         for symbol, frame in symbol_frames.items():
             if symbol in portfolio.positions:
@@ -338,6 +385,24 @@ class BacktestEngine:
             qty = self._size_quantity(strategy, config, portfolio, fill)
             if qty <= 0:
                 continue
+
+            if portfolio_engine is not None and evaluation is not None and limits is not None:
+                equity = portfolio.equity(marks)
+                candidate_weight = (fill * qty) / equity if equity > 0 else 0.0
+                hist = return_history or {}
+                if symbol in hist and len(hist) >= 2:
+                    trial = returns_df.copy()
+                    if symbol not in trial.columns and symbol in hist:
+                        trial[symbol] = hist[symbol][-len(trial) :]
+                    if not portfolio_engine.passes_entry_limits(
+                        evaluation,
+                        symbol,
+                        candidate_weight,
+                        trial,
+                        limits=limits,
+                    ):
+                        continue
+
             notional = fill * qty
             entry_fees = compute_trade_costs(notional, config.costs, is_sell=False)
             total_cost = notional + entry_fees

@@ -26,6 +26,10 @@ class BacktestSettings(BaseModel):
     benchmark: str = "^NSEI"
     fill_price: str = "close"
     allow_fractional: bool = False
+    max_position_weight: float = Field(default=0.25, ge=0, le=1)
+    max_correlation: float = Field(default=0.85, ge=0, le=1)
+    rebalance_threshold: float = Field(default=0.05, ge=0, le=1)
+    enable_rebalance: bool = False
 
 
 class BacktestConfig(BacktestSettings):

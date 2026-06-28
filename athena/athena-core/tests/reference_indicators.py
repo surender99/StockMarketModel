@@ -62,3 +62,28 @@ def pandas_ta_macd(
         },
         index=series.index,
     )
+
+
+def pandas_ta_stoch(
+    high: pd.Series,
+    low: pd.Series,
+    close: pd.Series,
+    k_period: int = 14,
+    d_period: int = 3,
+) -> pd.DataFrame | None:
+    """Return pandas-ta stochastic when the library is installed."""
+    try:
+        import pandas_ta as ta
+    except ImportError:
+        return None
+    result = ta.stoch(high, low, close, k=k_period, d=d_period)
+    if result is None:
+        return None
+    cols = result.columns.tolist()
+    return pd.DataFrame(
+        {
+            "stoch_k": result[cols[0]],
+            "stoch_d": result[cols[1]],
+        },
+        index=close.index,
+    )

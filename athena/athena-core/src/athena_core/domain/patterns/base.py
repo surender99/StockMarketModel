@@ -6,7 +6,12 @@ from collections.abc import Callable
 
 import pandas as pd
 
-from athena_core.domain.patterns.candlestick import detect_bullish_engulfing, detect_hammer
+from athena_core.domain.patterns.candlestick import (
+    detect_bullish_engulfing,
+    detect_doji,
+    detect_hammer,
+    detect_morning_star,
+)
 from athena_core.domain.patterns.chart import detect_bull_flag
 from athena_core.domain.patterns.types import PatternEvent
 
@@ -15,6 +20,8 @@ PatternFn = Callable[[pd.DataFrame], list[PatternEvent]]
 _REGISTRY: dict[str, PatternFn] = {
     "bullish_engulfing": detect_bullish_engulfing,
     "hammer": detect_hammer,
+    "doji": detect_doji,
+    "morning_star": detect_morning_star,
     "bull_flag": detect_bull_flag,
 }
 

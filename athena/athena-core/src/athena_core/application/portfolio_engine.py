@@ -2,6 +2,13 @@
 
 from __future__ import annotations
 
+import pandas as pd
+
+from athena_core.application.portfolio_risk import (
+    PortfolioLimits,
+    PortfolioRiskService,
+    RebalanceOrder,
+)
 from athena_core.domain.portfolio import (
     ExposureMetrics,
     PortfolioEvaluation,
@@ -11,7 +18,10 @@ from athena_core.domain.portfolio import (
 
 
 class PortfolioEngine:
-    """Evaluate portfolio state: exposure, sector weights, and heat metrics."""
+    """Evaluate portfolio state: exposure, sector weights, heat, and risk controls."""
+
+    def __init__(self) -> None:
+        self._risk = PortfolioRiskService()
 
     def evaluate(
         self,
@@ -86,4 +96,48 @@ class PortfolioEngine:
             cash=portfolio.cash,
             exposures=exposures,
             metrics=metrics,
+        )
+
+    def suggest_rebalance(
+        self,
+        portfolio: PortfolioState,
+        marks: dict[str, float],
+        target_weights: dict[str, float],
+        *,
+        limits: PortfolioLimits | None = None,
+    ) -> list[RebalanceOrder]:
+        """Rebalancing orders when drift exceeds threshold — REQ-PF-002."""
+        return self._risk.suggest_rebalance(
+            portfolio, marks, target_weights, limits=limits
+        )
+
+    def apply_rebalance(
+        self,
+        portfolio: PortfolioState,
+        marks: dict[str, float],
+        orders: list[RebalanceOrder],
+    ) -> None:
+        """Apply rebalance orders in-place — REQ-PF-002."""
+        self._risk.apply_rebalance_orders(portfolio, marks, orders)
+
+    def passes_entry_limits(
+        self,
+        evaluation: PortfolioEvaluation,
+        candidate_symbol: str,
+        candidate_weight: float,
+        returns: pd.DataFrame,
+        *,
+        limits: PortfolioLimits | None = None,
+        candidate_sector: str | None = None,
+    ) -> bool:
+        """Correlation and exposure gate for new entries — AES-0901."""
+        limits = limits or PortfolioLimits()
+        if self._risk.violates_correlation_limit(returns, candidate_symbol, limits=limits):
+            return False
+        return self._risk.passes_exposure_limits(
+            evaluation,
+            limits=limits,
+            candidate_symbol=candidate_symbol,
+            candidate_weight=candidate_weight,
+            candidate_sector=candidate_sector,
         )

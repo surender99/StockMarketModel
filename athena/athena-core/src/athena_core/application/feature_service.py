@@ -14,6 +14,8 @@ from athena_core.domain.indicators.ema import compute_ema_from_ohlcv
 from athena_core.domain.indicators.macd import compute_macd_from_ohlcv
 from athena_core.domain.indicators.rsi import compute_rsi_from_ohlcv
 from athena_core.domain.indicators.sma import compute_sma_from_ohlcv
+from athena_core.domain.indicators.stoch import compute_stoch_from_ohlcv
+from athena_core.domain.patterns.series import compute_pattern_series
 from athena_core.domain.ports.feature_store import FeatureCacheMiss, FeatureStorePort
 from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
 
@@ -38,6 +40,12 @@ _INDICATOR_REGISTRY: dict[str, IndicatorFn] = {
     "rsi": lambda df, params: compute_rsi_from_ohlcv(
         df, int(params.get("period", 14)), price_column=params.get("price_column", "close")
     ),
+    "stoch": lambda df, params: compute_stoch_from_ohlcv(
+        df,
+        k_period=int(params.get("k_period", 14)),
+        d_period=int(params.get("d_period", 3)),
+    ),
+    "pattern": lambda df, params: compute_pattern_series(df, str(params["pattern_id"])),
 }
 
 
@@ -96,6 +104,8 @@ class FeatureService:
         if isinstance(values, pd.Series):
             col = f"{feature_id}_{params['period']}" if "period" in params else feature_id
             out = pd.DataFrame({"date": ohlcv["date"].values, col: values.values})
+        elif feature_id == "pattern":
+            out = values
         else:
             out = pd.concat(
                 [ohlcv[["date"]].reset_index(drop=True), values.reset_index(drop=True)],

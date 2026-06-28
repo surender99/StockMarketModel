@@ -14,14 +14,14 @@
 | **01** | Governance | ✅ | N/A (docs) | [PACKAGE-01-COMPLETE.md](packages/PACKAGE-01-COMPLETE.md) |
 | **02** | Architecture | ✅ | ✅ PluginRegistry stub | [PACKAGE-02-COMPLETE.md](packages/PACKAGE-02-COMPLETE.md) |
 | **03** | Data Platform | ✅ | ✅ Quality checks | [PACKAGE-03-COMPLETE.md](packages/PACKAGE-03-COMPLETE.md) |
-| **04** | Market Intelligence | ✅ | ✅ Regime engine | [PACKAGE-04-COMPLETE.md](packages/PACKAGE-04-COMPLETE.md) |
-| **05** | Feature Engineering | ✅ | ✅ EMA/SMA/MACD/RSI | [PACKAGE-05-COMPLETE.md](packages/PACKAGE-05-COMPLETE.md) |
-| **06** | Pattern Recognition | ✅ | ⚠️ Stub only | [PACKAGE-06-COMPLETE.md](packages/PACKAGE-06-COMPLETE.md) |
+| **04** | Market Intelligence | ✅ | ✅ Regime + breadth engine | [PACKAGE-04-COMPLETE.md](packages/PACKAGE-04-COMPLETE.md) |
+| **05** | Feature Engineering | ✅ | ✅ EMA/SMA/MACD/RSI/STOCH | [PACKAGE-05-COMPLETE.md](packages/PACKAGE-05-COMPLETE.md) |
+| **06** | Pattern Recognition | ✅ | ✅ Scanner + feature store | [PACKAGE-06-COMPLETE.md](packages/PACKAGE-06-COMPLETE.md) |
 | **07** | Strategy Engine | ✅ | ✅ YAML + engine | [PACKAGE-07-COMPLETE.md](packages/PACKAGE-07-COMPLETE.md) |
 | **08** | Backtesting | ✅ | ✅ Backtest engine | [PACKAGE-08-COMPLETE.md](packages/PACKAGE-08-COMPLETE.md) |
-| **09** | Portfolio Engine | ✅ | ❌ Spec only | [PACKAGE-09-COMPLETE.md](packages/PACKAGE-09-COMPLETE.md) |
+| **09** | Portfolio Engine | ✅ | ✅ Rebalance + correlation limits | [PACKAGE-09-COMPLETE.md](packages/PACKAGE-09-COMPLETE.md) |
 | **10** | Research Engine | ✅ | ✅ Experiment tracker | [PACKAGE-10-COMPLETE.md](packages/PACKAGE-10-COMPLETE.md) |
-| **11** | Statistics | ✅ | ❌ Spec only | [PACKAGE-11-COMPLETE.md](packages/PACKAGE-11-COMPLETE.md) |
+| **11** | Statistics | ✅ | ✅ Bootstrap + Monte Carlo | [PACKAGE-11-COMPLETE.md](packages/PACKAGE-11-COMPLETE.md) |
 | **12** | Machine Learning | ✅ | ✅ ML scorer | [PACKAGE-12-COMPLETE.md](packages/PACKAGE-12-COMPLETE.md) |
 | **13** | AI Research Scientist | ✅ | ✅ athena-ai | [PACKAGE-13-COMPLETE.md](packages/PACKAGE-13-COMPLETE.md) |
 | **14** | Platform | ✅ | ✅ CI / install | [PACKAGE-14-COMPLETE.md](packages/PACKAGE-14-COMPLETE.md) |
@@ -35,8 +35,8 @@
 |---------|----------------|
 | 02 | `domain/plugins/` — PluginRegistry stub |
 | 03 | `domain/data/quality.py` — REQ-DATA-QUALITY-001 |
-| 05 | `domain/indicators/macd.py`, `rsi.py` — REQ-IND-MACD/RSI-001 |
-| 06 | `domain/patterns/` — PatternDetector stub |
+| 05 | `domain/indicators/macd.py`, `rsi.py`, `stoch.py` — REQ-IND-MACD/RSI/STOCH-001 |
+| 06 | `domain/patterns/` — PatternDetector + scanner/feature store integration |
 
 ---
 

@@ -78,3 +78,25 @@ def test_registered_patterns() -> None:
     assert "bullish_engulfing" in names
     assert "hammer" in names
     assert "bull_flag" in names
+    assert "doji" in names
+    assert "morning_star" in names
+
+
+def test_doji_detection_req_pat_001() -> None:
+    df = _ohlcv([{"open": 100, "high": 101, "low": 99, "close": 100.05}])
+    events = PatternDetector().detect(df, "doji")
+    assert len(events) == 1
+    assert events[0].pattern_id == "doji"
+
+
+def test_morning_star_detection_req_pat_001() -> None:
+    df = _ohlcv(
+        [
+            {"open": 110, "high": 111, "low": 100, "close": 101},
+            {"open": 100, "high": 101, "low": 99, "close": 100},
+            {"open": 100, "high": 115, "low": 99, "close": 114},
+        ]
+    )
+    events = PatternDetector().detect(df, "morning_star")
+    assert len(events) == 1
+    assert events[0].pattern_id == "morning_star"

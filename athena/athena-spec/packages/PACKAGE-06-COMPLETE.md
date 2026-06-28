@@ -13,7 +13,7 @@
 | 1 | All Package 06 markdown sources read | ✅ |
 | 2 | Specs integrated into athena-spec | ✅ |
 | 3 | Cross-links to ATH docs (no blind duplication) | ✅ |
-| 4 | Code gap addressed where applicable | ✅ PatternDetector stub |
+| 4 | Code gap addressed where applicable | ✅ PatternDetector + scanner/feature store |
 | 5 | REFERENCES-INDEX updated | ✅ |
 | 6 | Tests pass | ✅ |
 

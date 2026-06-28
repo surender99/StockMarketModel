@@ -66,3 +66,58 @@ def test_empty_portfolio_req_pf_002() -> None:
     assert evaluation.equity == 100_000.0
     assert evaluation.metrics.cash_weight == 1.0
     assert evaluation.metrics.position_count == 0
+
+
+def test_rebalance_suggestions_req_pf_002() -> None:
+    portfolio = PortfolioState(cash=0.0)
+    portfolio.positions["A"] = OpenPosition(
+        symbol="A",
+        side="long",
+        entry_date=date(2024, 1, 2),
+        entry_price=100.0,
+        quantity=80,
+        entry_fees=0.0,
+    )
+    portfolio.positions["B"] = OpenPosition(
+        symbol="B",
+        side="long",
+        entry_date=date(2024, 1, 2),
+        entry_price=100.0,
+        quantity=20,
+        entry_fees=0.0,
+    )
+    marks = {"A": 100.0, "B": 100.0}
+    engine = PortfolioEngine()
+    orders = engine.suggest_rebalance(
+        portfolio,
+        marks,
+        {"A": 0.5, "B": 0.5},
+    )
+    assert orders
+    assert any(o.symbol == "A" and o.side == "sell" for o in orders)
+
+
+def test_correlation_limit_blocks_entry() -> None:
+    import pandas as pd
+
+    portfolio = PortfolioState(cash=50_000.0)
+    portfolio.positions["A"] = OpenPosition(
+        symbol="A",
+        side="long",
+        entry_date=date(2024, 1, 2),
+        entry_price=100.0,
+        quantity=50,
+        entry_fees=0.0,
+    )
+    evaluation = PortfolioEngine().evaluate(portfolio, {"A": 100.0})
+    returns = pd.DataFrame({"A": [0.01, 0.02, 0.01, 0.02, 0.01], "B": [0.01, 0.02, 0.01, 0.02, 0.01]})
+    from athena_core.application.portfolio_risk import PortfolioLimits
+
+    allowed = PortfolioEngine().passes_entry_limits(
+        evaluation,
+        "B",
+        0.1,
+        returns,
+        limits=PortfolioLimits(max_correlation=0.5),
+    )
+    assert not allowed
