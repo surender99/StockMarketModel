@@ -138,3 +138,136 @@ def detect_hammer(ohlcv: pd.DataFrame) -> list[PatternEvent]:
                 )
             )
     return events
+
+
+def detect_bearish_engulfing(ohlcv: pd.DataFrame) -> list[PatternEvent]:
+    """Detect bearish engulfing candlestick — REQ-PAT-001."""
+    events: list[PatternEvent] = []
+    if len(ohlcv) < 2:
+        return events
+    for i in range(1, len(ohlcv)):
+        prev = ohlcv.iloc[i - 1]
+        curr = ohlcv.iloc[i]
+        prev_bullish = float(prev["close"]) > float(prev["open"])
+        curr_bearish = float(curr["close"]) < float(curr["open"])
+        if not (prev_bullish and curr_bearish):
+            continue
+        prev_body_low = min(float(prev["open"]), float(prev["close"]))
+        prev_body_high = max(float(prev["open"]), float(prev["close"]))
+        curr_body_low = min(float(curr["open"]), float(curr["close"]))
+        curr_body_high = max(float(curr["open"]), float(curr["close"]))
+        if curr_body_low <= prev_body_low and curr_body_high >= prev_body_high:
+            events.append(
+                PatternEvent(
+                    pattern_id="bearish_engulfing",
+                    pattern_type=PatternType.CANDLESTICK,
+                    bar_index=i,
+                    confidence=0.8,
+                    metadata={
+                        "prev_close": float(prev["close"]),
+                        "curr_close": float(curr["close"]),
+                    },
+                )
+            )
+    return events
+
+
+def detect_shooting_star(ohlcv: pd.DataFrame) -> list[PatternEvent]:
+    """Detect shooting star candlestick — REQ-PAT-001."""
+    events: list[PatternEvent] = []
+    for i in range(len(ohlcv)):
+        row = ohlcv.iloc[i]
+        bar_range = _range(row)
+        if bar_range <= 0:
+            continue
+        body = _body(row)
+        open_p, close_p = float(row["open"]), float(row["close"])
+        high_p, low_p = float(row["high"]), float(row["low"])
+        body_top = max(open_p, close_p)
+        body_bottom = min(open_p, close_p)
+        upper_shadow = high_p - body_top
+        lower_shadow = body_bottom - low_p
+        if body <= 0:
+            continue
+        if upper_shadow >= 2.0 * body and lower_shadow <= body * 0.5:
+            events.append(
+                PatternEvent(
+                    pattern_id="shooting_star",
+                    pattern_type=PatternType.CANDLESTICK,
+                    bar_index=i,
+                    confidence=0.75,
+                    metadata={"upper_shadow": upper_shadow, "body": body},
+                )
+            )
+    return events
+
+
+def detect_inverted_hammer(ohlcv: pd.DataFrame) -> list[PatternEvent]:
+    """Detect inverted hammer candlestick — REQ-PAT-001."""
+    events: list[PatternEvent] = []
+    for i in range(len(ohlcv)):
+        row = ohlcv.iloc[i]
+        bar_range = _range(row)
+        if bar_range <= 0:
+            continue
+        body = _body(row)
+        open_p, close_p = float(row["open"]), float(row["close"])
+        high_p, low_p = float(row["high"]), float(row["low"])
+        body_top = max(open_p, close_p)
+        body_bottom = min(open_p, close_p)
+        upper_shadow = high_p - body_top
+        lower_shadow = body_bottom - low_p
+        if body <= 0:
+            continue
+        if upper_shadow >= 2.0 * body and lower_shadow <= body * 0.5:
+            events.append(
+                PatternEvent(
+                    pattern_id="inverted_hammer",
+                    pattern_type=PatternType.CANDLESTICK,
+                    bar_index=i,
+                    confidence=0.7,
+                    metadata={"upper_shadow": upper_shadow, "body": body},
+                )
+            )
+    return events
+
+
+def detect_evening_star(ohlcv: pd.DataFrame) -> list[PatternEvent]:
+    """Detect evening star three-candle reversal — REQ-PAT-001."""
+    events: list[PatternEvent] = []
+    if len(ohlcv) < 3:
+        return events
+    for i in range(2, len(ohlcv)):
+        first = ohlcv.iloc[i - 2]
+        middle = ohlcv.iloc[i - 1]
+        third = ohlcv.iloc[i]
+        first_bullish = float(first["close"]) > float(first["open"])
+        third_bearish = float(third["close"]) < float(third["open"])
+        if not (first_bullish and third_bearish):
+            continue
+        middle_body = _body(middle)
+        middle_range = _range(middle)
+        if middle_range <= 0:
+            continue
+        if middle_body / middle_range > 0.35:
+            continue
+        if float(middle["close"]) <= float(first["close"]):
+            continue
+        if float(third["close"]) >= float(first["open"]):
+            continue
+        midpoint = (float(first["open"]) + float(first["close"])) / 2.0
+        if float(third["close"]) > midpoint:
+            continue
+        events.append(
+            PatternEvent(
+                pattern_id="evening_star",
+                pattern_type=PatternType.CANDLESTICK,
+                bar_index=i,
+                confidence=0.85,
+                metadata={
+                    "first_close": float(first["close"]),
+                    "third_close": float(third["close"]),
+                },
+            )
+        )
+    return events
