@@ -83,6 +83,9 @@ class _Repo(OHLCVRepositoryPort):
     def exists(self, symbol: str) -> bool:
         return True
 
+    def read_metadata(self, symbol: str) -> dict[str, Any] | None:
+        return None
+
 
 class _Features(FeatureProviderPort):
     def get_indicator_frame(

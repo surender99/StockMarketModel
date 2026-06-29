@@ -42,7 +42,8 @@ Contract for indicator plugins — pure, deterministic feature computation from 
 |------------------|------------------------|
 | Pure compute functions | `domain/indicators/ema.py`, `domain/indicators/sma.py` |
 | OHLCV → feature adapter | `compute_*_from_ohlcv()` helpers |
-| Registry lookup | `FeatureService._INDICATOR_REGISTRY` (`feature_id` → callable) |
+| Registry lookup | `domain/features/indicator_plugins.py` → `resolve_indicator(registry, feature_id)` |
+| Bootstrap wiring | `bootstrap_athena_core` calls `register_builtin_indicators` |
 | Cache layer | `FeatureService.get_feature()` via `FeatureStorePort` |
 | Config schema | `IndicatorSpec` in `domain/strategy/config.py` |
 
@@ -58,15 +59,11 @@ def compute_ema_from_ohlcv(
     ...
 ```
 
-Registered in `FeatureService` as:
+Registered via `PluginRegistry` in `domain/features/indicator_plugins.py`:
 
 ```python
-_INDICATOR_REGISTRY = {
-    "ema": lambda df, params: compute_ema_from_ohlcv(
-        df, int(params["period"]), price_column=params.get("price_column", "close")
-    ),
-    ...
-}
+register_builtin_indicators(plugin_registry)  # bootstrap_athena_core
+compute_fn = resolve_indicator(plugin_registry, "ema")
 ```
 
 ### Strategy YAML reference
@@ -83,9 +80,9 @@ indicators:
 
 ---
 
-## Future (Package 05)
+## Release-03 (ATH-REL-003)
 
-Indicators will implement the full `Plugin` contract from [AES-0202](../architecture/AES-0202-Plugin-Architecture.md) and register via `PluginRegistry`. Until then, `_INDICATOR_REGISTRY` is the authoritative runtime registry.
+Indicators implement the `Plugin` contract from [AES-0202](../architecture/AES-0202-Plugin-Architecture.md) and register via `PluginRegistry` at bootstrap. See [ATH-REL-003-Feature-Engineering.md](../ATH-REL-003-Feature-Engineering.md) and [REQ-FEAT-REGISTRY-001](../requirements/REQ-FEAT-REGISTRY-001.md).
 
 ---
 

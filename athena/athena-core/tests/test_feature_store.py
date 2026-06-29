@@ -11,9 +11,26 @@ import pytest
 
 from athena_core.application.config import FeatureStoreConfig
 from athena_core.application.feature_service import FeatureService
+from athena_core.domain.features.indicator_plugins import register_builtin_indicators
 from athena_core.domain.ports.feature_store import FeatureCacheMiss
+from athena_core.domain.plugins import PluginRegistry
 from athena_core.infrastructure.parquet_feature_store import ParquetFeatureStore, params_hash
 from athena_core.infrastructure.parquet_ohlcv_store import ParquetOHLCVStore
+
+
+def _feature_service(
+    feature_store: ParquetFeatureStore,
+    ohlcv_store: ParquetOHLCVStore,
+    config: FeatureStoreConfig | None = None,
+) -> FeatureService:
+    registry = PluginRegistry()
+    register_builtin_indicators(registry)
+    return FeatureService(
+        feature_store,
+        ohlcv_store,
+        config or FeatureStoreConfig(),
+        plugin_registry=registry,
+    )
 
 
 @pytest.fixture
@@ -104,7 +121,7 @@ def test_feature_service_cache_hit_skips_recompute(
     ohlcv_store = ParquetOHLCVStore(tmp_path / "ohlcv")
     feature_store = ParquetFeatureStore(tmp_path / "features")
     ohlcv_store.write("TEST.NS", ohlcv_sample)
-    service = FeatureService(feature_store, ohlcv_store, FeatureStoreConfig(data_version="v1"))
+    service = _feature_service(feature_store, ohlcv_store, FeatureStoreConfig(data_version="v1"))
 
     first = service.get_feature("TEST.NS", "ema", {"period": 9})
     assert service.compute_count == 1
@@ -117,7 +134,7 @@ def test_feature_service_pattern_feature(tmp_path: Path, ohlcv_sample: pd.DataFr
     ohlcv_store = ParquetOHLCVStore(tmp_path / "ohlcv")
     feature_store = ParquetFeatureStore(tmp_path / "features")
     ohlcv_store.write("TEST.NS", ohlcv_sample)
-    service = FeatureService(feature_store, ohlcv_store, FeatureStoreConfig(data_version="v1"))
+    service = _feature_service(feature_store, ohlcv_store, FeatureStoreConfig(data_version="v1"))
     frame = service.get_feature("TEST.NS", "pattern", {"pattern_id": "hammer"})
     assert "signal" in frame.columns
     assert "confidence" in frame.columns
@@ -128,7 +145,7 @@ def test_feature_service_stoch_feature(tmp_path: Path, ohlcv_sample: pd.DataFram
     ohlcv_store = ParquetOHLCVStore(tmp_path / "ohlcv")
     feature_store = ParquetFeatureStore(tmp_path / "features")
     ohlcv_store.write("TEST.NS", ohlcv_sample)
-    service = FeatureService(feature_store, ohlcv_store, FeatureStoreConfig(data_version="v1"))
+    service = _feature_service(feature_store, ohlcv_store, FeatureStoreConfig(data_version="v1"))
     frame = service.get_feature("TEST.NS", "stoch", {"k_period": 14, "d_period": 3})
     assert "stoch_k" in frame.columns
     assert "stoch_d" in frame.columns
@@ -138,7 +155,7 @@ def test_different_params_separate_paths(tmp_path: Path, ohlcv_sample: pd.DataFr
     ohlcv_store = ParquetOHLCVStore(tmp_path / "ohlcv")
     feature_store = ParquetFeatureStore(tmp_path / "features")
     ohlcv_store.write("TEST.NS", ohlcv_sample)
-    service = FeatureService(feature_store, ohlcv_store, FeatureStoreConfig())
+    service = _feature_service(feature_store, ohlcv_store, FeatureStoreConfig())
 
     service.get_feature("TEST.NS", "ema", {"period": 9})
     service.get_feature("TEST.NS", "ema", {"period": 21})

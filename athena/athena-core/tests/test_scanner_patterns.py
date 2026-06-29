@@ -10,7 +10,7 @@ from athena_core.application.backtest_engine import FeatureProviderPort
 from athena_core.application.scanner import DailyScanner
 from athena_core.application.scanner_config import ScannerConfig, ScannerWeightsConfig
 from athena_core.domain.patterns.base import PatternDetector
-from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
+from tests.memory_ohlcv_repo import MemoryOHLCVRepo
 from athena_core.domain.strategy.config import (
     EntryConfig,
     ExitConfig,
@@ -22,28 +22,6 @@ from athena_core.domain.strategy.config import (
     StrategyMeta,
     UniverseConfig,
 )
-
-
-class _Repo(OHLCVRepositoryPort):
-    def __init__(self, frames: dict[str, pd.DataFrame]) -> None:
-        self._frames = frames
-
-    def read(self, symbol: str, start: date | None = None, end: date | None = None) -> pd.DataFrame:
-        df = self._frames.get(symbol, pd.DataFrame())
-        if df.empty:
-            return df
-        out = df.copy()
-        if start:
-            out = out[out["date"] >= start]
-        if end:
-            out = out[out["date"] <= end]
-        return out.reset_index(drop=True)
-
-    def write(self, symbol: str, df: pd.DataFrame) -> int:
-        return len(df)
-
-    def exists(self, symbol: str) -> bool:
-        return symbol in self._frames
 
 
 class _Features(FeatureProviderPort):
@@ -92,7 +70,7 @@ def test_scanner_pattern_score_boosts_candidate() -> None:
     )
     as_of = dates[-1]
     scanner = DailyScanner(
-        _Repo({"^NSEI": bench, "PAT": pat}),
+        MemoryOHLCVRepo({"^NSEI": bench, "PAT": pat}),
         _Features(),
         ScannerConfig(
             top_n=1,

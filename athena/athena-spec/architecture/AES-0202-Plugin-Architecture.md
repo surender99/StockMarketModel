@@ -27,7 +27,7 @@ Plugins are **registered**, not hardcoded. The composition root (`runtime.py`) o
 
 | Type | Contract | MVP Implementation |
 |------|----------|-------------------|
-| **Indicators** | [IndicatorProvider](../contracts/IndicatorProvider.md) | `_INDICATOR_REGISTRY` in `FeatureService` |
+| **Indicators** | [IndicatorProvider](../contracts/IndicatorProvider.md) | `register_builtin_indicators` + `FeatureService` via `PluginRegistry` (ATH-REL-003) |
 | **Patterns** | PatternProvider (Package 06) | ⏳ Not yet |
 | **Strategies** | [StrategyProvider](../contracts/StrategyProvider.md) | `StrategyConfig` YAML |
 | **Risk** | Risk rules in strategy config | `RiskConfig` in `StrategyConfig` |
@@ -45,7 +45,7 @@ PluginRegistry
   └── list(plugin_type: PluginType) → list[Plugin]
 ```
 
-MVP stub: `athena_core.domain.plugins.PluginRegistry` — registry with lifecycle (`REGISTERED`, `ACTIVE`, `DISABLED`), discovery, and unregister. `AthenaRuntime` exposes the registry via `bootstrap_athena_core`. Current indicators remain in `FeatureService._INDICATOR_REGISTRY` until Package 05 formalizes the indicator framework.
+MVP: `athena_core.domain.plugins.PluginRegistry` with lifecycle (`REGISTERED`, `ACTIVE`, `DISABLED`), discovery, and unregister. `bootstrap_athena_core` registers built-in indicators via `register_builtin_indicators`. `FeatureService` resolves indicators through `PluginRegistry` (REQ-FEAT-REGISTRY-001, ATH-REL-003).
 
 ---
 
@@ -63,7 +63,7 @@ MVP stub: `athena_core.domain.plugins.PluginRegistry` — registry with lifecycl
 | Phase | Action |
 |-------|--------|
 | Package 02 (now) | `PluginRegistry` stub, contracts documented |
-| Package 05 | Migrate indicators to `IndicatorProvider` plugins |
+| Package 05 / REL-003 (now) | Indicators registered as `Plugin` via `register_builtin_indicators` |
 | Package 06 | Add `PatternProvider` plugins |
 | Package 07 | Formalize `StrategyProvider` lifecycle |
 

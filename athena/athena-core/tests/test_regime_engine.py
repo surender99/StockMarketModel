@@ -9,34 +9,10 @@ import pytest
 
 from athena_core.application.regime_config import RegimeConfig
 from athena_core.application.regime_engine import RegimeEngine
-from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
 from athena_core.domain.regime.indicators import compute_adx, compute_atr, compute_regime_features
 from athena_core.domain.regime.models import TrendRegime, VolatilityRegime
 from athena_core.domain.strategy.config import FilterSpec
-
-
-class _Repo(OHLCVRepositoryPort):
-    def __init__(self, frames: dict[str, pd.DataFrame]) -> None:
-        self._frames = frames
-
-    def read(self, symbol: str, start: date | None = None, end: date | None = None) -> pd.DataFrame:
-        df = self._frames.get(symbol, pd.DataFrame())
-        if df.empty:
-            return df
-        out = df.copy()
-        if start:
-            out = out[out["date"] >= start]
-        if end:
-            out = out[out["date"] <= end]
-        return out.reset_index(drop=True)
-
-    def write(self, symbol: str, df: pd.DataFrame) -> int:
-        self._frames[symbol] = df
-        return len(df)
-
-    def exists(self, symbol: str) -> bool:
-        return symbol in self._frames
-
+from tests.memory_ohlcv_repo import MemoryOHLCVRepo
 
 def _bull_ohlcv(days: int = 260) -> pd.DataFrame:
     start = date(2023, 1, 3)
@@ -75,7 +51,7 @@ def test_regime_indicators_compute() -> None:
 
 def test_bull_trend_classification() -> None:
     ohlcv = _bull_ohlcv()
-    engine = RegimeEngine(_Repo({"^NSEI": ohlcv}), RegimeConfig(benchmark_symbol="^NSEI"))
+    engine = RegimeEngine(MemoryOHLCVRepo({"^NSEI": ohlcv}), RegimeConfig(benchmark_symbol="^NSEI"))
     state = engine.classify_as_of("^NSEI", ohlcv["date"].iloc[-1])
     assert state is not None
     assert state.trend == TrendRegime.BULL
@@ -84,7 +60,7 @@ def test_bull_trend_classification() -> None:
 def test_volatility_high_on_spike() -> None:
     ohlcv = _vol_spike_ohlcv()
     engine = RegimeEngine(
-        _Repo({"^NSEI": ohlcv}),
+        MemoryOHLCVRepo({"^NSEI": ohlcv}),
         RegimeConfig(benchmark_symbol="^NSEI", vol_high_percentile=0.5),
     )
     state = engine.classify_as_of("^NSEI", ohlcv["date"].iloc[-1])

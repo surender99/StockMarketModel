@@ -10,7 +10,6 @@ import pandas as pd
 from athena_core.application.backtest_config import BacktestConfig, BacktestCostsConfig
 from athena_core.application.backtest_engine import BacktestEngine, FeatureProviderPort
 from athena_core.application.costs import apply_slippage, compute_trade_costs
-from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
 from athena_core.domain.ports.trading_calendar import TradingCalendarPort
 from athena_core.domain.strategy.config import (
     EntryConfig,
@@ -24,6 +23,7 @@ from athena_core.domain.strategy.config import (
     StrategyMeta,
     UniverseConfig,
 )
+from tests.memory_ohlcv_repo import MemoryOHLCVRepo
 
 
 class _Calendar(TradingCalendarPort):
@@ -53,29 +53,6 @@ class _Calendar(TradingCalendarPort):
 
     def holidays_for_year(self, year: int) -> list[date]:
         return []
-
-
-class _Repo(OHLCVRepositoryPort):
-    def __init__(self, frames: dict[str, pd.DataFrame]) -> None:
-        self._frames = frames
-
-    def read(self, symbol: str, start: date | None = None, end: date | None = None) -> pd.DataFrame:
-        df = self._frames.get(symbol, pd.DataFrame())
-        if df.empty:
-            return df
-        out = df.copy()
-        if start:
-            out = out[out["date"] >= start]
-        if end:
-            out = out[out["date"] <= end]
-        return out.reset_index(drop=True)
-
-    def write(self, symbol: str, df: pd.DataFrame) -> int:
-        self._frames[symbol] = df
-        return len(df)
-
-    def exists(self, symbol: str) -> bool:
-        return symbol in self._frames
 
 
 class _Features(FeatureProviderPort):
@@ -159,7 +136,7 @@ def test_cost_calculation_spot_check() -> None:
 
 def test_synthetic_trade_count() -> None:
     ohlcv, fast, slow = _synthetic_crossover_series()
-    repo = _Repo({"TEST": ohlcv, "^NSEI": ohlcv})
+    repo = MemoryOHLCVRepo({"TEST": ohlcv, "^NSEI": ohlcv})
     features = _Features(
         {
             "TEST:ema:9": fast.rename(columns={"ema_9": "ema_9"}),
@@ -175,7 +152,7 @@ def test_synthetic_trade_count() -> None:
 
 def test_costs_reduce_pnl() -> None:
     ohlcv, fast, slow = _synthetic_crossover_series()
-    repo = _Repo({"TEST": ohlcv, "^NSEI": ohlcv})
+    repo = MemoryOHLCVRepo({"TEST": ohlcv, "^NSEI": ohlcv})
     features = _Features(
         {
             "TEST:ema:9": fast,
@@ -201,7 +178,7 @@ def test_max_positions_enforced() -> None:
     ohlcv, fast, slow = _synthetic_crossover_series()
     ohlcv_b = ohlcv.copy()
     ohlcv_b["symbol"] = "TEST2"
-    repo = _Repo({"TEST": ohlcv, "TEST2": ohlcv_b, "^NSEI": ohlcv})
+    repo = MemoryOHLCVRepo({"TEST": ohlcv, "TEST2": ohlcv_b, "^NSEI": ohlcv})
     features = _Features(
         {
             "TEST:ema:9": fast,
@@ -221,7 +198,7 @@ def test_max_positions_enforced() -> None:
 
 def test_reproducible_results() -> None:
     ohlcv, fast, slow = _synthetic_crossover_series()
-    repo = _Repo({"TEST": ohlcv, "^NSEI": ohlcv})
+    repo = MemoryOHLCVRepo({"TEST": ohlcv, "^NSEI": ohlcv})
     features = _Features({"TEST:ema:9": fast, "TEST:ema:21": slow})
     engine = BacktestEngine(_Calendar(), repo, features)
     config = BacktestConfig(start=date(2024, 1, 2), end=date(2024, 1, 15), initial_capital=100_000)
@@ -234,7 +211,7 @@ def test_reproducible_results() -> None:
 
 def test_benchmark_metrics_present() -> None:
     ohlcv, fast, slow = _synthetic_crossover_series()
-    repo = _Repo({"TEST": ohlcv, "^NSEI": ohlcv})
+    repo = MemoryOHLCVRepo({"TEST": ohlcv, "^NSEI": ohlcv})
     features = _Features({"TEST:ema:9": fast, "TEST:ema:21": slow})
     engine = BacktestEngine(_Calendar(), repo, features)
     config = BacktestConfig(start=date(2024, 1, 2), end=date(2024, 1, 15), initial_capital=100_000)
@@ -258,7 +235,7 @@ def test_lookahead_shifted_signal_not_early() -> None:
     )
     fast = pd.DataFrame({"date": dates, "ema_9": [90, 90, 90, 140, 140, 140]})
     slow = pd.DataFrame({"date": dates, "ema_21": [95, 95, 95, 100, 100, 100]})
-    repo = _Repo({"TEST": ohlcv, "^NSEI": ohlcv})
+    repo = MemoryOHLCVRepo({"TEST": ohlcv, "^NSEI": ohlcv})
     features = _Features({"TEST:ema:9": fast, "TEST:ema:21": slow})
     engine = BacktestEngine(_Calendar(), repo, features)
     strategy = _strategy()
@@ -272,7 +249,7 @@ def test_lookahead_shifted_signal_not_early() -> None:
 def test_backtest_portfolio_and_statistics_integration() -> None:
     """Vertical slice: backtest returns portfolio evaluation and statistics — Rev 2."""
     ohlcv, fast, slow = _synthetic_crossover_series()
-    repo = _Repo({"TEST": ohlcv, "^NSEI": ohlcv})
+    repo = MemoryOHLCVRepo({"TEST": ohlcv, "^NSEI": ohlcv})
     features = _Features({"TEST:ema:9": fast, "TEST:ema:21": slow})
     engine = BacktestEngine(_Calendar(), repo, features)
     config = BacktestConfig(start=date(2024, 1, 2), end=date(2024, 1, 15), initial_capital=100_000)

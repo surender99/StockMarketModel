@@ -7,29 +7,7 @@ from datetime import date, timedelta
 import pandas as pd
 
 from athena_core.application.breadth_engine import BreadthEngine
-from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
-
-
-class _Repo(OHLCVRepositoryPort):
-    def __init__(self, frames: dict[str, pd.DataFrame]) -> None:
-        self._frames = frames
-
-    def read(self, symbol: str, start: date | None = None, end: date | None = None) -> pd.DataFrame:
-        df = self._frames.get(symbol, pd.DataFrame())
-        if df.empty:
-            return df
-        out = df.copy()
-        if start:
-            out = out[out["date"] >= start]
-        if end:
-            out = out[out["date"] <= end]
-        return out.reset_index(drop=True)
-
-    def write(self, symbol: str, df: pd.DataFrame) -> int:
-        return len(df)
-
-    def exists(self, symbol: str) -> bool:
-        return symbol in self._frames
+from tests.memory_ohlcv_repo import MemoryOHLCVRepo
 
 
 def _series(symbol: str, drift: float, days: int = 80) -> pd.DataFrame:
@@ -51,7 +29,7 @@ def _series(symbol: str, drift: float, days: int = 80) -> pd.DataFrame:
 
 def test_breadth_metrics_req_mi_001() -> None:
     as_of = date(2024, 1, 2) + timedelta(days=79)
-    repo = _Repo(
+    repo = MemoryOHLCVRepo(
         {
             "A": _series("A", 1.0),
             "B": _series("B", 0.5),
@@ -66,7 +44,7 @@ def test_breadth_metrics_req_mi_001() -> None:
 
 def test_breadth_deterministic_req_mi_001() -> None:
     as_of = date(2024, 1, 2) + timedelta(days=79)
-    repo = _Repo({"A": _series("A", 0.2), "B": _series("B", 0.1)})
+    repo = MemoryOHLCVRepo({"A": _series("A", 0.2), "B": _series("B", 0.1)})
     engine = BreadthEngine(repo)
     first = engine.compute(["A", "B"], as_of)
     second = engine.compute(["A", "B"], as_of)

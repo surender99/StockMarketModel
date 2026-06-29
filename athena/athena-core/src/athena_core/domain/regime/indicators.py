@@ -7,57 +7,16 @@ from typing import cast
 import numpy as np
 import pandas as pd
 
+from athena_core.domain.indicators.adx import compute_adx
+from athena_core.domain.indicators.atr import compute_atr
 from athena_core.domain.indicators.ema import compute_ema
 
-
-def compute_atr(ohlcv: pd.DataFrame, period: int = 14) -> pd.Series:
-    """Average True Range — REQ-REGIME-001."""
-    high = ohlcv["high"].astype(float)
-    low = ohlcv["low"].astype(float)
-    close = ohlcv["close"].astype(float)
-    prev_close = close.shift(1)
-    tr = pd.concat(
-        [
-            high - low,
-            (high - prev_close).abs(),
-            (low - prev_close).abs(),
-        ],
-        axis=1,
-    ).max(axis=1)
-    return tr.rolling(window=period, min_periods=period).mean()
-
-
-def compute_adx(ohlcv: pd.DataFrame, period: int = 14) -> pd.Series:
-    """Average Directional Index — REQ-REGIME-001."""
-    high = ohlcv["high"].astype(float)
-    low = ohlcv["low"].astype(float)
-    close = ohlcv["close"].astype(float)
-
-    up_move = high.diff()
-    down_move = -low.diff()
-    plus_dm = np.where((up_move > down_move) & (up_move > 0), up_move, 0.0)
-    minus_dm = np.where((down_move > up_move) & (down_move > 0), down_move, 0.0)
-
-    prev_close = close.shift(1)
-    tr = pd.concat(
-        [
-            high - low,
-            (high - prev_close).abs(),
-            (low - prev_close).abs(),
-        ],
-        axis=1,
-    ).max(axis=1)
-
-    atr = tr.rolling(window=period, min_periods=period).mean()
-    plus_di = (
-        100 * pd.Series(plus_dm, index=ohlcv.index).rolling(period, min_periods=period).sum() / atr
-    )
-    minus_di = (
-        100 * pd.Series(minus_dm, index=ohlcv.index).rolling(period, min_periods=period).sum() / atr
-    )
-    dx = (plus_di - minus_di).abs() / (plus_di + minus_di).replace(0, np.nan) * 100
-    adx: pd.Series = dx.rolling(window=period, min_periods=period).mean()
-    return adx
+__all__ = [
+    "compute_adx",
+    "compute_atr",
+    "compute_regime_features",
+    "compute_rolling_volatility",
+]
 
 
 def compute_rolling_volatility(close: pd.Series, window: int = 20) -> pd.Series:

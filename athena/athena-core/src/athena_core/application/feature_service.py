@@ -1,8 +1,7 @@
-"""Feature orchestration — REQ-FEAT-STORE-001."""
+"""Feature orchestration — REQ-FEAT-STORE-001, ATH-REL-003."""
 
 from __future__ import annotations
 
-from collections.abc import Callable
 from datetime import date
 from typing import Any
 
@@ -10,43 +9,13 @@ import pandas as pd
 import structlog
 
 from athena_core.application.config import FeatureStoreConfig
-from athena_core.domain.indicators.ema import compute_ema_from_ohlcv
-from athena_core.domain.indicators.macd import compute_macd_from_ohlcv
-from athena_core.domain.indicators.rsi import compute_rsi_from_ohlcv
-from athena_core.domain.indicators.sma import compute_sma_from_ohlcv
-from athena_core.domain.indicators.stoch import compute_stoch_from_ohlcv
-from athena_core.domain.patterns.series import compute_pattern_series
+from athena_core.domain.features.caching import FeatureCachePolicy
+from athena_core.domain.features.indicator_plugins import resolve_indicator
 from athena_core.domain.ports.feature_store import FeatureCacheMiss, FeatureStorePort
 from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
+from athena_core.domain.plugins import PluginRegistry
 
 log = structlog.get_logger(__name__)
-
-IndicatorFn = Callable[[pd.DataFrame, dict[str, Any]], pd.Series | pd.DataFrame]
-
-_INDICATOR_REGISTRY: dict[str, IndicatorFn] = {
-    "ema": lambda df, params: compute_ema_from_ohlcv(
-        df, int(params["period"]), price_column=params.get("price_column", "close")
-    ),
-    "sma": lambda df, params: compute_sma_from_ohlcv(
-        df, int(params["period"]), price_column=params.get("price_column", "close")
-    ),
-    "macd": lambda df, params: compute_macd_from_ohlcv(
-        df,
-        fast=int(params.get("fast", 12)),
-        slow=int(params.get("slow", 26)),
-        signal=int(params.get("signal", 9)),
-        price_column=params.get("price_column", "close"),
-    ),
-    "rsi": lambda df, params: compute_rsi_from_ohlcv(
-        df, int(params.get("period", 14)), price_column=params.get("price_column", "close")
-    ),
-    "stoch": lambda df, params: compute_stoch_from_ohlcv(
-        df,
-        k_period=int(params.get("k_period", 14)),
-        d_period=int(params.get("d_period", 3)),
-    ),
-    "pattern": lambda df, params: compute_pattern_series(df, str(params["pattern_id"])),
-}
 
 
 class FeatureService:
@@ -57,10 +26,13 @@ class FeatureService:
         feature_store: FeatureStorePort,
         ohlcv_repo: OHLCVRepositoryPort,
         config: FeatureStoreConfig,
+        *,
+        plugin_registry: PluginRegistry | None = None,
     ) -> None:
         self._store = feature_store
         self._ohlcv = ohlcv_repo
         self._config = config
+        self._registry = plugin_registry
         self._compute_count = 0
 
     @property
@@ -76,17 +48,25 @@ class FeatureService:
         start: date | None = None,
         end: date | None = None,
     ) -> pd.DataFrame:
-        cached = self._store.get(
-            symbol,
-            feature_id,
-            params,
-            self._config.data_version,
-            start=start,
-            end=end,
-        )
-        if not isinstance(cached, FeatureCacheMiss):
-            log.info("feature.cache_hit", symbol=symbol, feature_id=feature_id, params=params)
-            return cached.data
+        policy = self._config.cache_policy
+        cached = None
+        if policy != FeatureCachePolicy.FORCE_RECOMPUTE:
+            cached = self._store.get(
+                symbol,
+                feature_id,
+                params,
+                self._config.data_version,
+                start=start,
+                end=end,
+            )
+            if not isinstance(cached, FeatureCacheMiss):
+                log.info("feature.cache_hit", symbol=symbol, feature_id=feature_id, params=params)
+                return cached.data
+
+        if policy == FeatureCachePolicy.CACHE_ONLY:
+            reason = cached.reason if isinstance(cached, FeatureCacheMiss) else "cache_only_miss"
+            msg = f"Feature cache miss under cache_only policy: {symbol}/{feature_id} ({reason})"
+            raise ValueError(msg)
 
         log.info("feature.cache_miss", symbol=symbol, feature_id=feature_id, params=params)
         ohlcv = self._ohlcv.read(symbol, start=start, end=end)
@@ -94,23 +74,14 @@ class FeatureService:
             msg = f"No OHLCV data for {symbol}"
             raise ValueError(msg)
 
-        compute_fn = _INDICATOR_REGISTRY.get(feature_id)
-        if compute_fn is None:
-            msg = f"Unknown feature_id: {feature_id}"
+        if self._registry is None:
+            msg = "PluginRegistry is required for indicator resolution"
             raise ValueError(msg)
 
+        compute_fn = resolve_indicator(self._registry, feature_id)
         self._compute_count += 1
         values = compute_fn(ohlcv, params)
-        if isinstance(values, pd.Series):
-            col = f"{feature_id}_{params['period']}" if "period" in params else feature_id
-            out = pd.DataFrame({"date": ohlcv["date"].values, col: values.values})
-        elif feature_id == "pattern":
-            out = values
-        else:
-            out = pd.concat(
-                [ohlcv[["date"]].reset_index(drop=True), values.reset_index(drop=True)],
-                axis=1,
-            )
+        out = self._frame_output(feature_id, ohlcv, values, params)
 
         self._store.put(symbol, feature_id, params, self._config.data_version, out)
         result = self._store.get(
@@ -123,3 +94,20 @@ class FeatureService:
         )
         assert not isinstance(result, FeatureCacheMiss)
         return result.data
+
+    @staticmethod
+    def _frame_output(
+        feature_id: str,
+        ohlcv: pd.DataFrame,
+        values: pd.Series | pd.DataFrame,
+        params: dict[str, Any],
+    ) -> pd.DataFrame:
+        if isinstance(values, pd.Series):
+            col = f"{feature_id}_{params['period']}" if "period" in params else feature_id
+            return pd.DataFrame({"date": ohlcv["date"].values, col: values.values})
+        if feature_id == "pattern":
+            return values
+        return pd.concat(
+            [ohlcv[["date"]].reset_index(drop=True), values.reset_index(drop=True)],
+            axis=1,
+        )

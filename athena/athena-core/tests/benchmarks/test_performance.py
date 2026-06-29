@@ -12,7 +12,8 @@ from athena_core.application.backtest_config import BacktestConfig, BacktestCost
 from athena_core.application.backtest_engine import BacktestEngine, FeatureProviderPort
 from athena_core.application.config import FeatureStoreConfig
 from athena_core.application.feature_service import FeatureService
-from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
+from athena_core.domain.features.indicator_plugins import register_builtin_indicators
+from athena_core.domain.plugins import PluginRegistry
 from athena_core.domain.ports.trading_calendar import TradingCalendarPort
 from athena_core.domain.strategy.config import (
     EntryConfig,
@@ -27,6 +28,7 @@ from athena_core.domain.strategy.config import (
     UniverseConfig,
 )
 from athena_core.infrastructure.parquet_feature_store import ParquetFeatureStore
+from tests.memory_ohlcv_repo import MemoryOHLCVRepo
 
 
 class _Calendar(TradingCalendarPort):
@@ -56,29 +58,6 @@ class _Calendar(TradingCalendarPort):
 
     def holidays_for_year(self, year: int) -> list[date]:
         return []
-
-
-class _Repo(OHLCVRepositoryPort):
-    def __init__(self, frames: dict[str, pd.DataFrame]) -> None:
-        self._frames = frames
-
-    def read(self, symbol: str, start: date | None = None, end: date | None = None) -> pd.DataFrame:
-        df = self._frames.get(symbol, pd.DataFrame())
-        if df.empty:
-            return df
-        out = df.copy()
-        if start:
-            out = out[out["date"] >= start]
-        if end:
-            out = out[out["date"] <= end]
-        return out.reset_index(drop=True)
-
-    def write(self, symbol: str, df: pd.DataFrame) -> int:
-        self._frames[symbol] = df
-        return len(df)
-
-    def exists(self, symbol: str) -> bool:
-        return symbol in self._frames
 
 
 class _Features(FeatureProviderPort):
@@ -114,9 +93,11 @@ def _synthetic_ohlcv(days: int = 252) -> pd.DataFrame:
 
 @pytest.mark.benchmark
 def test_indicator_generation_under_2s(tmp_path) -> None:
-    repo = _Repo({"SYM": _synthetic_ohlcv()})
+    repo = MemoryOHLCVRepo({"SYM": _synthetic_ohlcv()})
     store = ParquetFeatureStore(tmp_path, "snappy")
-    service = FeatureService(store, repo, FeatureStoreConfig())
+    registry = PluginRegistry()
+    register_builtin_indicators(registry)
+    service = FeatureService(store, repo, FeatureStoreConfig(), plugin_registry=registry)
     start = time.perf_counter()
     frame = service.get_feature(
         "SYM", "ema", {"period": 20}, start=date(2023, 1, 2), end=date(2023, 12, 31)
@@ -132,9 +113,11 @@ def test_backtest_small_universe_reasonable_time(tmp_path) -> None:
     frames = {s: _synthetic_ohlcv(120) for s in symbols}
     for df in frames.values():
         df["symbol"] = df["symbol"].iloc[0]
-    repo = _Repo(frames)
+    repo = MemoryOHLCVRepo(frames)
     store = ParquetFeatureStore(tmp_path, "snappy")
-    service = FeatureService(store, repo, FeatureStoreConfig())
+    registry = PluginRegistry()
+    register_builtin_indicators(registry)
+    service = FeatureService(store, repo, FeatureStoreConfig(), plugin_registry=registry)
     strategy = StrategyConfig(
         strategy=StrategyMeta(id="bench", version="1"),
         universe=UniverseConfig(symbols=symbols),

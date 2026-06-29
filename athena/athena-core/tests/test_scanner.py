@@ -12,7 +12,7 @@ from athena_core.application.explainability import ShapExplainer
 from athena_core.application.ml_scorer import MLSignalScorer, SignalFeatures, TrainingSample
 from athena_core.application.scanner import DailyScanner
 from athena_core.application.scanner_config import ScannerConfig
-from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
+from tests.memory_ohlcv_repo import MemoryOHLCVRepo
 from athena_core.domain.strategy.config import (
     EntryConfig,
     ExitConfig,
@@ -24,28 +24,6 @@ from athena_core.domain.strategy.config import (
     StrategyMeta,
     UniverseConfig,
 )
-
-
-class _Repo(OHLCVRepositoryPort):
-    def __init__(self, frames: dict[str, pd.DataFrame]) -> None:
-        self._frames = frames
-
-    def read(self, symbol: str, start: date | None = None, end: date | None = None) -> pd.DataFrame:
-        df = self._frames.get(symbol, pd.DataFrame())
-        if df.empty:
-            return df
-        out = df.copy()
-        if start:
-            out = out[out["date"] >= start]
-        if end:
-            out = out[out["date"] <= end]
-        return out.reset_index(drop=True)
-
-    def write(self, symbol: str, df: pd.DataFrame) -> int:
-        return len(df)
-
-    def exists(self, symbol: str) -> bool:
-        return symbol in self._frames
 
 
 class _Features(FeatureProviderPort):
@@ -97,7 +75,7 @@ def test_scanner_ranks_higher_momentum_first() -> None:
     strong = _series("STRONG", 100, 1.0)
     weak = _series("WEAK", 100, 0.05)
     scanner = DailyScanner(
-        _Repo({"^NSEI": bench, "STRONG": strong, "WEAK": weak}),
+        MemoryOHLCVRepo({"^NSEI": bench, "STRONG": strong, "WEAK": weak}),
         _Features(),
         ScannerConfig(
             top_n=2, breakout_lookback_days=60, rs_lookback_days=20, momentum_lookback_days=20
@@ -115,13 +93,13 @@ def test_scanner_top_n_limit() -> None:
     bench = _series("^NSEI", 100, 0.1)
     frames = {f"S{i}": _series(f"S{i}", 100, 0.2 + i * 0.1) for i in range(5)}
     frames["^NSEI"] = bench
-    scanner = DailyScanner(_Repo(frames), _Features(), ScannerConfig(top_n=3))
+    scanner = DailyScanner(MemoryOHLCVRepo(frames), _Features(), ScannerConfig(top_n=3))
     result = scanner.scan(_strategy(), [f"S{i}" for i in range(5)], as_of)
     assert len(result.candidates) <= 3
 
 
 def test_scanner_empty_universe() -> None:
-    scanner = DailyScanner(_Repo({}), _Features())
+    scanner = DailyScanner(MemoryOHLCVRepo({}), _Features())
     result = scanner.scan(_strategy(), [], date(2024, 3, 1))
     assert result.candidates == []
     assert result.scanned_count == 0
@@ -144,7 +122,7 @@ def test_scanner_ml_scorer_augmented_signal_score() -> None:
     ] * 12
     scorer.fit(samples)
     scanner = DailyScanner(
-        _Repo({"^NSEI": bench, "STRONG": strong}),
+        MemoryOHLCVRepo({"^NSEI": bench, "STRONG": strong}),
         _Features(),
         ScannerConfig(top_n=1, use_ml_scorer=True),
         ml_scorer=scorer,
