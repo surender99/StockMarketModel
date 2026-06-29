@@ -18,6 +18,7 @@ This index tracks integration of the Athena References package series and Releas
 | **REL-003** | Feature Engineering (Release-03) | Indicator registry, pipeline, cache policies, ATR/ADX/Bollinger | ✅ Complete |
 | **REL-004** | Indicator Framework (Release-04) | Indicator engine, WMA/ROC/OBV/CMF/MFI/CCI/Williams %R, validation | ✅ Complete |
 | **REL-005** | Pattern Recognition (Release-05) | PatternProvider registry, expanded candlestick/chart catalog | ✅ Complete |
+| **REL-006** | Strategy Engine (Release-06) | Strategy registry, signal engine, composition, validation, sizing | ✅ Complete |
 | **REL-002** | Data Platform (Release-02) | OHLCV ingest, calendar, quality, cleaning, versioning, registry | ✅ Complete |
 | **01** | Governance | Constitution, execution plan, quant & AI standards, templates, DoD | ✅ Complete |
 | **02** | Architecture | System architecture, clean architecture, plugin model, repo structure | ✅ Complete |
@@ -47,6 +48,7 @@ This index tracks integration of the Athena References package series and Releas
 | REL-003 | [ATH-REL-003-Feature-Engineering.md](ATH-REL-003-Feature-Engineering.md), [release-03/](release-03/) | [PACKAGE-REL-003-COMPLETE.md](packages/PACKAGE-REL-003-COMPLETE.md) |
 | REL-004 | [ATH-REL-004-Indicator-Framework.md](ATH-REL-004-Indicator-Framework.md), [release-04/](release-04/) | [PACKAGE-REL-004-COMPLETE.md](packages/PACKAGE-REL-004-COMPLETE.md) |
 | REL-005 | [ATH-REL-005-Pattern-Recognition.md](ATH-REL-005-Pattern-Recognition.md), [release-05/](release-05/) | [PACKAGE-REL-005-COMPLETE.md](packages/PACKAGE-REL-005-COMPLETE.md) |
+| REL-006 | [ATH-REL-006-Strategy-Engine.md](ATH-REL-006-Strategy-Engine.md), [release-06/](release-06/) | [PACKAGE-REL-006-COMPLETE.md](packages/PACKAGE-REL-006-COMPLETE.md) |
 | REL-002 | [ATH-REL-002-Data-Platform.md](ATH-REL-002-Data-Platform.md), [release-02/](release-02/) | [PACKAGE-REL-002-COMPLETE.md](packages/PACKAGE-REL-002-COMPLETE.md) |
 | 01 | [governance/](governance/), [templates/](templates/), [checklists/](checklists/) | [PACKAGE-01-COMPLETE.md](packages/PACKAGE-01-COMPLETE.md) |
 | 02 | [architecture/](architecture/), [contracts/](contracts/), [diagrams/](diagrams/) | [PACKAGE-02-COMPLETE.md](packages/PACKAGE-02-COMPLETE.md) |

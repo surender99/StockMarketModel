@@ -44,7 +44,7 @@ class RuleSpec(BaseModel):
     """Entry rule with side."""
 
     condition: str
-    side: Literal["long"] = "long"
+    side: Literal["long", "short"] = "long"
 
 
 class ExitRuleSpec(BaseModel):
@@ -97,7 +97,13 @@ class FilterSpec(BaseModel):
 class PositionSizingConfig(BaseModel):
     """Position sizing method and parameters."""
 
-    method: Literal["fixed_fraction", "fixed_amount"] = "fixed_fraction"
+    method: Literal[
+        "fixed_fraction",
+        "fixed_amount",
+        "fixed_quantity",
+        "pct_risk",
+        "atr_based",
+    ] = "fixed_fraction"
     params: dict[str, Any] = Field(default_factory=dict)
 
     @model_validator(mode="after")
@@ -115,6 +121,29 @@ class PositionSizingConfig(BaseModel):
             amount = float(self.params.get("amount", 0))
             if amount <= 0:
                 msg = "fixed_amount requires amount > 0"
+                raise ValueError(msg)
+        elif self.method == "fixed_quantity":
+            quantity = int(self.params.get("quantity", 0))
+            if quantity < 1:
+                msg = "fixed_quantity requires quantity >= 1"
+                raise ValueError(msg)
+        elif self.method == "pct_risk":
+            risk_pct = float(self.params.get("risk_pct", 0.01))
+            stop_pct = float(self.params.get("stop_pct", 0.05))
+            if not 0 < risk_pct <= 1:
+                msg = "pct_risk requires 0 < risk_pct <= 1"
+                raise ValueError(msg)
+            if not 0 < stop_pct <= 1:
+                msg = "pct_risk requires 0 < stop_pct <= 1"
+                raise ValueError(msg)
+        elif self.method == "atr_based":
+            risk_pct = float(self.params.get("risk_pct", 0.01))
+            atr_multiplier = float(self.params.get("atr_multiplier", 2.0))
+            if not 0 < risk_pct <= 1:
+                msg = "atr_based requires 0 < risk_pct <= 1"
+                raise ValueError(msg)
+            if atr_multiplier <= 0:
+                msg = "atr_based requires atr_multiplier > 0"
                 raise ValueError(msg)
         return self
 

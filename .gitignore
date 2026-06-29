@@ -26,6 +26,7 @@ uv.lock
 # References package archives (source trees are tracked; zips are local-only)
 References/*.zip
 References/**/Package-*-Overview.docx
+References/**/*.docx
 
 # Athena package archives (source trees are tracked; zips are local-only)
 athena/**/*.zip
