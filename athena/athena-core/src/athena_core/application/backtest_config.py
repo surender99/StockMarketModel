@@ -25,6 +25,9 @@ class BacktestSettings(BaseModel):
     costs: BacktestCostsConfig = Field(default_factory=BacktestCostsConfig)
     benchmark: str = "^NSEI"
     fill_price: str = "close"
+    execution_model: str = "current_bar_close"
+    slippage_model: str = "percentage"
+    order_type: str = "market"
     allow_fractional: bool = False
     max_position_weight: float = Field(default=0.25, ge=0, le=1)
     max_correlation: float = Field(default=0.85, ge=0, le=1)

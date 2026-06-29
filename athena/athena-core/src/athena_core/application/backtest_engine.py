@@ -1,8 +1,8 @@
-"""Event-driven backtest engine — REQ-BT-ENGINE-001."""
+"""Event-driven backtest engine — REQ-BT-ENGINE-001, ATH-REL-007."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 from typing import Any, cast
 
@@ -11,11 +11,19 @@ import structlog
 
 from athena_core.application.backtest_config import BacktestConfig
 from athena_core.application.backtest_metrics import compute_benchmark_metrics, compute_metrics
-from athena_core.application.costs import apply_slippage, compute_trade_costs
+from athena_core.application.costs import compute_trade_costs
 from athena_core.application.portfolio_engine import PortfolioEngine
 from athena_core.application.portfolio_risk import PortfolioLimits
 from athena_core.application.regime_engine import RegimeEngine
 from athena_core.application.statistics_engine import StatisticsEngine
+from athena_core.domain.backtest import (
+    FillModel,
+    PendingEntry,
+    TradeJournalEntry,
+    apply_slippage_model,
+    build_trade_journal,
+    resolve_fill_price,
+)
 from athena_core.domain.backtest import TradeRecord
 from athena_core.domain.portfolio import PortfolioEvaluation, PortfolioState
 from athena_core.domain.portfolio.positions import OpenPosition
@@ -36,6 +44,7 @@ class BacktestResult:
     equity_curve: pd.DataFrame
     metrics: dict[str, Any]
     benchmark_metrics: dict[str, Any]
+    trade_journal: list[TradeJournalEntry] = field(default_factory=list)
     portfolio_evaluation: PortfolioEvaluation | None = None
     statistics_report: dict[str, Any] | None = None
 
@@ -97,6 +106,8 @@ class BacktestEngine:
         return_history: dict[str, list[float]] = {sym: [] for sym in universe}
 
         max_positions = int(strategy.position_sizing.params.get("max_positions", 10))
+        pending_entries: list[PendingEntry] = []
+        use_next_open = config.execution_model == FillModel.NEXT_BAR_OPEN
 
         for session in trading_days:
             marks: dict[str, float] = {}
@@ -110,6 +121,21 @@ class BacktestEngine:
                         cur = float(frame.iloc[idx][config.fill_price])
                         if prev > 0:
                             return_history.setdefault(symbol, []).append(cur / prev - 1.0)
+
+            if pending_entries:
+                self._process_pending_entries(
+                    strategy,
+                    config,
+                    portfolio,
+                    symbol_frames,
+                    session,
+                    pending_entries,
+                    max_positions,
+                    portfolio_engine=portfolio_engine,
+                    limits=limits,
+                    return_history=return_history,
+                )
+                pending_entries.clear()
 
             self._process_exits(
                 strategy,
@@ -131,6 +157,7 @@ class BacktestEngine:
                 portfolio_engine=portfolio_engine,
                 limits=limits,
                 return_history=return_history,
+                pending_entries=pending_entries if use_next_open else None,
             )
 
             if config.enable_rebalance and marks:
@@ -196,11 +223,18 @@ class BacktestEngine:
             }
         )
 
+        journal = build_trade_journal(
+            trades,
+            strategy_id=strategy.strategy.id,
+            slippage_pct=config.costs.slippage_pct,
+        )
+
         return BacktestResult(
             trades=trades,
             equity_curve=equity_curve,
             metrics=metrics,
             benchmark_metrics=benchmark_metrics,
+            trade_journal=journal,
             portfolio_evaluation=portfolio_eval,
             statistics_report=statistics_report,
         )
@@ -299,7 +333,8 @@ class BacktestEngine:
 
         for symbol, reason in to_close:
             position = portfolio.positions.pop(symbol)
-            fill = apply_slippage(marks[symbol], config.costs, is_buy=False)
+            raw_exit = marks[symbol]
+            fill = self._slipped_fill(raw_exit, config, is_buy=False)
             notional = fill * position.quantity
             exit_fees = compute_trade_costs(notional, config.costs, is_sell=True)
             portfolio.cash += notional - exit_fees
@@ -334,6 +369,7 @@ class BacktestEngine:
         portfolio_engine: PortfolioEngine | None = None,
         limits: PortfolioLimits | None = None,
         return_history: dict[str, list[float]] | None = None,
+        pending_entries: list[PendingEntry] | None = None,
     ) -> None:
         if portfolio.position_count() >= max_positions:
             return
@@ -368,68 +404,203 @@ class BacktestEngine:
                 if rule.side != "long":
                     continue
                 if evaluate_condition_at_index(rule.condition, frame, indicator_map, idx):
-                    candidates.append(symbol)
+                    if pending_entries is not None:
+                        pending_entries.append(
+                            PendingEntry(symbol=symbol, signal_date=session, strategy_id=strategy.strategy.id)
+                        )
+                    else:
+                        candidates.append(symbol)
                     break
 
         for symbol in candidates:
-            if portfolio.position_count() >= max_positions:
-                break
-            frame = symbol_frames[symbol]
-            idx = self._index_for_date(frame, session)
-            assert idx is not None
-            raw_price = float(frame.iloc[idx][config.fill_price])
-            fill = apply_slippage(raw_price, config.costs, is_buy=True)
-            qty = self._size_quantity(strategy, config, portfolio, fill)
-            if qty <= 0:
+            self._open_position(
+                strategy,
+                config,
+                portfolio,
+                symbol_frames,
+                session,
+                symbol,
+                max_positions,
+                portfolio_engine=portfolio_engine,
+                limits=limits,
+                return_history=return_history,
+                evaluation=evaluation,
+                returns_df=returns_df,
+                marks=marks,
+            )
+
+    def _process_pending_entries(
+        self,
+        strategy: StrategyConfig,
+        config: BacktestConfig,
+        portfolio: PortfolioState,
+        symbol_frames: dict[str, pd.DataFrame],
+        session: date,
+        pending: list[PendingEntry],
+        max_positions: int,
+        *,
+        portfolio_engine: PortfolioEngine | None = None,
+        limits: PortfolioLimits | None = None,
+        return_history: dict[str, list[float]] | None = None,
+    ) -> None:
+        marks: dict[str, float] = {}
+        for symbol, frame in symbol_frames.items():
+            row = self._row_for_date(frame, session)
+            if row is not None:
+                marks[symbol] = float(row[config.fill_price])
+
+        evaluation = None
+        returns_df = pd.DataFrame()
+        if portfolio_engine is not None and portfolio.positions and return_history:
+            evaluation = portfolio_engine.evaluate(portfolio, marks)
+            min_len = min(len(v) for v in return_history.values() if v)
+            if min_len >= 5:
+                returns_df = pd.DataFrame(
+                    {sym: vals[-min_len:] for sym, vals in return_history.items() if vals}
+                )
+
+        for entry in pending:
+            if entry.symbol in portfolio.positions:
                 continue
+            self._open_position(
+                strategy,
+                config,
+                portfolio,
+                symbol_frames,
+                session,
+                entry.symbol,
+                max_positions,
+                portfolio_engine=portfolio_engine,
+                limits=limits,
+                return_history=return_history,
+                evaluation=evaluation,
+                returns_df=returns_df,
+                marks=marks,
+                fill_at_open=True,
+            )
 
-            if portfolio_engine is not None and evaluation is not None and limits is not None:
-                equity = portfolio.equity(marks)
-                candidate_weight = (fill * qty) / equity if equity > 0 else 0.0
-                hist = return_history or {}
-                if symbol in hist and len(hist) >= 2:
-                    trial = returns_df.copy()
-                    if symbol not in trial.columns and symbol in hist:
-                        trial[symbol] = hist[symbol][-len(trial) :]
-                    if not portfolio_engine.passes_entry_limits(
-                        evaluation,
-                        symbol,
-                        candidate_weight,
-                        trial,
-                        limits=limits,
-                    ):
-                        continue
+    def _open_position(
+        self,
+        strategy: StrategyConfig,
+        config: BacktestConfig,
+        portfolio: PortfolioState,
+        symbol_frames: dict[str, pd.DataFrame],
+        session: date,
+        symbol: str,
+        max_positions: int,
+        *,
+        portfolio_engine: PortfolioEngine | None = None,
+        limits: PortfolioLimits | None = None,
+        return_history: dict[str, list[float]] | None = None,
+        evaluation: Any = None,
+        returns_df: pd.DataFrame | None = None,
+        marks: dict[str, float] | None = None,
+        fill_at_open: bool = False,
+    ) -> None:
+        if portfolio.position_count() >= max_positions:
+            return
+        frame = symbol_frames[symbol]
+        idx = self._index_for_date(frame, session)
+        if idx is None:
+            return
 
+        if fill_at_open:
+            raw_price = float(frame.iloc[idx]["open"])
+        else:
+            raw = resolve_fill_price(
+                frame,
+                idx,
+                fill_model=config.execution_model,
+                is_buy=True,
+                fill_price_col=config.fill_price,
+            )
+            if raw is None:
+                return
+            raw_price = raw
+
+        fill = self._slipped_fill(raw_price, config, is_buy=True, frame=frame, idx=idx)
+        qty = self._size_quantity(strategy, config, portfolio, fill)
+        if qty <= 0:
+            return
+
+        marks = marks or {}
+        if portfolio_engine is not None and evaluation is not None and limits is not None:
+            equity = portfolio.equity(marks)
+            candidate_weight = (fill * qty) / equity if equity > 0 else 0.0
+            hist = return_history or {}
+            trial = returns_df if returns_df is not None else pd.DataFrame()
+            if symbol in hist and len(hist) >= 2:
+                trial = trial.copy()
+                if symbol not in trial.columns and symbol in hist:
+                    trial[symbol] = hist[symbol][-len(trial) :]
+                if not portfolio_engine.passes_entry_limits(
+                    evaluation,
+                    symbol,
+                    candidate_weight,
+                    trial,
+                    limits=limits,
+                ):
+                    return
+
+        notional = fill * qty
+        entry_fees = compute_trade_costs(notional, config.costs, is_sell=False)
+        total_cost = notional + entry_fees
+        if total_cost > portfolio.cash:
+            affordable = int((portfolio.cash - entry_fees) / fill)
+            if affordable <= 0:
+                return
+            qty = affordable
             notional = fill * qty
             entry_fees = compute_trade_costs(notional, config.costs, is_sell=False)
             total_cost = notional + entry_fees
-            if total_cost > portfolio.cash:
-                affordable = int((portfolio.cash - entry_fees) / fill)
-                if affordable <= 0:
-                    continue
-                qty = affordable
-                notional = fill * qty
-                entry_fees = compute_trade_costs(notional, config.costs, is_sell=False)
-                total_cost = notional + entry_fees
 
-            stop_price = None
-            target_price = None
-            if strategy.risk.stop_loss_pct is not None:
-                stop_price = fill * (1.0 - strategy.risk.stop_loss_pct)
-            if strategy.risk.take_profit_pct is not None:
-                target_price = fill * (1.0 + strategy.risk.take_profit_pct)
+        stop_price = None
+        target_price = None
+        if strategy.risk.stop_loss_pct is not None:
+            stop_price = fill * (1.0 - strategy.risk.stop_loss_pct)
+        if strategy.risk.take_profit_pct is not None:
+            target_price = fill * (1.0 + strategy.risk.take_profit_pct)
 
-            portfolio.cash -= total_cost
-            portfolio.positions[symbol] = OpenPosition(
-                symbol=symbol,
-                side="long",
-                entry_date=session,
-                entry_price=fill,
-                quantity=qty,
-                entry_fees=entry_fees,
-                stop_price=stop_price,
-                target_price=target_price,
-            )
+        portfolio.cash -= total_cost
+        portfolio.positions[symbol] = OpenPosition(
+            symbol=symbol,
+            side="long",
+            entry_date=session,
+            entry_price=fill,
+            quantity=qty,
+            entry_fees=entry_fees,
+            stop_price=stop_price,
+            target_price=target_price,
+        )
+
+    @staticmethod
+    def _slipped_fill(
+        price: float,
+        config: BacktestConfig,
+        *,
+        is_buy: bool,
+        frame: pd.DataFrame | None = None,
+        idx: int | None = None,
+    ) -> float:
+        atr: float | None = None
+        volume: float | None = None
+        avg_volume: float | None = None
+        if frame is not None and idx is not None:
+            if "atr" in frame.columns:
+                atr = float(frame.iloc[idx]["atr"])
+            if "volume" in frame.columns:
+                volume = float(frame.iloc[idx]["volume"])
+                window = frame["volume"].iloc[max(0, idx - 19) : idx + 1]
+                avg_volume = float(window.mean())
+        return apply_slippage_model(
+            price,
+            config.costs,
+            model=config.slippage_model,
+            is_buy=is_buy,
+            atr=atr,
+            volume=volume,
+            avg_volume=avg_volume,
+        )
 
     @staticmethod
     def _index_for_date(frame: pd.DataFrame, session: date) -> int | None:

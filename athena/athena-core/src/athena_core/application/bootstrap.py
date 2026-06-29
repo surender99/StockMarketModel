@@ -11,6 +11,7 @@ from athena_core.application.data_bootstrap import DataContext, bootstrap_data_p
 from athena_core.domain.events import EventBus
 from athena_core.domain.features.indicator_plugins import register_builtin_indicators
 from athena_core.domain.patterns.pattern_plugins import register_builtin_patterns
+from athena_core.domain.backtest.backtest_plugins import register_builtin_backtest_plugins
 from athena_core.domain.strategy.strategy_plugins import register_builtin_strategies
 from athena_core.domain.plugins import PluginRegistry
 from athena_core.infrastructure.logging import configure_logging
@@ -40,6 +41,7 @@ def bootstrap_athena_core(config: AthenaConfig, *, wire_data: bool = True) -> Co
     register_builtin_indicators(plugin_registry)
     register_builtin_patterns(plugin_registry)
     register_builtin_strategies(plugin_registry)
+    register_builtin_backtest_plugins(plugin_registry)
     event_bus = EventBus()
     data_ctx = bootstrap_data_platform(config) if wire_data else None
 
