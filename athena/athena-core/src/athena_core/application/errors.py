@@ -1,4 +1,4 @@
-"""Ingestion errors — REQ-DATA-INGEST-001."""
+"""Ingestion errors — REQ-DATA-INGEST-001, REQ-DATA-QUALITY-001, REQ-DATA-VERSION-001."""
 
 from __future__ import annotations
 
@@ -17,3 +17,11 @@ class IngestError(Exception):
 
 class EmptyDataError(IngestError):
     """yfinance returned no rows for the requested range."""
+
+
+class DataQualityGateError(IngestError):
+    """OHLCV failed configured quality checks before persistence."""
+
+
+class ImmutabilityViolationError(IngestError):
+    """Attempted to mutate an immutable dataset snapshot."""

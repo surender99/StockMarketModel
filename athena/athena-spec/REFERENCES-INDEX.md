@@ -14,6 +14,9 @@ This index tracks integration of the Athena References package series and Releas
 |---------|------|-------|--------|
 | **REL-000** | Engineering Standards (Release-00) | Master standards taxonomy, quality gates, section index | ✅ Complete |
 | **REL-001** | Core Framework (Release-01) | Config, DI, plugins, events, logging, errors, utilities, contracts | ✅ Complete |
+| **REL-002** | Data Platform (Release-02) | Historical/live data, instrument master, validation, versioning | ✅ Complete |
+| **REL-003** | Feature Engineering (Release-03) | Indicator registry, pipeline, cache policies, ATR/ADX/Bollinger | ✅ Complete |
+| **REL-002** | Data Platform (Release-02) | OHLCV ingest, calendar, quality, cleaning, versioning, registry | ✅ Complete |
 | **01** | Governance | Constitution, execution plan, quant & AI standards, templates, DoD | ✅ Complete |
 | **02** | Architecture | System architecture, clean architecture, plugin model, repo structure | ✅ Complete |
 | **03** | Data Platform | DataProvider contract, OHLCV schema, data quality | ✅ Complete |
@@ -38,6 +41,9 @@ This index tracks integration of the Athena References package series and Releas
 |-----|----------------|------------|
 | REL-000 | [ATH-REL-000-Engineering-Standards.md](ATH-REL-000-Engineering-Standards.md), [engineering-standards/](engineering-standards/) | [PACKAGE-REL-000-COMPLETE.md](packages/PACKAGE-REL-000-COMPLETE.md) |
 | REL-001 | [ATH-REL-001-Core-Framework.md](ATH-REL-001-Core-Framework.md), [release-01/](release-01/) | [PACKAGE-REL-001-COMPLETE.md](packages/PACKAGE-REL-001-COMPLETE.md) |
+| REL-002 | [ATH-REL-002-Data-Platform.md](ATH-REL-002-Data-Platform.md), [release-02/](release-02/) | [PACKAGE-REL-002-COMPLETE.md](packages/PACKAGE-REL-002-COMPLETE.md) |
+| REL-003 | [ATH-REL-003-Feature-Engineering.md](ATH-REL-003-Feature-Engineering.md), [release-03/](release-03/) | [PACKAGE-REL-003-COMPLETE.md](packages/PACKAGE-REL-003-COMPLETE.md) |
+| REL-002 | [ATH-REL-002-Data-Platform.md](ATH-REL-002-Data-Platform.md), [release-02/](release-02/) | [PACKAGE-REL-002-COMPLETE.md](packages/PACKAGE-REL-002-COMPLETE.md) |
 | 01 | [governance/](governance/), [templates/](templates/), [checklists/](checklists/) | [PACKAGE-01-COMPLETE.md](packages/PACKAGE-01-COMPLETE.md) |
 | 02 | [architecture/](architecture/), [contracts/](contracts/), [diagrams/](diagrams/) | [PACKAGE-02-COMPLETE.md](packages/PACKAGE-02-COMPLETE.md) |
 | 03 | [data/](data/), [schemas/ohlcv-schema.json](schemas/ohlcv-schema.json), [DataProvider](contracts/DataProvider.md) | [PACKAGE-03-COMPLETE.md](packages/PACKAGE-03-COMPLETE.md) |

@@ -15,11 +15,12 @@ from athena_core.application.backtest_features import FeatureServiceProvider
 from athena_core.application.config import AthenaConfig
 from athena_core.application.config_loader import load_athena_config
 from athena_core.application.bootstrap import CoreContext, bootstrap_athena_core
+from athena_core.application.data_bootstrap import DataContext, bootstrap_data_platform
 from athena_core.application.errors import IngestError
 from athena_core.application.experiment_tracker import ExperimentTracker
 from athena_core.application.explainability import ShapExplainer
 from athena_core.application.feature_service import FeatureService
-from athena_core.application.ingest_ohlcv import IngestOHLCVUseCase, IngestResult
+from athena_core.application.ingest_ohlcv import IngestResult, build_ingest_use_case
 from athena_core.application.ml_scorer import MLSignalScorer
 from athena_core.application.optimizer import OptimizerResult, StrategyOptimizer
 from athena_core.application.regime_engine import RegimeEngine
@@ -60,16 +61,23 @@ class AthenaRuntime:
         config_path: Path | None = None,
         profile: str | None = None,
         core: CoreContext | None = None,
+        data: DataContext | None = None,
     ) -> None:
         if config is None:
             self.config = load_athena_config(config_path, profile=profile)
         else:
             self.config = config
         self._core = core or bootstrap_athena_core(self.config)
+        self._data = data or self._core.data or bootstrap_data_platform(self.config)
         self._calendar: NSETradingCalendar | None = None
         self._ohlcv_store: ParquetOHLCVStore | None = None
         self._feature_service: FeatureService | None = None
         self._regime_engine: RegimeEngine | None = None
+
+    @property
+    def data(self) -> DataContext:
+        """Release-02 data platform context (calendar, stores, registry)."""
+        return self._data
 
     @property
     def core(self) -> CoreContext:
@@ -111,8 +119,18 @@ class AthenaRuntime:
         self,
     ) -> tuple[NSETradingCalendar, ParquetOHLCVStore, FeatureService, RegimeEngine]:
         if self._calendar is None:
-            self._calendar = NSETradingCalendar(holidays_file=self.config.calendar.holidays_file)
-            self._ohlcv_store = ParquetOHLCVStore(self.config.data_ingest.base_path)
+            calendar = self._data.calendar
+            if not isinstance(calendar, NSETradingCalendar):
+                calendar = NSETradingCalendar(holidays_file=self.config.calendar.holidays_file)
+            self._calendar = calendar
+            store = self._data.ohlcv_repository
+            if not isinstance(store, ParquetOHLCVStore):
+                store = ParquetOHLCVStore(
+                    self.config.data_ingest.base_path,
+                    data_version=self.config.data_platform.versioning.data_version,
+                    immutable_snapshots=self.config.data_platform.versioning.immutable_snapshots,
+                )
+            self._ohlcv_store = store
             feature_store = ParquetFeatureStore(
                 self.config.feature_store.base_path,
                 self.config.feature_store.compression,
@@ -121,6 +139,7 @@ class AthenaRuntime:
                 feature_store,
                 self._ohlcv_store,
                 self.config.feature_store,
+                plugin_registry=self._core.plugin_registry,
             )
             self._regime_engine = RegimeEngine(self._ohlcv_store, self.config.regime)
         assert self._calendar is not None
@@ -148,8 +167,7 @@ class AthenaRuntime:
         start: date,
         end: date,
     ) -> IngestBatchResult:
-        _, ohlcv_store, _, _ = self._services()
-        use_case = IngestOHLCVUseCase(ohlcv_store, self.config.data_ingest)
+        use_case = build_ingest_use_case(self.config, self._data)
         results: list[IngestResult] = []
         failures: list[tuple[str, str]] = []
         for sym in symbols:

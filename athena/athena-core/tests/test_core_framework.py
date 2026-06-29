@@ -134,3 +134,5 @@ def test_bootstrap_wires_core_context() -> None:
     assert ctx.container.resolve("config") is ctx.config
     assert isinstance(ctx.plugin_registry, PluginRegistry)
     assert isinstance(ctx.event_bus, EventBus)
+    assert ctx.data is not None
+    assert ctx.container.has("data")

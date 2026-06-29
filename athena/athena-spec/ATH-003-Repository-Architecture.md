@@ -61,7 +61,26 @@ ATH-REL-001 defines shared infrastructure wired at the composition root:
 | Core utilities | `domain/common/` | Domain |
 | Ports | `domain/ports/` | Domain |
 
-`AthenaRuntime` bootstraps `CoreContext` (container, plugin registry, event bus) on construction. See [ATH-REL-001](ATH-REL-001-Core-Framework.md) and [release-01/](release-01/README.md).
+`AthenaRuntime` bootstraps `CoreContext` (container, plugin registry, event bus) and `DataContext` (calendar, OHLCV store, dataset registry, instrument master) on construction. See [ATH-REL-001](ATH-REL-001-Core-Framework.md), [release-01/](release-01/README.md), [ATH-REL-002](ATH-REL-002-Data-Platform.md), and [release-02/](release-02/README.md).
+
+## Release-02 Data Platform (`athena-core`)
+
+ATH-REL-002 defines data-layer services wired at the composition root:
+
+| Concern | Module | Layer |
+|---------|--------|-------|
+| Data platform config | `application/data_platform_config.py`, `config.py` | Application |
+| Data bootstrap | `application/data_bootstrap.py` | Application |
+| OHLCV ingest | `application/ingest_ohlcv.py` | Application |
+| Data quality | `domain/data/quality.py` | Domain |
+| Data cleaning | `domain/data/cleaning.py` | Domain |
+| Versioning | `domain/data/versioning.py` | Domain |
+| Dataset registry | `domain/data/registry.py`, `infrastructure/file_dataset_registry.py` | Domain / Infrastructure |
+| Instrument master | `infrastructure/instrument_master.py` | Infrastructure |
+| OHLCV storage | `infrastructure/parquet_ohlcv_store.py`, `yfinance_client.py` | Infrastructure |
+| Trading calendar | `infrastructure/nse_calendar.py` | Infrastructure |
+| Feature store | `infrastructure/parquet_feature_store.py` | Infrastructure |
+| Data ports | `domain/ports/` (`ohlcv_repository`, `dataset_registry`, `instrument_registry`, `trading_calendar`, `feature_store`) | Domain |
 
 ## System Architecture
 

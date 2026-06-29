@@ -1,4 +1,4 @@
-"""Application configuration models — REQ-DATA-INGEST-001, REQ-FEAT-STORE-001."""
+"""Application configuration models — REQ-DATA-INGEST-001, REQ-FEAT-STORE-001, ATH-REL-002."""
 
 from __future__ import annotations
 
@@ -14,6 +14,8 @@ from athena_core.application.regime_config import RegimeConfig
 from athena_core.application.scanner_config import ScannerConfig
 from athena_core.application.walk_forward_config import WalkForwardConfig
 from athena_core.application.core_config import CoreFrameworkConfig
+from athena_core.domain.features.caching import FeatureCachePolicy
+from athena_core.application.data_platform_config import DataPlatformConfig
 
 
 class CalendarConfig(BaseModel):
@@ -48,11 +50,12 @@ class IndicatorConfig(BaseModel):
 
 
 class FeatureStoreConfig(BaseModel):
-    """REQ-FEAT-STORE-001."""
+    """REQ-FEAT-STORE-001, REQ-FEAT-CACHE-001."""
 
     base_path: Path = Field(default=Path("./data/features"))
     compression: str = "snappy"
     data_version: str = "v1"
+    cache_policy: FeatureCachePolicy = FeatureCachePolicy.COMPUTE_ON_MISS
 
 
 class AthenaConfig(BaseModel):
@@ -71,3 +74,4 @@ class AthenaConfig(BaseModel):
     ml_scorer: MLScorerConfig = Field(default_factory=MLScorerConfig)
     explainability: ExplainabilityConfig = Field(default_factory=ExplainabilityConfig)
     core: CoreFrameworkConfig = Field(default_factory=CoreFrameworkConfig)
+    data_platform: DataPlatformConfig = Field(default_factory=DataPlatformConfig)

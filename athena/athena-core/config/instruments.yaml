@@ -1,0 +1,11 @@
+# NSE instrument master — REQ-DATA-INSTR-001
+instruments:
+  - code: RELIANCE
+    exchange: NSE
+    yfinance_suffix: .NS
+  - code: TCS
+    exchange: NSE
+    yfinance_suffix: .NS
+  - code: INFY
+    exchange: NSE
+    yfinance_suffix: .NS

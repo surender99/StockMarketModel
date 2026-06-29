@@ -8,6 +8,8 @@ venv/
 
 # Data & experiments (runtime artifacts)
 data/
+!athena/athena-core/src/athena_core/domain/data/
+!athena/athena-core/src/athena_core/domain/data/*.py
 experiments/
 *.parquet
 
