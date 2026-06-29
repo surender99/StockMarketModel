@@ -15,6 +15,13 @@ from athena_core.application.data_platform_config import DataPlatformConfig, Dat
 from athena_core.application.errors import DataQualityGateError, ImmutabilityViolationError
 from athena_core.application.ingest_ohlcv import IngestOHLCVUseCase
 from athena_core.domain.data.cleaning import clean_ohlcv_frame
+from athena_core.domain.data.lineage import LineageStepKind, build_ingest_lineage
+from athena_core.domain.data.quality import (
+    DataQualityIssue,
+    check_ohlcv_quality,
+    compute_quality_score,
+    profile_ohlcv_frame,
+)
 from athena_core.domain.data.registry import DatasetDescriptor, DatasetKind
 from athena_core.domain.data.versioning import build_snapshot_id, compute_content_version
 from athena_core.infrastructure.file_dataset_registry import FileDatasetRegistry
@@ -167,3 +174,34 @@ def test_bootstrap_core_includes_data_context() -> None:
     ctx = bootstrap_athena_core(AthenaConfig())
     assert ctx.data is not None
     assert ctx.container.has("data")
+
+
+def test_compute_quality_score_penalizes_issues() -> None:
+    df = _sample_df()
+    df.loc[0, "high"] = 50.0
+    report = check_ohlcv_quality(df, "TEST.NS")
+    assert DataQualityIssue.INVALID_OHLC in report.issues
+    score = compute_quality_score(report)
+    assert 0.0 < score < 100.0
+    clean_report = check_ohlcv_quality(_sample_df(), "TEST.NS")
+    assert compute_quality_score(clean_report) == 100.0
+
+
+def test_profile_ohlcv_frame_summarizes_columns() -> None:
+    profile = profile_ohlcv_frame(_sample_df())
+    assert profile["row_count"] == 2
+    assert "close_min" in profile
+    assert "volume_null_count" in profile
+
+
+def test_build_ingest_lineage_tracks_pipeline() -> None:
+    lineage = build_ingest_lineage(
+        "RELIANCE.NS@abc123",
+        source="yfinance",
+        symbol="RELIANCE.NS",
+        content_version="abc123",
+    )
+    assert lineage.origin is not None
+    assert lineage.origin.kind == LineageStepKind.SOURCE
+    assert len(lineage.steps) == 4
+    assert lineage.steps[-1].kind == LineageStepKind.VALIDATE

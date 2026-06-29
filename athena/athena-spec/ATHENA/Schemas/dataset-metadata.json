@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://athena.local/schemas/dataset-metadata.json",
+  "title": "DatasetDescriptor",
+  "description": "ATHENA Golden schema for dataset registry entries — APS-DATASET-001",
+  "type": "object",
+  "required": [
+    "dataset_id",
+    "kind",
+    "path",
+    "data_version",
+    "content_version",
+    "checksum_sha256"
+  ],
+  "properties": {
+    "dataset_id": { "type": "string", "minLength": 1 },
+    "kind": { "type": "string", "enum": ["ohlcv", "features", "instruments"] },
+    "path": { "type": "string" },
+    "data_version": { "type": "string" },
+    "content_version": { "type": "string", "pattern": "^[a-f0-9]{16}$" },
+    "checksum_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "symbol": { "type": "string" },
+    "source": { "type": "string" },
+    "row_count": { "type": "integer", "minimum": 0 },
+    "registered_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

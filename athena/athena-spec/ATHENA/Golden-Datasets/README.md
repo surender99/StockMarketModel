@@ -5,6 +5,7 @@ Small, version-controlled fixtures for reproducible tests and APS validation. No
 | File | Purpose | Used by |
 |------|---------|---------|
 | [ohlcv-sample-30d.csv](ohlcv-sample-30d.csv) | 30 business days OHLCV for TEST.NS | Feature store, indicator tests |
+| [ohlcv-dirty-sample.csv](ohlcv-dirty-sample.csv) | OHLCV with duplicates, invalid OHLC, zero volume | Data quality APS validation |
 | [symbols-sample.csv](symbols-sample.csv) | 5 NSE symbols | Ingest/scanner examples |
 | [config-minimal.yaml](config-minimal.yaml) | Minimal Athena config | Bootstrap smoke tests |
 

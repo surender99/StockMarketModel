@@ -2,6 +2,16 @@
 
 Performance targets and benchmark test references. Domain benchmarks remain at legacy paths.
 
+## Data Platform (Phase 2)
+
+| Target | Source | Test ref |
+|--------|--------|----------|
+| OHLCV quality 10k rows < 50 ms | APS-DQ-SCORE-001 | `tests/test_data_platform.py` |
+| clean_ohlcv 10k rows < 30 ms | APS-CLEAN-001 | `tests/test_data_platform.py` |
+| Feature cache hit < 5 ms | APS-FS-CACHE-001 | `tests/test_feature_store.py` |
+
+Full table: [data-platform.md](data-platform.md)
+
 ## Foundation (APS-001–015)
 
 | Target | Source | Test ref |

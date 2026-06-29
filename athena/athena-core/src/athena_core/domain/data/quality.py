@@ -84,3 +84,36 @@ def check_ohlcv_quality(
             report.details["outlier_count"] = outlier_count
 
     return report
+
+
+def compute_quality_score(report: DataQualityReport) -> float:
+    """Composite 0–100 quality score — REQ-APS-DQ-SCORE-001."""
+    if report.row_count == 0:
+        return 0.0
+    penalty = 0.0
+    weights = {
+        DataQualityIssue.MISSING_CANDLES: 40.0,
+        DataQualityIssue.DUPLICATE_ROWS: 15.0,
+        DataQualityIssue.INVALID_OHLC: 25.0,
+        DataQualityIssue.ZERO_VOLUME: 10.0,
+        DataQualityIssue.OUTLIER: 10.0,
+    }
+    for issue in report.issues:
+        penalty += weights.get(issue, 5.0)
+    return max(0.0, min(100.0, 100.0 - penalty))
+
+
+def profile_ohlcv_frame(df: pd.DataFrame) -> dict[str, int | float]:
+    """Column-level profiler summary — REQ-APS-DQ-PROFILER-001."""
+    if df.empty:
+        return {"row_count": 0}
+    summary: dict[str, int | float] = {"row_count": len(df)}
+    for col in ("open", "high", "low", "close", "volume"):
+        if col not in df.columns:
+            continue
+        series = df[col]
+        summary[f"{col}_null_count"] = int(series.isna().sum())
+        if col != "volume":
+            summary[f"{col}_min"] = float(series.min())
+            summary[f"{col}_max"] = float(series.max())
+    return summary

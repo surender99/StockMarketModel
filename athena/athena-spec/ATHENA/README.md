@@ -19,9 +19,10 @@ ATHENA
 
 1. [Releases/](Releases/README.md) — what to build (REL packages)
 2. [APS/Foundation/](APS/Foundation/README.md) — Phase 1 foundation frameworks (APS-001–015)
-3. [APS/](APS/README.md) — domain implementation specs (Indicators, Patterns, …)
-4. [ADR/](ADR/README.md) — accepted architecture decisions
-5. [Golden-Datasets/](Golden-Datasets/README.md) — reproducible test inputs
+3. [APS/Data/](APS/Data/README.md) — Phase 2 data platform APS (51 specs)
+4. [APS/](APS/README.md) — domain implementation specs (Indicators, Patterns, …)
+5. [ADR/](ADR/README.md) — accepted architecture decisions
+6. [Golden-Datasets/](Golden-Datasets/README.md) — reproducible test inputs
 
 ## Relationship to Legacy Paths
 
@@ -38,4 +39,6 @@ Existing documents under `athena-spec/` remain authoritative. This tree adds **i
 
 **Phase 1 validation:** [PHASE-1-FOUNDATION-COMPLETE.md](../PHASE-1-FOUNDATION-COMPLETE.md)
 
-**Source document:** `References/PHASE1 -ATHENA FOUNDATION APS.docx` (not committed; content captured in APS/Foundation/).
+**Phase 2 validation:** [PHASE-2-DATA-PLATFORM-COMPLETE.md](../PHASE-2-DATA-PLATFORM-COMPLETE.md)
+
+**Source documents:** `References/PHASE1 -ATHENA FOUNDATION APS.docx`, `References/PHASE2 -DATA PLATFORM APS.docx` (not committed; content captured in APS/).

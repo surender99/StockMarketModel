@@ -19,6 +19,8 @@ This directory contains the engineering specification for **Athena – AI Quanti
 
 **Phase 1 Foundation:** [PHASE-1-FOUNDATION-COMPLETE.md](PHASE-1-FOUNDATION-COMPLETE.md) · [APS/Foundation/](ATHENA/APS/Foundation/README.md)
 
+**Phase 2 Data Platform:** [PHASE-2-DATA-PLATFORM-COMPLETE.md](PHASE-2-DATA-PLATFORM-COMPLETE.md) · [APS/Data/](ATHENA/APS/Data/README.md)
+
 ---
 
 Start reading in this order:
