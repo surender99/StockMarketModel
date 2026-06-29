@@ -200,6 +200,21 @@ class AthenaClient:
             return format_comparison_table(comparison)
         return comparison
 
+    def api_spec(self) -> dict[str, Any]:
+        """OpenAPI specification stub — REQ-SDK-REST-001."""
+        from athena_sdk.api import OpenAPISpec
+
+        spec = OpenAPISpec()
+        for path in ("/health", "/scan", "/backtest", "/experiments"):
+            spec.add_path(path, {"get": {"summary": path}})
+        return spec.to_dict()
+
+    def health(self) -> dict[str, Any]:
+        """Health check — REQ-SDK-PYTHON-001."""
+        from athena_sdk import __version__
+
+        return {"status": "ok", "sdk_version": __version__, "profile": self.profile}
+
     def _coerce_strategy(self, strategy: StrategyConfig | Path | str) -> StrategyConfig:
         if isinstance(strategy, StrategyConfig):
             return strategy

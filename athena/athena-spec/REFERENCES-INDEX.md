@@ -23,6 +23,16 @@ This index tracks integration of the Athena References package series and Releas
 | **REL-008** | Portfolio Management Engine (Release-08) | Allocation models, risk budgets, optimization, analytics, snapshots | ✅ Complete |
 | **REL-009** | Statistics & Analytics Engine (Release-09) | Distribution, hypothesis tests, correlation, regression, reporting | ✅ Complete |
 | **REL-010** | Research Engine (Release-10) | Research workspace, experiment lifecycle, dataset snapshots, pipeline, results | ✅ Complete |
+| **REL-011** | Machine Learning Platform (Release-11) | Feature selection, dataset builder, model registry, training, evaluation, drift | ✅ Complete |
+| **REL-012** | AI Research Scientist (Release-12) | AI planner, hypothesis generator, strategy designer, reviewer, docs | ✅ Complete |
+| **REL-013** | Dashboard & Visualization (Release-13) | Chart engine, portfolio/strategy/risk/research dashboards | ✅ Complete |
+| **REL-014** | Paper Trading Engine (Release-14) | Paper broker, orders, positions, execution simulator, risk controls | ✅ Complete |
+| **REL-015** | Production & Deployment (Release-15) | Broker gateway, OMS, RMS, health checks, audit logging | ✅ Complete |
+| **REL-016** | Engineering Review Framework (Release-16) | Architecture/code/quant reviews, release gates | ✅ Complete |
+| **REL-017** | Security & Compliance (Release-17) | Authentication, RBAC, secrets, audit trails | ✅ Complete |
+| **REL-018** | DevOps & Platform Engineering (Release-18) | CI/CD, artifacts, deployment pipelines | ✅ Complete |
+| **REL-019** | Observability & Monitoring (Release-19) | Metrics, tracing, alerting, SLA/SLO reporting | ✅ Complete |
+| **REL-020** | SDK & Public APIs (Release-20) | Python SDK, REST/WS stubs, rate limiting, API versioning | ✅ Complete |
 | **REL-002** | Data Platform (Release-02) | OHLCV ingest, calendar, quality, cleaning, versioning, registry | ✅ Complete |
 | **01** | Governance | Constitution, execution plan, quant & AI standards, templates, DoD | ✅ Complete |
 | **02** | Architecture | System architecture, clean architecture, plugin model, repo structure | ✅ Complete |
@@ -57,6 +67,16 @@ This index tracks integration of the Athena References package series and Releas
 | REL-008 | [ATH-REL-008-Portfolio-Management-Engine.md](ATH-REL-008-Portfolio-Management-Engine.md), [release-08/](release-08/) | [PACKAGE-REL-008-COMPLETE.md](packages/PACKAGE-REL-008-COMPLETE.md) |
 | REL-009 | [ATH-REL-009-Statistics-and-Analytics-Engine.md](ATH-REL-009-Statistics-and-Analytics-Engine.md), [release-09/](release-09/) | [PACKAGE-REL-009-COMPLETE.md](packages/PACKAGE-REL-009-COMPLETE.md) |
 | REL-010 | [ATH-REL-010-Research-Engine.md](ATH-REL-010-Research-Engine.md), [release-10/](release-10/) | [PACKAGE-REL-010-COMPLETE.md](packages/PACKAGE-REL-010-COMPLETE.md) |
+| REL-011 | [ATH-REL-011-Machine-Learning-Platform.md](ATH-REL-011-Machine-Learning-Platform.md), [release-11/](release-11/) | [PACKAGE-REL-011-COMPLETE.md](packages/PACKAGE-REL-011-COMPLETE.md) |
+| REL-012 | [ATH-REL-012-AI-Research-Scientist.md](ATH-REL-012-AI-Research-Scientist.md), [release-12/](release-12/) | [PACKAGE-REL-012-COMPLETE.md](packages/PACKAGE-REL-012-COMPLETE.md) |
+| REL-013 | [ATH-REL-013-Dashboard-and-Visualization.md](ATH-REL-013-Dashboard-and-Visualization.md), [release-13/](release-13/) | [PACKAGE-REL-013-COMPLETE.md](packages/PACKAGE-REL-013-COMPLETE.md) |
+| REL-014 | [ATH-REL-014-Paper-Trading-Engine.md](ATH-REL-014-Paper-Trading-Engine.md), [release-14/](release-14/) | [PACKAGE-REL-014-COMPLETE.md](packages/PACKAGE-REL-014-COMPLETE.md) |
+| REL-015 | [ATH-REL-015-Production-and-Deployment.md](ATH-REL-015-Production-and-Deployment.md), [release-15/](release-15/) | [PACKAGE-REL-015-COMPLETE.md](packages/PACKAGE-REL-015-COMPLETE.md) |
+| REL-016 | [ATH-REL-016-Engineering-Review-Framework.md](ATH-REL-016-Engineering-Review-Framework.md), [release-16/](release-16/) | [PACKAGE-REL-016-COMPLETE.md](packages/PACKAGE-REL-016-COMPLETE.md) |
+| REL-017 | [ATH-REL-017-Security-and-Compliance.md](ATH-REL-017-Security-and-Compliance.md), [release-17/](release-17/) | [PACKAGE-REL-017-COMPLETE.md](packages/PACKAGE-REL-017-COMPLETE.md) |
+| REL-018 | [ATH-REL-018-DevOps-and-Platform-Engineering.md](ATH-REL-018-DevOps-and-Platform-Engineering.md), [release-18/](release-18/) | [PACKAGE-REL-018-COMPLETE.md](packages/PACKAGE-REL-018-COMPLETE.md) |
+| REL-019 | [ATH-REL-019-Observability-and-Monitoring.md](ATH-REL-019-Observability-and-Monitoring.md), [release-19/](release-19/) | [PACKAGE-REL-019-COMPLETE.md](packages/PACKAGE-REL-019-COMPLETE.md) |
+| REL-020 | [ATH-REL-020-SDK-and-Public-APIs.md](ATH-REL-020-SDK-and-Public-APIs.md), [release-20/](release-20/) | [PACKAGE-REL-020-COMPLETE.md](packages/PACKAGE-REL-020-COMPLETE.md) |
 | REL-002 | [ATH-REL-002-Data-Platform.md](ATH-REL-002-Data-Platform.md), [release-02/](release-02/) | [PACKAGE-REL-002-COMPLETE.md](packages/PACKAGE-REL-002-COMPLETE.md) |
 | 01 | [governance/](governance/), [templates/](templates/), [checklists/](checklists/) | [PACKAGE-01-COMPLETE.md](packages/PACKAGE-01-COMPLETE.md) |
 | 02 | [architecture/](architecture/), [contracts/](contracts/), [diagrams/](diagrams/) | [PACKAGE-02-COMPLETE.md](packages/PACKAGE-02-COMPLETE.md) |
