@@ -10,6 +10,8 @@ venv/
 data/
 !athena/athena-core/src/athena_core/domain/data/
 !athena/athena-core/src/athena_core/domain/data/*.py
+!athena/athena-spec/ATHENA/APS/Data/
+!athena/athena-spec/ATHENA/APS/Data/**
 experiments/
 *.parquet
 

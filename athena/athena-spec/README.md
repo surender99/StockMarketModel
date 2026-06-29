@@ -2,6 +2,25 @@
 
 This directory contains the engineering specification for **Athena – AI Quantitative Research Operating System**.
 
+## ATHENA Tree (navigation)
+
+**[ATHENA/](ATHENA/README.md)** — unified index:
+
+| Branch | Purpose |
+|--------|---------|
+| [Releases/](ATHENA/Releases/README.md) | Planning packages REL-000 … REL-020 |
+| [APS/](ATHENA/APS/README.md) | Implementation specs (Foundation + domains) |
+| [ADR/](ATHENA/ADR/README.md) | Architecture decision records |
+| [Schemas/](ATHENA/Schemas/README.md) | JSON/YAML schemas |
+| [Golden-Datasets/](ATHENA/Golden-Datasets/README.md) | Test fixtures |
+| [Benchmarks/](ATHENA/Benchmarks/README.md) | Performance targets |
+| [Prompts/](ATHENA/Prompts/README.md) | AI agent prompts |
+| [Reviews/](ATHENA/Reviews/README.md) | CTO and revision reviews |
+
+**Phase 1 Foundation:** [PHASE-1-FOUNDATION-COMPLETE.md](PHASE-1-FOUNDATION-COMPLETE.md) · [APS/Foundation/](ATHENA/APS/Foundation/README.md)
+
+---
+
 Start reading in this order:
 
 1. [ATH-000-Philosophy.md](ATH-000-Philosophy.md)

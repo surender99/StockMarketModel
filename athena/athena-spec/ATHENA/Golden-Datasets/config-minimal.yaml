@@ -1,0 +1,7 @@
+core:
+  logging:
+    level: INFO
+    json_logs: false
+data:
+  ohlcv_root: ./data/ohlcv
+  feature_root: ./data/features

@@ -61,7 +61,9 @@ athena-dashboard
 
 ## Documentation
 
-Specifications live in [`athena/athena-spec/`](athena/athena-spec/README.md):
+Specifications live in [`athena/athena-spec/`](athena/athena-spec/README.md).
+
+**Navigation tree:** [`ATHENA/`](athena/athena-spec/ATHENA/README.md) — Releases (REL-000…020), APS (Foundation + domains), ADR, Schemas, Golden Datasets, Benchmarks, Prompts, Reviews.
 
 | Document | Purpose |
 |----------|---------|
@@ -82,6 +84,7 @@ Specifications live in [`athena/athena-spec/`](athena/athena-spec/README.md):
 | [Athena Handbook](athena/athena-docs/handbook/) | Operator volumes (Package 15) |
 | [Requirements backlog](athena/athena-spec/requirements/) | Traceable REQ specs (hybrid layout) |
 | [Platform Complete](athena/athena-spec/PLATFORM-COMPLETE.md) | MVP code sign-off (Phases 0–7) |
+| [Phase 1 Foundation APS](athena/athena-spec/PHASE-1-FOUNDATION-COMPLETE.md) | ATHENA tree + APS-001…015 specs |
 | [Phase 6 Validation](athena/athena-spec/PHASE-6-VALIDATION.md) | Latest phase validation report |
 | [CHANGELOG](CHANGELOG.md) | Release history |
 
