@@ -1,4 +1,4 @@
-"""Indicator plugin registry — REQ-FEAT-REGISTRY-001, ATH-REL-003 §09."""
+"""Indicator plugin registry — REQ-FEAT-REGISTRY-001, ATH-REL-003/004."""
 
 from __future__ import annotations
 
@@ -10,11 +10,18 @@ import pandas as pd
 from athena_core.domain.indicators.adx import compute_adx_from_ohlcv
 from athena_core.domain.indicators.atr import compute_atr_from_ohlcv
 from athena_core.domain.indicators.bollinger import compute_bollinger_from_ohlcv
+from athena_core.domain.indicators.cci import compute_cci_from_ohlcv
+from athena_core.domain.indicators.cmf import compute_cmf_from_ohlcv
 from athena_core.domain.indicators.ema import compute_ema_from_ohlcv
 from athena_core.domain.indicators.macd import compute_macd_from_ohlcv
+from athena_core.domain.indicators.mfi import compute_mfi_from_ohlcv
+from athena_core.domain.indicators.obv import compute_obv_from_ohlcv
+from athena_core.domain.indicators.roc import compute_roc_from_ohlcv
 from athena_core.domain.indicators.rsi import compute_rsi_from_ohlcv
 from athena_core.domain.indicators.sma import compute_sma_from_ohlcv
 from athena_core.domain.indicators.stoch import compute_stoch_from_ohlcv
+from athena_core.domain.indicators.willr import compute_willr_from_ohlcv
+from athena_core.domain.indicators.wma import compute_wma_from_ohlcv
 from athena_core.domain.patterns.series import compute_pattern_series
 from athena_core.domain.plugins import Plugin, PluginMetadata, PluginRegistry, PluginType
 
@@ -127,6 +134,59 @@ def _builtin_indicator_specs() -> list[tuple[str, str, str, dict[str, Any], Indi
                 std_dev=float(params.get("std_dev", 2.0)),
                 price_column=params.get("price_column", "close"),
             ),
+        ),
+        (
+            "wma",
+            "0.1.0",
+            "Weighted Moving Average",
+            {"period": {"type": "integer", "minimum": 1}, "price_column": {"type": "string"}},
+            lambda df, params: compute_wma_from_ohlcv(
+                df, int(params["period"]), price_column=params.get("price_column", "close")
+            ),
+        ),
+        (
+            "roc",
+            "0.1.0",
+            "Rate of Change",
+            {"period": {"type": "integer", "default": 12}, "price_column": {"type": "string"}},
+            lambda df, params: compute_roc_from_ohlcv(
+                df, int(params.get("period", 12)), price_column=params.get("price_column", "close")
+            ),
+        ),
+        (
+            "obv",
+            "0.1.0",
+            "On-Balance Volume",
+            {},
+            lambda df, params: compute_obv_from_ohlcv(df),
+        ),
+        (
+            "cmf",
+            "0.1.0",
+            "Chaikin Money Flow",
+            {"period": {"type": "integer", "default": 20}},
+            lambda df, params: compute_cmf_from_ohlcv(df, int(params.get("period", 20))),
+        ),
+        (
+            "mfi",
+            "0.1.0",
+            "Money Flow Index",
+            {"period": {"type": "integer", "default": 14}},
+            lambda df, params: compute_mfi_from_ohlcv(df, int(params.get("period", 14))),
+        ),
+        (
+            "cci",
+            "0.1.0",
+            "Commodity Channel Index",
+            {"period": {"type": "integer", "default": 20}},
+            lambda df, params: compute_cci_from_ohlcv(df, int(params.get("period", 20))),
+        ),
+        (
+            "willr",
+            "0.1.0",
+            "Williams %R",
+            {"period": {"type": "integer", "default": 14}},
+            lambda df, params: compute_willr_from_ohlcv(df, int(params.get("period", 14))),
         ),
         (
             "pattern",
