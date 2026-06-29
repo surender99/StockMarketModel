@@ -56,5 +56,5 @@ athena/athena-spec/
 ## Test Results
 
 ```
-See pytest output after integration run.
+237 passed, 9 skipped, 3 deselected
 ```
