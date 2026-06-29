@@ -2,9 +2,10 @@
 
 from athena_core.domain.ports.feature_store import FeatureStorePort
 from athena_core.domain.ports.ohlcv_repository import OHLCVRepositoryPort
-from athena_core.domain.ports.trading_calendar import TradingCalendarPort
+from athena_core.domain.ports.event_publisher import EventPublisherPort
 
 __all__ = [
+    "EventPublisherPort",
     "FeatureStorePort",
     "OHLCVRepositoryPort",
     "TradingCalendarPort",

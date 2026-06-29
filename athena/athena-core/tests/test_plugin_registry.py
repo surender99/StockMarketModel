@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from athena_core.domain.plugins import Plugin, PluginMetadata, PluginRegistry, PluginType
+from athena_core.domain.errors import PluginError
+from athena_core.domain.plugins import Plugin, PluginLifecycle, PluginMetadata, PluginRegistry, PluginType
 
 
 def test_register_and_get_plugin() -> None:
@@ -19,6 +20,7 @@ def test_register_and_get_plugin() -> None:
     )
     registry.register(plugin)
     assert registry.get("ema") is plugin
+    assert plugin.lifecycle == PluginLifecycle.ACTIVE
 
 
 def test_list_filters_by_type() -> None:
@@ -53,11 +55,11 @@ def test_duplicate_registration_raises() -> None:
         metadata=PluginMetadata(name="SMA"),
     )
     registry.register(plugin)
-    with pytest.raises(ValueError, match="already registered"):
+    with pytest.raises(PluginError, match="already registered"):
         registry.register(plugin)
 
 
 def test_unknown_plugin_raises() -> None:
     registry = PluginRegistry()
-    with pytest.raises(KeyError, match="unknown plugin"):
+    with pytest.raises(PluginError, match="unknown plugin"):
         registry.get("missing")

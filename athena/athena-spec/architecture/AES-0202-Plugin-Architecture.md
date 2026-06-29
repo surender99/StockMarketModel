@@ -45,7 +45,7 @@ PluginRegistry
   └── list(plugin_type: PluginType) → list[Plugin]
 ```
 
-MVP stub: `athena_core.domain.plugins.PluginRegistry` — minimal registry for future indicator/pattern/strategy plugins. Current indicators remain in `FeatureService._INDICATOR_REGISTRY` until Package 05 formalizes the indicator framework.
+MVP stub: `athena_core.domain.plugins.PluginRegistry` — registry with lifecycle (`REGISTERED`, `ACTIVE`, `DISABLED`), discovery, and unregister. `AthenaRuntime` exposes the registry via `bootstrap_athena_core`. Current indicators remain in `FeatureService._INDICATOR_REGISTRY` until Package 05 formalizes the indicator framework.
 
 ---
 

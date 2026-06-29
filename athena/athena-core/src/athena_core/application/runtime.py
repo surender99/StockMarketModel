@@ -14,6 +14,7 @@ from athena_core.application.backtest_engine import BacktestEngine, BacktestResu
 from athena_core.application.backtest_features import FeatureServiceProvider
 from athena_core.application.config import AthenaConfig
 from athena_core.application.config_loader import load_athena_config
+from athena_core.application.bootstrap import CoreContext, bootstrap_athena_core
 from athena_core.application.errors import IngestError
 from athena_core.application.experiment_tracker import ExperimentTracker
 from athena_core.application.explainability import ShapExplainer
@@ -24,6 +25,8 @@ from athena_core.application.optimizer import OptimizerResult, StrategyOptimizer
 from athena_core.application.regime_engine import RegimeEngine
 from athena_core.application.scanner import DailyScanner, ScanResult, scan_result_to_dict
 from athena_core.application.walk_forward import WalkForwardSummary, WalkForwardValidator
+from athena_core.domain.events import EventBus
+from athena_core.domain.plugins import PluginRegistry
 from athena_core.domain.strategy.config import StrategyConfig
 from athena_core.infrastructure.nse_calendar import NSETradingCalendar
 from athena_core.infrastructure.parquet_feature_store import ParquetFeatureStore
@@ -56,15 +59,30 @@ class AthenaRuntime:
         *,
         config_path: Path | None = None,
         profile: str | None = None,
+        core: CoreContext | None = None,
     ) -> None:
         if config is None:
             self.config = load_athena_config(config_path, profile=profile)
         else:
             self.config = config
+        self._core = core or bootstrap_athena_core(self.config)
         self._calendar: NSETradingCalendar | None = None
         self._ohlcv_store: ParquetOHLCVStore | None = None
         self._feature_service: FeatureService | None = None
         self._regime_engine: RegimeEngine | None = None
+
+    @property
+    def core(self) -> CoreContext:
+        """Release-01 core framework context (DI, plugins, events)."""
+        return self._core
+
+    @property
+    def plugin_registry(self) -> PluginRegistry:
+        return self._core.plugin_registry
+
+    @property
+    def event_bus(self) -> EventBus:
+        return self._core.event_bus
 
     @staticmethod
     def load_symbols(path: Path) -> list[str]:

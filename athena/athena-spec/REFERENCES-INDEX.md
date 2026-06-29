@@ -13,6 +13,7 @@ This index tracks integration of the Athena References package series and Releas
 | Package | Name | Scope | Status |
 |---------|------|-------|--------|
 | **REL-000** | Engineering Standards (Release-00) | Master standards taxonomy, quality gates, section index | ✅ Complete |
+| **REL-001** | Core Framework (Release-01) | Config, DI, plugins, events, logging, errors, utilities, contracts | ✅ Complete |
 | **01** | Governance | Constitution, execution plan, quant & AI standards, templates, DoD | ✅ Complete |
 | **02** | Architecture | System architecture, clean architecture, plugin model, repo structure | ✅ Complete |
 | **03** | Data Platform | DataProvider contract, OHLCV schema, data quality | ✅ Complete |
@@ -36,6 +37,7 @@ This index tracks integration of the Athena References package series and Releas
 | Pkg | Canonical Path | Validation |
 |-----|----------------|------------|
 | REL-000 | [ATH-REL-000-Engineering-Standards.md](ATH-REL-000-Engineering-Standards.md), [engineering-standards/](engineering-standards/) | [PACKAGE-REL-000-COMPLETE.md](packages/PACKAGE-REL-000-COMPLETE.md) |
+| REL-001 | [ATH-REL-001-Core-Framework.md](ATH-REL-001-Core-Framework.md), [release-01/](release-01/) | [PACKAGE-REL-001-COMPLETE.md](packages/PACKAGE-REL-001-COMPLETE.md) |
 | 01 | [governance/](governance/), [templates/](templates/), [checklists/](checklists/) | [PACKAGE-01-COMPLETE.md](packages/PACKAGE-01-COMPLETE.md) |
 | 02 | [architecture/](architecture/), [contracts/](contracts/), [diagrams/](diagrams/) | [PACKAGE-02-COMPLETE.md](packages/PACKAGE-02-COMPLETE.md) |
 | 03 | [data/](data/), [schemas/ohlcv-schema.json](schemas/ohlcv-schema.json), [DataProvider](contracts/DataProvider.md) | [PACKAGE-03-COMPLETE.md](packages/PACKAGE-03-COMPLETE.md) |

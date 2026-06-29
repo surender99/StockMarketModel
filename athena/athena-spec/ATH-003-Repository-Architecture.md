@@ -46,6 +46,23 @@ Dependencies point inward: interfaces → application → domain; infrastructure
 
 See [AES-0201 Clean Architecture](architecture/AES-0201-Clean-Architecture.md) for the full dependency matrix and port mapping.
 
+## Release-01 Core Framework (`athena-core`)
+
+ATH-REL-001 defines shared infrastructure wired at the composition root:
+
+| Concern | Module | Layer |
+|---------|--------|-------|
+| Configuration | `application/config.py`, `core_config.py`, `config_loader.py` | Application |
+| Dependency injection | `application/container.py`, `bootstrap.py` | Application |
+| Plugin lifecycle | `domain/plugins/` | Domain |
+| Event bus | `domain/events/` | Domain |
+| Logging | `infrastructure/logging.py` | Infrastructure |
+| Error hierarchy | `domain/errors.py` | Domain |
+| Core utilities | `domain/common/` | Domain |
+| Ports | `domain/ports/` | Domain |
+
+`AthenaRuntime` bootstraps `CoreContext` (container, plugin registry, event bus) on construction. See [ATH-REL-001](ATH-REL-001-Core-Framework.md) and [release-01/](release-01/README.md).
+
 ## System Architecture
 
 Athena is organized into 13 system layers (governance through platform). Lower layers never depend on higher layers; all cross-layer communication uses documented contracts.

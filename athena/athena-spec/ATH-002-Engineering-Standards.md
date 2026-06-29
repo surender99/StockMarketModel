@@ -1,6 +1,7 @@
 # ATH-002 – Engineering Standards
 
-> **Release package:** [ATH-REL-000 Engineering Standards](ATH-REL-000-Engineering-Standards.md) (Release-00 v0.1)
+> **Release package:** [ATH-REL-000 Engineering Standards](ATH-REL-000-Engineering-Standards.md) (Release-00 v0.1)  
+> **Core framework:** [ATH-REL-001 Core Framework](ATH-REL-001-Core-Framework.md) (Release-01 v0.1)
 > **AI agent workflow:** [governance/AES-0006-AI-Coding-Standards.md](governance/AES-0006-AI-Coding-Standards.md)
 > **Quant research rules:** [governance/AES-0005-Quant-Standards.md](governance/AES-0005-Quant-Standards.md)
 > **Section index:** [engineering-standards/README.md](engineering-standards/README.md)
