@@ -21,6 +21,7 @@ This index tracks integration of the Athena References package series and Releas
 | **REL-006** | Strategy Engine (Release-06) | Strategy registry, signal engine, composition, validation, sizing | ✅ Complete |
 | **REL-007** | Backtesting Engine (Release-07) | Order engine, execution models, slippage, trade journal, advanced metrics | ✅ Complete |
 | **REL-008** | Portfolio Management Engine (Release-08) | Allocation models, risk budgets, optimization, analytics, snapshots | ✅ Complete |
+| **REL-009** | Statistics & Analytics Engine (Release-09) | Distribution, hypothesis tests, correlation, regression, reporting | ✅ Complete |
 | **REL-002** | Data Platform (Release-02) | OHLCV ingest, calendar, quality, cleaning, versioning, registry | ✅ Complete |
 | **01** | Governance | Constitution, execution plan, quant & AI standards, templates, DoD | ✅ Complete |
 | **02** | Architecture | System architecture, clean architecture, plugin model, repo structure | ✅ Complete |
@@ -53,6 +54,7 @@ This index tracks integration of the Athena References package series and Releas
 | REL-006 | [ATH-REL-006-Strategy-Engine.md](ATH-REL-006-Strategy-Engine.md), [release-06/](release-06/) | [PACKAGE-REL-006-COMPLETE.md](packages/PACKAGE-REL-006-COMPLETE.md) |
 | REL-007 | [ATH-REL-007-Backtesting-Engine.md](ATH-REL-007-Backtesting-Engine.md), [release-07/](release-07/) | [PACKAGE-REL-007-COMPLETE.md](packages/PACKAGE-REL-007-COMPLETE.md) |
 | REL-008 | [ATH-REL-008-Portfolio-Management-Engine.md](ATH-REL-008-Portfolio-Management-Engine.md), [release-08/](release-08/) | [PACKAGE-REL-008-COMPLETE.md](packages/PACKAGE-REL-008-COMPLETE.md) |
+| REL-009 | [ATH-REL-009-Statistics-and-Analytics-Engine.md](ATH-REL-009-Statistics-and-Analytics-Engine.md), [release-09/](release-09/) | [PACKAGE-REL-009-COMPLETE.md](packages/PACKAGE-REL-009-COMPLETE.md) |
 | REL-002 | [ATH-REL-002-Data-Platform.md](ATH-REL-002-Data-Platform.md), [release-02/](release-02/) | [PACKAGE-REL-002-COMPLETE.md](packages/PACKAGE-REL-002-COMPLETE.md) |
 | 01 | [governance/](governance/), [templates/](templates/), [checklists/](checklists/) | [PACKAGE-01-COMPLETE.md](packages/PACKAGE-01-COMPLETE.md) |
 | 02 | [architecture/](architecture/), [contracts/](contracts/), [diagrams/](diagrams/) | [PACKAGE-02-COMPLETE.md](packages/PACKAGE-02-COMPLETE.md) |
