@@ -3,7 +3,7 @@
 > **Validated by:** Integration Sign-off Agent  
 > **Date:** 2026-06-30  
 > **Repository:** StockMarketModel (`athena/` monorepo)  
-> **Baseline commit:** `cf4b161` (pre sign-off) → integration commit on `master`
+> **Baseline commit:** `3e63208` (PHASE-9 QREP) → integration sign-off on `master`
 
 ---
 
@@ -26,10 +26,10 @@ All **References planning packages (REL-000 … REL-020)**, **References product
 | **5** | Strategies (SIP) | 169 | ✅ | **MVP** — YAML engine, templates, decision pipeline catalog | [PHASE-5-STRATEGIES-COMPLETE.md](../PHASE-5-STRATEGIES-COMPLETE.md) |
 | **6** | Simulation (SBP) | 56 | ✅ | **MVP** — simulation catalog + core backtest wiring | [PHASE-6-SIMULATION-COMPLETE.md](../PHASE-6-SIMULATION-COMPLETE.md) |
 | **7** | Portfolio Intelligence (PIP) | 72 | ✅ | **MVP** — portfolio catalog, rebalancing, exposure limits | [PHASE-7-PORTFOLIO-COMPLETE.md](../PHASE-7-PORTFOLIO-COMPLETE.md) |
-| **8** | Quantitative Analytics (QARIP) | 44 | ✅ | **MVP** — analytics catalog, statistics/risk partial wiring | [PHASE-8-ANALYTICS-COMPLETE.md](../PHASE-8-ANALYTICS-COMPLETE.md) |
+| **8** | Quantitative Analytics (QARIP) | 160 | ✅ | **MVP** — analytics catalog, statistics/risk partial wiring | [PHASE-8-ANALYTICS-COMPLETE.md](../PHASE-8-ANALYTICS-COMPLETE.md) |
 | **9** | Research & Experimentation (QREP) | 140 | ✅ | **MVP** — QREP catalog, hypothesis, reproducibility, events | [PHASE-9-QREP-COMPLETE.md](../PHASE-9-QREP-COMPLETE.md) |
 
-**Total APS published:** 813 across PHASE 1–9.
+**Total APS published:** 929 across PHASE 1–9.
 
 ---
 

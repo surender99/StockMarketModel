@@ -30,7 +30,7 @@ A package can be **spec-complete** while **code-partial** or **code-absent**.
 | **5** | Strategies | 169 | ✅ | **MVP** | YAML engine + templates; optimizer/risk/exit APS mostly catalog |
 | **6** | Simulation | 56 | ✅ | **MVP** | Backtest engine covers core loop; simulation catalog + event stubs |
 | **7** | Portfolio Intelligence | 72 | ✅ | **MVP** | `PortfolioEngine`, rebalancing, exposure limits; optimizer/risk-budget deferred |
-| **8** | Quantitative Analytics | 44 | ✅ | **MVP** | Analytics catalog; statistics/risk partial via existing engines |
+| **8** | Quantitative Analytics | 160 | ✅ | **MVP** | Analytics catalog; statistics/risk partial via existing engines |
 | **9** | Research & Experimentation | 140 | ✅ | **MVP** | QREP catalog, hypothesis, reproducibility, events; notebook/collaboration deferred |
 
 **Master sign-off:** [ATHENA/REFERENCES-COMPLETE.md](ATHENA/REFERENCES-COMPLETE.md)
