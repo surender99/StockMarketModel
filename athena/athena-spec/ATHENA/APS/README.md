@@ -11,6 +11,9 @@ Implementation specs organized by domain. Foundation (Phase 1) is prerequisite f
 | **Indicators** | [Indicators/](Indicators/README.md) | REL-004 — **Phase 3 complete** |
 | **Patterns** | [Patterns/](Patterns/README.md) | REL-005 — **Phase 4 complete** |
 | **Strategies** | [Strategies/](Strategies/README.md) | REL-006 — **Phase 5 complete** |
+| **Simulation** | [Simulation/](Simulation/README.md) | REL-007 — **Phase 6 complete** |
+| **Portfolio Intelligence** | [Portfolio-Intelligence/](Portfolio-Intelligence/README.md) | REL-008 — **Phase 7 complete** |
+| **Quantitative Analytics** | [Quantitative-Analytics/](Quantitative-Analytics/README.md) | REL-009 — **Phase 8 complete** |
 | **Backtesting** | [Backtesting/](Backtesting/README.md) | REL-007 |
 | **Portfolio** | [Portfolio/](Portfolio/README.md) | REL-008 |
 | **Statistics** | [Statistics/](Statistics/README.md) | REL-009 |

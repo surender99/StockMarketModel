@@ -1,0 +1,31 @@
+# APS-EXPOSURE-NET-001 — Net Exposure
+
+> **APS ID:** APS-EXPOSURE-NET-001  
+> **Requirement ID:** REQ-APS-EXPOSURE-NET-001  
+> **Phase:** 7 — Portfolio Intelligence  
+> **Domain:** Exposure Engine  
+> **Source:** `References/PHASE7 - Portfolio Intelligence Platform (PIP).docx`  
+> **Implementation status:** MVP
+
+## Objective
+
+Net Exposure for the Athena portfolio intelligence platform.
+
+## Code Wiring (`athena-core`)
+
+- `athena-core/src/athena_core/application/portfolio_engine.py`
+
+## Dependencies
+
+- Phase 1–5 APS prerequisites
+- [ATH-REL-008-Portfolio-Management-Engine.md](../../ATH-REL-008-Portfolio-Management-Engine.md)
+
+## Acceptance Criteria
+
+- [ ] APS-EXPOSURE-NET-001 spec published with REQ ID
+- [ ] MVP modules wired where status is MVP/Partial
+- [ ] Deferred APS have no silent production stub
+
+---
+
+*Template: [ATH-004 Requirement Standard](../../ATH-004-Requirement-Standard.md)*
