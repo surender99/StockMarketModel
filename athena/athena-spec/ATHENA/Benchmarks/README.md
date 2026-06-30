@@ -12,6 +12,22 @@ Performance targets and benchmark test references. Domain benchmarks remain at l
 
 Full table: [data-platform.md](data-platform.md)
 
+## Indicators (Phase 3)
+
+| Target | Source | Test ref |
+|--------|--------|----------|
+| EMA 10k bars < 50 ms | APS-IND-EMA-001 | `tests/test_indicator_aps.py` |
+
+Full table: [indicators.md](indicators.md)
+
+## Patterns (Phase 4)
+
+Full table: [patterns.md](patterns.md)
+
+## Strategies (Phase 5)
+
+Full table: [strategies.md](strategies.md)
+
 ## Foundation (APS-001–015)
 
 | Target | Source | Test ref |

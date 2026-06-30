@@ -8,9 +8,9 @@ Implementation specs organized by domain. Foundation (Phase 1) is prerequisite f
 |--------|-------|-------------|
 | **Foundation** | [Foundation/](Foundation/README.md) | REL-001 |
 | **Data** | [Data/](Data/README.md) | REL-002 — **Phase 2 complete** |
-| **Indicators** | [Indicators/](Indicators/README.md) | REL-003, REL-004 |
-| **Patterns** | [Patterns/](Patterns/README.md) | REL-005 |
-| **Strategies** | [Strategies/](Strategies/README.md) | REL-006 |
+| **Indicators** | [Indicators/](Indicators/README.md) | REL-004 — **Phase 3 complete** |
+| **Patterns** | [Patterns/](Patterns/README.md) | REL-005 — **Phase 4 complete** |
+| **Strategies** | [Strategies/](Strategies/README.md) | REL-006 — **Phase 5 complete** |
 | **Backtesting** | [Backtesting/](Backtesting/README.md) | REL-007 |
 | **Portfolio** | [Portfolio/](Portfolio/README.md) | REL-008 |
 | **Statistics** | [Statistics/](Statistics/README.md) | REL-009 |

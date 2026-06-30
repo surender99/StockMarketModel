@@ -8,6 +8,9 @@ JSON and YAML schema index. Canonical files remain at legacy paths.
 |--------|------|---------|
 | OHLCV | [schemas/ohlcv-schema.json](../../schemas/ohlcv-schema.json) | Ingest, feature store |
 | Dataset metadata | [dataset-metadata.json](dataset-metadata.json) | Dataset registry — APS-DATASET-001 |
+| Indicator metadata | [indicator-metadata.json](indicator-metadata.json) | Indicator catalog — APS-IND-REGISTRY-001 |
+| Pattern metadata | [pattern-metadata.json](pattern-metadata.json) | Pattern catalog — APS-PAT-REGISTRY-001 |
+| Strategy metadata | [strategy-metadata.json](strategy-metadata.json) | Strategy catalog — APS-STRAT-REGISTRY-001 |
 | Backtest config | [backtesting/schemas/backtest-config.json](../../backtesting/schemas/backtest-config.json) | Backtest engine |
 | Indicator config | [feature-engineering/schemas/indicator-config.json](../../feature-engineering/schemas/indicator-config.json) | Feature pipeline |
 | Pattern event | [pattern-recognition/schemas/pattern-event.json](../../pattern-recognition/schemas/pattern-event.json) | Pattern engine |
