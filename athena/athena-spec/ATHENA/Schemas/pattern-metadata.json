@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://athena.local/schemas/pattern-metadata.json",
+  "title": "PatternMetadata",
+  "description": "APS-PAT-REGISTRY-001 pattern catalog entry metadata",
+  "type": "object",
+  "required": ["pattern_id", "aps_id", "category", "status"],
+  "properties": {
+    "pattern_id": { "type": "string", "minLength": 1 },
+    "aps_id": { "type": "string", "pattern": "^APS-PAT-" },
+    "category": {
+      "type": "string",
+      "enum": ["Candlestick-Patterns", "Chart-Patterns"]
+    },
+    "status": { "type": "string", "enum": ["MVP", "Deferred"] }
+  },
+  "additionalProperties": false
+}
