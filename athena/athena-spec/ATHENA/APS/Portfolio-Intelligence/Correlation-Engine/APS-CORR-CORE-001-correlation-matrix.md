@@ -1,5 +1,18 @@
 # APS-CORR-CORE-001 — Correlation Matrix
 
+## Traceability
+
+| Field | Value |
+|-------|-------|
+| **APS ID** | APS-CORR-CORE-001 |
+| **Implemented In** | `athena/athena-core/src/athena_core/domain/portfolio_intelligence/correlation.py` |
+| **Tests** | `athena-core/tests/test_phase678_aps.py` |
+| **Benchmarks** | N/A |
+| **Owner** | `@portfolio` |
+| **Status** | MVP |
+| **Release** | REL-008 |
+| **Example** | Multi-symbol correlation from OHLCV returns |
+
 > **APS ID:** APS-CORR-CORE-001  
 > **Requirement ID:** REQ-APS-CORR-CORE-001  
 > **Phase:** 7 — Portfolio Intelligence  

@@ -1,5 +1,18 @@
 # APS-003 — Plugin Framework
 
+## Traceability
+
+| Field | Value |
+|-------|-------|
+| **APS ID** | APS-003 |
+| **Implemented In** | `athena/athena-os/src/athena_os/plugins.py` |
+| **Tests** | `athena-os/tests/test_athena_os.py`, `athena-core/tests/test_plugin_registry.py` |
+| **Benchmarks** | N/A |
+| **Owner** | `@platform` |
+| **Status** | MVP |
+| **Release** | REL-001 |
+| **Example** | `PluginRegistry().register(Plugin(...))` |
+
 > **APS ID:** APS-003  
 > **Requirement ID:** REQ-APS-003  
 > **Maps to:** REQ-CORE-PLG-001  

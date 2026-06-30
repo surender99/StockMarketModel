@@ -1,5 +1,18 @@
 # APS-CS-HAMMER-001 — Hammer
 
+## Traceability
+
+| Field | Value |
+|-------|-------|
+| **APS ID** | APS-CS-HAMMER-001 |
+| **Implemented In** | `athena/athena-core/src/athena_core/domain/patterns/candlestick.py` |
+| **Tests** | `athena-core/tests/test_pattern_aps.py` |
+| **Benchmarks** | N/A |
+| **Owner** | `@patterns` |
+| **Status** | MVP |
+| **Release** | REL-005 |
+| **Example** | `athena-spec/ATHENA/Golden-Datasets/ohlcv-sample-30d.csv` |
+
 > **APS ID:** APS-CS-HAMMER-001  
 > **Requirement ID:** REQ-APS-CS-HAMMER-001  
 > **Phase:** 4 — Patterns  

@@ -1,5 +1,18 @@
 # APS-004 — Event Bus
 
+## Traceability
+
+| Field | Value |
+|-------|-------|
+| **APS ID** | APS-004 |
+| **Implemented In** | `athena/athena-os/src/athena_os/event_bus.py` |
+| **Tests** | `athena-os/tests/test_athena_os.py`, `athena-core/tests/test_core_framework.py` |
+| **Benchmarks** | N/A |
+| **Owner** | `@platform` |
+| **Status** | MVP |
+| **Release** | REL-001 |
+| **Example** | `EventBus().publish(DomainEvent(event_type="ingest.completed", payload={"symbol": "RELIANCE.NS"}))` |
+
 > **APS ID:** APS-004  
 > **Requirement ID:** REQ-APS-004  
 > **Maps to:** REQ-CORE-EVT-001  
@@ -31,9 +44,10 @@ In-process publish/subscribe for domain and application events.
 - **FR-003:** Unsubscribe or one-shot handlers
 - **FR-004:** Handler failure surfaces as EventError
 
-## Code Wiring (`athena-core`)
+## Code Wiring
 
-- `athena-core/src/athena_core/domain/events/`
+- `athena-os/src/athena_os/event_bus.py` (canonical)
+- `athena-core/src/athena_core/domain/events/` (compatibility re-export)
 
 ## Configuration
 

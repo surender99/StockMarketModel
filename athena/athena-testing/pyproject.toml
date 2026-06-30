@@ -1,0 +1,36 @@
+[project]
+name = "athena-testing"
+version = "0.1.0"
+description = "Athena testing infrastructure — golden datasets, fixtures, benchmarks, chaos tests"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Athena Contributors" }]
+
+dependencies = [
+    "athena-os @ file:../athena-os",
+    "athena-core @ file:../athena-core",
+    "pandas>=2.2",
+    "pyarrow>=15.0",
+    "pytest>=8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.4",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/athena_testing"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"

@@ -1,5 +1,18 @@
 # APS-SIGNAL-CORE-001 — Signal Object
 
+## Traceability
+
+| Field | Value |
+|-------|-------|
+| **APS ID** | APS-SIGNAL-CORE-001 |
+| **Implemented In** | `athena/athena-core/src/athena_core/domain/strategy/signals.py` |
+| **Tests** | `athena-core/tests/test_strategy_aps.py` |
+| **Benchmarks** | N/A |
+| **Owner** | `@strategies` |
+| **Status** | MVP |
+| **Release** | REL-006 |
+| **Example** | Strategy YAML template with signal output |
+
 > **APS ID:** APS-SIGNAL-CORE-001  
 > **Requirement ID:** REQ-APS-SIGNAL-CORE-001  
 > **Phase:** 5 — Strategies  

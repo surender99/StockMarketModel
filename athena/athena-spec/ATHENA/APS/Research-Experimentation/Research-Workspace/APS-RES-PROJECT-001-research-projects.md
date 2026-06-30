@@ -1,5 +1,18 @@
 # APS-RES-PROJECT-001 — Research Projects
 
+## Traceability
+
+| Field | Value |
+|-------|-------|
+| **APS ID** | APS-RES-PROJECT-001 |
+| **Implemented In** | `athena/athena-core/src/athena_core/domain/research/projects.py` |
+| **Tests** | `athena-core/tests/test_qrep_aps.py` |
+| **Benchmarks** | N/A |
+| **Owner** | `@research` |
+| **Status** | MVP |
+| **Release** | REL-010 |
+| **Example** | `ResearchEventType.PROJECT_CREATED` event flow |
+
 > **APS ID:** APS-RES-PROJECT-001  
 > **Requirement ID:** REQ-APS-RES-PROJECT-001  
 > **Phase:** 9 — Research Experimentation  

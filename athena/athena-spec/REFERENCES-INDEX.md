@@ -105,9 +105,24 @@ This index tracks integration of the Athena References package series and Releas
 
 ---
 
+## Architecture Packages (2026-06-30)
+
+| Package | Path | ADR | Status |
+|---------|------|-----|--------|
+| **athena-os** | `athena/athena-os/` | [ADR-0005](adrs/ADR-0005-athena-os.md) | ✅ MVP — infrastructure layer |
+| **athena-testing** | `athena/athena-testing/` | — | ✅ MVP — golden datasets, benchmarks |
+| **Event catalog** | `athena-spec/events/` | — | ✅ 20 events documented |
+| **Interface catalog** | `athena-spec/interfaces/` | — | ✅ 23 interfaces documented |
+| **APS traceability** | `ATHENA/APS/TRACEABILITY-INDEX.md` | [ATH-005](ATH-005-DOCUMENTATION-STANDARD.md) | ✅ Template + 12 sample APS |
+
+---
+
 ## Related Documents
 
 - [README.md](README.md) — spec reading order
+- [ATHENA/README.md](ATHENA/README.md) — APS traceability and package map
+- [ATHENA/DEPENDENCY-RULES.md](ATHENA/DEPENDENCY-RULES.md) — package dependency enforcement
+- [ATH-005-DOCUMENTATION-STANDARD.md](ATH-005-DOCUMENTATION-STANDARD.md) — per-feature documentation requirements
 - [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) — MVP code sign-off (Phases 0–9)
 - [REFERENCES-INTEGRATION-COMPLETE.md](REFERENCES-INTEGRATION-COMPLETE.md) — spec integration sign-off
 - [SPEC-VS-CODE-STATUS.md](SPEC-VS-CODE-STATUS.md) — spec vs implementation gaps

@@ -8,6 +8,7 @@ license = { text = "MIT" }
 authors = [{ name = "Athena Contributors" }]
 
 dependencies = [
+    "athena-os @ file:../athena-os",
     "pandas>=2.2",
     "numpy>=1.26",
     "yfinance>=0.2",
@@ -35,6 +36,9 @@ dev = [
     "pandas-ta>=0.4.67b0; python_version>='3.12'",
     "optuna>=3.6",
 ]
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [build-system]
 requires = ["hatchling"]

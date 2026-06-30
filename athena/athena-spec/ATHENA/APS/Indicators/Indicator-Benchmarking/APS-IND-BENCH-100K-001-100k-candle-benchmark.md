@@ -1,5 +1,18 @@
 # APS-IND-BENCH-100K-001 — 100K Candle Benchmark
 
+## Traceability
+
+| Field | Value |
+|-------|-------|
+| **APS ID** | APS-IND-BENCH-100K-001 |
+| **Implemented In** | `athena/athena-core/src/athena_core/domain/indicators/` |
+| **Tests** | `athena-core/tests/test_indicator_benchmarks.py` |
+| **Benchmarks** | `athena-testing/benchmarks/test_indicator_throughput.py` |
+| **Owner** | `@indicators` |
+| **Status** | MVP |
+| **Release** | REL-004 |
+| **Example** | PG-IND-100K gate in PERFORMANCE-GATES.md |
+
 > **APS ID:** APS-IND-BENCH-100K-001  
 > **Requirement ID:** REQ-APS-IND-BENCH-100K-001  
 > **Maps to:** REQ-IND-IND-BENCH-100K-001  

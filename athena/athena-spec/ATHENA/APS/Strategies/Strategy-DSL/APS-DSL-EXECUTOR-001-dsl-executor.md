@@ -1,5 +1,18 @@
 # APS-DSL-EXECUTOR-001 — DSL Executor
 
+## Traceability
+
+| Field | Value |
+|-------|-------|
+| **APS ID** | APS-DSL-EXECUTOR-001 |
+| **Implemented In** | `athena/athena-core/src/athena_core/domain/strategy/dsl_executor.py` |
+| **Tests** | `athena-core/tests/test_strategy_dsl.py` |
+| **Benchmarks** | N/A |
+| **Owner** | `@strategies` |
+| **Status** | MVP |
+| **Release** | REL-006 |
+| **Example** | YAML strategy template execution |
+
 > **APS ID:** APS-DSL-EXECUTOR-001  
 > **Requirement ID:** REQ-APS-DSL-EXECUTOR-001  
 > **Phase:** 5 — Strategies  

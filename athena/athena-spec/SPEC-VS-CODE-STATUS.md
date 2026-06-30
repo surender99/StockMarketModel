@@ -23,14 +23,14 @@ A package can be **spec-complete** while **code-partial** or **code-absent**.
 
 | Phase | Platform | APS | Spec | Code | Honest Notes |
 |-------|----------|-----|------|------|--------------|
-| **1** | Foundation | 15 | ✅ | **Partial** | Config, DI, plugins, events, logging in `application/` + `domain/`; full `foundation/` package layout deferred |
+| **1** | Foundation | 15 | ✅ | **Partial** | `athena-os` infrastructure layer; config, DI, plugins, events, logging; see ADR-0005 |
 | **2** | Data Platform | 51 | ✅ | **Partial** | Ingest, calendar, quality, lineage, registry MVP; connectors microservices not split out |
 | **3** | Indicators | 102 | ✅ | **MVP** | 19 builtin indicators; 77 deferred catalog entries; pipeline + metadata store wired |
 | **4** | Patterns | 164 | ✅ | **Partial** | 12 builtin detectors; 164-entry intelligence catalog; Elliott/Wyckoff/SMC specs only |
 | **5** | Strategies | 169 | ✅ | **MVP** | YAML engine + templates; optimizer/risk/exit APS mostly catalog |
 | **6** | Simulation | 56 | ✅ | **MVP** | Backtest engine covers core loop; simulation catalog + event stubs |
 | **7** | Portfolio Intelligence | 72 | ✅ | **MVP** | `PortfolioEngine`, rebalancing, exposure limits; optimizer/risk-budget deferred |
-| **8** | Quantitative Analytics | 160 | ✅ | **MVP** | Analytics catalog; statistics/risk partial via existing engines |
+| **8** | Quantitative Analytics | 160 | ✅ | **MVP** | Analytics in `domain/analytics` and `domain/statistics` — **not** in indicators (ADR-0005) |
 | **9** | Research & Experimentation | 140 | ✅ | **MVP** | QREP catalog, hypothesis, reproducibility, events; notebook/collaboration deferred |
 
 **Master sign-off:** [ATHENA/REFERENCES-COMPLETE.md](ATHENA/REFERENCES-COMPLETE.md)

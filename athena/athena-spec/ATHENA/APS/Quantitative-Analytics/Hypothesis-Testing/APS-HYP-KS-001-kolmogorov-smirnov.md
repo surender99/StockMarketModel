@@ -1,5 +1,18 @@
 # APS-HYP-KS-001 — Kolmogorov Smirnov
 
+## Traceability
+
+| Field | Value |
+|-------|-------|
+| **APS ID** | APS-HYP-KS-001 |
+| **Implemented In** | `athena/athena-core/src/athena_core/domain/analytics/hypothesis.py` |
+| **Tests** | `athena-core/tests/test_analytics_aps.py` |
+| **Benchmarks** | N/A |
+| **Owner** | `@analytics` |
+| **Status** | MVP |
+| **Release** | REL-009 |
+| **Example** | KS test on return distribution (domain/analytics, not indicators) |
+
 > **APS ID:** APS-HYP-KS-001  
 > **Requirement ID:** REQ-APS-HYP-KS-001  
 > **Phase:** 8 — Quantitative Analytics  

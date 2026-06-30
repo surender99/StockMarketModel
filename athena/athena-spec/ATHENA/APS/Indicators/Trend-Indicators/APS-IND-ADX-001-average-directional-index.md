@@ -1,5 +1,18 @@
 # APS-IND-ADX-001 — Average Directional Index
 
+## Traceability
+
+| Field | Value |
+|-------|-------|
+| **APS ID** | APS-IND-ADX-001 |
+| **Implemented In** | `athena/athena-core/src/athena_core/domain/indicators/adx.py` |
+| **Tests** | `athena-core/tests/test_indicator_aps.py`, `test_indicator_framework.py` |
+| **Benchmarks** | `athena-testing/benchmarks/test_indicator_throughput.py` |
+| **Owner** | `@indicators` |
+| **Status** | MVP |
+| **Release** | REL-004 |
+| **Example** | Golden dataset: `athena-spec/ATHENA/Golden-Datasets/ohlcv-sample-30d.csv` |
+
 > **APS ID:** APS-IND-ADX-001  
 > **Requirement ID:** REQ-APS-IND-ADX-001  
 > **Maps to:** REQ-IND-IND-ADX-001  

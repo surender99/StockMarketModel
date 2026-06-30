@@ -1,71 +1,49 @@
-"""Plugin registry — AES-0202, ATH-REL-001 §03."""
+"""Plugin registry — athena-os wrapper mapping errors to athena-core types."""
 
 from __future__ import annotations
 
 from collections.abc import Iterable
 
+from athena_os.errors import PluginError as OSPluginError
+from athena_os.plugins import Plugin, PluginLifecycle, PluginType
+from athena_os.plugins import PluginRegistry as _PluginRegistry
+
 from athena_core.domain.errors import PluginError
-from athena_core.domain.plugins.base import Plugin, PluginLifecycle, PluginType
+
+__all__ = ["PluginRegistry"]
 
 
-class PluginRegistry:
-    """In-memory plugin registry with lifecycle management."""
+def _map_plugin_error(fn):  # type: ignore[no-untyped-def]
+    def wrapper(*args, **kwargs):  # type: ignore[no-untyped-def]
+        try:
+            return fn(*args, **kwargs)
+        except OSPluginError as exc:
+            raise PluginError(str(exc), context=exc.context) from exc
 
-    def __init__(self) -> None:
-        self._plugins: dict[str, Plugin] = {}
+    return wrapper
 
+
+class PluginRegistry(_PluginRegistry):
+    @_map_plugin_error
     def register(self, plugin: Plugin, *, activate: bool = True) -> None:
-        if plugin.id in self._plugins:
-            msg = f"plugin already registered: {plugin.id}"
-            raise PluginError(msg, context={"plugin_id": plugin.id})
-        if activate:
-            plugin.lifecycle = PluginLifecycle.ACTIVE
-        self._plugins[plugin.id] = plugin
+        super().register(plugin, activate=activate)
 
+    @_map_plugin_error
     def unregister(self, plugin_id: str) -> Plugin:
-        plugin = self._plugins.pop(plugin_id, None)
-        if plugin is None:
-            msg = f"unknown plugin: {plugin_id}"
-            raise PluginError(msg, context={"plugin_id": plugin_id})
-        return plugin
+        return super().unregister(plugin_id)
 
+    @_map_plugin_error
     def get(self, plugin_id: str) -> Plugin:
-        plugin = self._plugins.get(plugin_id)
-        if plugin is None:
-            msg = f"unknown plugin: {plugin_id}"
-            raise PluginError(msg, context={"plugin_id": plugin_id})
-        return plugin
-
-    def activate(self, plugin_id: str) -> None:
-        plugin = self.get(plugin_id)
-        plugin.lifecycle = PluginLifecycle.ACTIVE
-
-    def disable(self, plugin_id: str) -> None:
-        plugin = self.get(plugin_id)
-        plugin.lifecycle = PluginLifecycle.DISABLED
-
-    def list(
-        self,
-        plugin_type: PluginType | None = None,
-        *,
-        active_only: bool = False,
-    ) -> list[Plugin]:
-        plugins = list(self._plugins.values())
-        if plugin_type is not None:
-            plugins = [plugin for plugin in plugins if plugin.plugin_type == plugin_type]
-        if active_only:
-            plugins = [plugin for plugin in plugins if plugin.lifecycle == PluginLifecycle.ACTIVE]
-        return plugins
+        return super().get(plugin_id)
 
     def register_many(self, plugins: Iterable[Plugin], *, activate: bool = True) -> None:
         for plugin in plugins:
             self.register(plugin, activate=activate)
 
     def discover(self, plugins: Iterable[Plugin], *, activate: bool = True) -> int:
-        """Register plugins that are not already present; returns count added."""
         added = 0
         for plugin in plugins:
-            if plugin.id in self._plugins:
+            if plugin.id in self._plugins:  # noqa: SLF001
                 continue
             self.register(plugin, activate=activate)
             added += 1

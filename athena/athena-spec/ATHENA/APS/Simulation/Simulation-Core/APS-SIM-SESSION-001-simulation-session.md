@@ -1,5 +1,18 @@
 # APS-SIM-SESSION-001 — Simulation Session
 
+## Traceability
+
+| Field | Value |
+|-------|-------|
+| **APS ID** | APS-SIM-SESSION-001 |
+| **Implemented In** | `athena/athena-core/src/athena_core/domain/simulation/session.py` |
+| **Tests** | `athena-core/tests/test_phase6_simulation.py` |
+| **Benchmarks** | N/A |
+| **Owner** | `@simulation` |
+| **Status** | MVP |
+| **Release** | REL-007 |
+| **Example** | `SimulationEventBus` session replay |
+
 > **APS ID:** APS-SIM-SESSION-001  
 > **Requirement ID:** REQ-APS-SIM-SESSION-001  
 > **Phase:** 6 — Simulation  

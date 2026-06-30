@@ -12,8 +12,38 @@ ATHENA
 ├── Golden-Datasets/   Small fixtures for tests and validation
 ├── Benchmarks/          Performance targets and test references
 ├── Prompts/             AI coding agent prompts (index)
-└── Reviews/             CTO and revision review archives
+├── Reviews/             CTO and revision review archives
+├── events/              Event catalog (publisher/subscriber contracts)
+└── interfaces/          Public API interface catalog
 ```
+
+## APS Traceability
+
+Every APS document must include the traceability block defined in [APS/_TEMPLATE.md](APS/_TEMPLATE.md):
+
+| Field | Description |
+|-------|-------------|
+| APS ID | Canonical identifier |
+| Implemented In | Code path(s) |
+| Tests | Pytest module(s) |
+| Benchmarks | Performance test or N/A |
+| Owner | Team or individual |
+| Status | Draft / MVP / Partial / Complete / Deferred |
+| Release | REL package |
+| Example | Runnable example or golden dataset |
+
+**Index:** [APS/TRACEABILITY-INDEX.md](APS/TRACEABILITY-INDEX.md)
+
+## Packages
+
+| Package | Role |
+|---------|------|
+| `athena-os` | Infrastructure layer (event bus, config, plugins, logging) |
+| `athena-core` | Domain and application logic |
+| `athena-testing` | Golden datasets, benchmarks, smoke tests |
+| `athena-sdk`, `athena-cli`, `athena-ai`, `athena-dashboard` | Interface adapters |
+
+See [DEPENDENCY-RULES.md](DEPENDENCY-RULES.md) and [ADR-0005](../adrs/ADR-0005-athena-os.md).
 
 ## Reading Order
 

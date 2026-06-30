@@ -1,5 +1,18 @@
 # APS-REPRO-BUNDLE-001 — Reproducibility Bundle
 
+## Traceability
+
+| Field | Value |
+|-------|-------|
+| **APS ID** | APS-REPRO-BUNDLE-001 |
+| **Implemented In** | `athena/athena-core/src/athena_core/domain/research/reproducibility.py` |
+| **Tests** | `athena-core/tests/test_qrep_aps.py` |
+| **Benchmarks** | N/A |
+| **Owner** | `@research` |
+| **Status** | MVP |
+| **Release** | REL-010 |
+| **Example** | Reproducibility bundle export from experiment |
+
 > **APS ID:** APS-REPRO-BUNDLE-001  
 > **Requirement ID:** REQ-APS-REPRO-BUNDLE-001  
 > **Phase:** 9 — Research Experimentation  
