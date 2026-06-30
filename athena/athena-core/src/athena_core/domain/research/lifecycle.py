@@ -6,9 +6,10 @@ from enum import Enum
 
 
 class ExperimentState(str, Enum):
-    """Experiment lifecycle — AES-1001."""
+    """Experiment lifecycle — AES-1001, APS-EXP-LIFECYCLE-001."""
 
     DRAFT = "draft"
+    CONFIGURED = "configured"
     RUNNING = "running"
     COMPLETED = "completed"
     VALIDATED = "validated"
@@ -17,7 +18,10 @@ class ExperimentState(str, Enum):
 
 
 VALID_TRANSITIONS: dict[ExperimentState, frozenset[ExperimentState]] = {
-    ExperimentState.DRAFT: frozenset({ExperimentState.RUNNING, ExperimentState.ARCHIVED}),
+    ExperimentState.DRAFT: frozenset(
+        {ExperimentState.CONFIGURED, ExperimentState.RUNNING, ExperimentState.ARCHIVED}
+    ),
+    ExperimentState.CONFIGURED: frozenset({ExperimentState.RUNNING, ExperimentState.ARCHIVED}),
     ExperimentState.RUNNING: frozenset(
         {ExperimentState.COMPLETED, ExperimentState.REJECTED, ExperimentState.ARCHIVED}
     ),

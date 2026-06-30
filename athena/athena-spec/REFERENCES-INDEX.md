@@ -22,7 +22,7 @@ This index tracks integration of the Athena References package series and Releas
 | **REL-007** | Backtesting Engine (Release-07) | Order engine, execution models, slippage, trade journal, advanced metrics | ✅ Complete |
 | **REL-008** | Portfolio Management Engine (Release-08) | Allocation models, risk budgets, optimization, analytics, snapshots | ✅ Complete |
 | **REL-009** | Statistics & Analytics Engine (Release-09) | Distribution, hypothesis tests, correlation, regression, reporting | ✅ Complete |
-| **REL-010** | Research Engine (Release-10) | Research workspace, experiment lifecycle, dataset snapshots, pipeline, results | ✅ Complete |
+| **REL-010** | Research Engine (Release-10) | Research workspace, experiment lifecycle, dataset snapshots, pipeline, results | ✅ Complete — **Phase 9 QREP APS** |
 | **REL-011** | Machine Learning Platform (Release-11) | Feature selection, dataset builder, model registry, training, evaluation, drift | ✅ Complete |
 | **REL-012** | AI Research Scientist (Release-12) | AI planner, hypothesis generator, strategy designer, reviewer, docs | ✅ Complete |
 | **REL-013** | Dashboard & Visualization (Release-13) | Chart engine, portfolio/strategy/risk/research dashboards | ✅ Complete |
@@ -87,7 +87,7 @@ This index tracks integration of the Athena References package series and Releas
 | 07 | [strategy-engine/](strategy-engine/) | [PACKAGE-07-COMPLETE.md](packages/PACKAGE-07-COMPLETE.md) |
 | 08 | [backtesting/](backtesting/) | [PACKAGE-08-COMPLETE.md](packages/PACKAGE-08-COMPLETE.md) |
 | 09 | [portfolio-engine/](portfolio-engine/) | [PACKAGE-09-COMPLETE.md](packages/PACKAGE-09-COMPLETE.md) |
-| 10 | [research-engine/](research-engine/) | [PACKAGE-10-COMPLETE.md](packages/PACKAGE-10-COMPLETE.md) |
+| 10 | [research-engine/](research-engine/), [Research-Experimentation APS](ATHENA/APS/Research-Experimentation/README.md) | [PACKAGE-10-COMPLETE.md](packages/PACKAGE-10-COMPLETE.md), [PHASE-9-QREP-COMPLETE.md](PHASE-9-QREP-COMPLETE.md) |
 | 11 | [statistics/](statistics/) | [PACKAGE-11-COMPLETE.md](packages/PACKAGE-11-COMPLETE.md) |
 | 12 | [machine-learning/](machine-learning/) | [PACKAGE-12-COMPLETE.md](packages/PACKAGE-12-COMPLETE.md) |
 | 13 | [ai-research/](ai-research/) | [PACKAGE-13-COMPLETE.md](packages/PACKAGE-13-COMPLETE.md) |
@@ -108,7 +108,7 @@ This index tracks integration of the Athena References package series and Releas
 ## Related Documents
 
 - [README.md](README.md) — spec reading order
-- [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) — MVP code sign-off (Phases 0–7)
+- [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) — MVP code sign-off (Phases 0–9)
 - [REFERENCES-INTEGRATION-COMPLETE.md](REFERENCES-INTEGRATION-COMPLETE.md) — spec integration sign-off
 - [SPEC-VS-CODE-STATUS.md](SPEC-VS-CODE-STATUS.md) — spec vs implementation gaps
 - [adrs/](adrs/) — architecture decision records
