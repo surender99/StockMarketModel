@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://athena.local/schemas/indicator-metadata.json",
+  "title": "IndicatorMetadata",
+  "description": "APS-IND-REGISTRY-001 indicator catalog entry metadata",
+  "type": "object",
+  "required": ["plugin_id", "aps_id", "name", "category", "status"],
+  "properties": {
+    "plugin_id": { "type": "string", "minLength": 1 },
+    "aps_id": { "type": "string", "pattern": "^APS-IND-" },
+    "name": { "type": "string" },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Moving-Averages",
+        "Trend-Indicators",
+        "Momentum-Indicators",
+        "Volume-Indicators",
+        "Volatility-Indicators",
+        "Oscillators"
+      ]
+    },
+    "status": { "type": "string", "enum": ["MVP", "Partial", "Deferred"] }
+  },
+  "additionalProperties": false
+}
