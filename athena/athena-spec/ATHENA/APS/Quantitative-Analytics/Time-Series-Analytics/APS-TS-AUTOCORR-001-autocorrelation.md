@@ -4,12 +4,12 @@
 > **Requirement ID:** REQ-APS-TS-AUTOCORR-001  
 > **Phase:** 8 — Quantitative Analytics  
 > **Domain:** Time Series Analytics  
-> **Source:** `References/ATH.docx`  
+> **Source:** `References/PHASE8 - Quantitative Analytics & Risk Intelligence Platform (QARIP).docx`  
 > **Implementation status:** Deferred
 
 ## Objective
 
-Autocorrelation for the Athena quantitative analytics platform.
+Autocorrelation for the Athena quantitative analytics and risk intelligence platform (QARIP).
 
 ## Code Wiring (`athena-core`)
 
@@ -17,7 +17,7 @@ Autocorrelation for the Athena quantitative analytics platform.
 
 ## Dependencies
 
-- Phase 1–5 APS prerequisites
+- Phase 1–7 APS prerequisites
 - [ATH-REL-009-Statistics-and-Analytics-Engine.md](../../ATH-REL-009-Statistics-and-Analytics-Engine.md)
 
 ## Acceptance Criteria

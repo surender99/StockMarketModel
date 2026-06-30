@@ -23,8 +23,8 @@ def test_portfolio_catalog_mvp_entries() -> None:
 
 def test_analytics_catalog_mvp_entries() -> None:
     mvp = list_mvp_analytics()
-    assert len(mvp) >= 5
-    assert len(ANALYTICS_CATALOG) >= 8
+    assert len(mvp) >= 15
+    assert len(ANALYTICS_CATALOG) == 160
 
 
 def test_simulation_event_bus_replay() -> None:

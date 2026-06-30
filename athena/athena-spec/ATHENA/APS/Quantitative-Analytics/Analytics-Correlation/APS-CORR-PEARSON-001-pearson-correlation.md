@@ -4,20 +4,20 @@
 > **Requirement ID:** REQ-APS-CORR-PEARSON-001  
 > **Phase:** 8 — Quantitative Analytics  
 > **Domain:** Analytics Correlation  
-> **Source:** `References/ATH.docx`  
+> **Source:** `References/PHASE8 - Quantitative Analytics & Risk Intelligence Platform (QARIP).docx`  
 > **Implementation status:** Partial
 
 ## Objective
 
-Pearson Correlation for the Athena quantitative analytics platform.
+Pearson Correlation for the Athena quantitative analytics and risk intelligence platform (QARIP).
 
 ## Code Wiring (`athena-core`)
 
-- `athena-core/src/athena_core/application/statistics_engine.py`
+- `athena-core/src/athena_core/domain/statistics/`
 
 ## Dependencies
 
-- Phase 1–5 APS prerequisites
+- Phase 1–7 APS prerequisites
 - [ATH-REL-009-Statistics-and-Analytics-Engine.md](../../ATH-REL-009-Statistics-and-Analytics-Engine.md)
 
 ## Acceptance Criteria

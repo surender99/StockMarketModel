@@ -4,20 +4,21 @@
 > **Requirement ID:** REQ-APS-RISK-DRAWDOWN-001  
 > **Phase:** 8 — Quantitative Analytics  
 > **Domain:** Risk Intelligence  
-> **Source:** `References/ATH.docx`  
+> **Source:** `References/PHASE8 - Quantitative Analytics & Risk Intelligence Platform (QARIP).docx`  
 > **Implementation status:** MVP
 
 ## Objective
 
-Drawdown Analysis for the Athena quantitative analytics platform.
+Drawdown Analysis for the Athena quantitative analytics and risk intelligence platform (QARIP).
 
 ## Code Wiring (`athena-core`)
 
+- `athena-core/src/athena_core/domain/analytics/risk.py`
 - `athena-core/src/athena_core/domain/statistics/risk_metrics.py`
 
 ## Dependencies
 
-- Phase 1–5 APS prerequisites
+- Phase 1–7 APS prerequisites
 - [ATH-REL-009-Statistics-and-Analytics-Engine.md](../../ATH-REL-009-Statistics-and-Analytics-Engine.md)
 
 ## Acceptance Criteria
