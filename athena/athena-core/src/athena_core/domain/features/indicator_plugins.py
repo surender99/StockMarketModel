@@ -9,7 +9,10 @@ import pandas as pd
 
 from athena_core.domain.indicators.adx import compute_adx_from_ohlcv
 from athena_core.domain.indicators.atr import compute_atr_from_ohlcv
+from athena_core.domain.indicators.atr_bands import compute_atr_bands_from_ohlcv
 from athena_core.domain.indicators.bollinger import compute_bollinger_from_ohlcv
+from athena_core.domain.indicators.ichimoku import compute_ichimoku_from_ohlcv
+from athena_core.domain.indicators.pivot_points import compute_pivot_points_from_ohlcv
 from athena_core.domain.indicators.cci import compute_cci_from_ohlcv
 from athena_core.domain.indicators.cmf import compute_cmf_from_ohlcv
 from athena_core.domain.indicators.ema import compute_ema_from_ohlcv
@@ -21,6 +24,7 @@ from athena_core.domain.indicators.rsi import compute_rsi_from_ohlcv
 from athena_core.domain.indicators.sma import compute_sma_from_ohlcv
 from athena_core.domain.indicators.stoch import compute_stoch_from_ohlcv
 from athena_core.domain.indicators.willr import compute_willr_from_ohlcv
+from athena_core.domain.indicators.vwap import compute_vwap_from_ohlcv
 from athena_core.domain.indicators.wma import compute_wma_from_ohlcv
 from athena_core.domain.patterns.series import compute_pattern_series
 from athena_core.domain.plugins import Plugin, PluginMetadata, PluginRegistry, PluginType
@@ -187,6 +191,56 @@ def _builtin_indicator_specs() -> list[tuple[str, str, str, dict[str, Any], Indi
             "Williams %R",
             {"period": {"type": "integer", "default": 14}},
             lambda df, params: compute_willr_from_ohlcv(df, int(params.get("period", 14))),
+        ),
+        (
+            "ichimoku",
+            "0.1.0",
+            "Ichimoku Cloud",
+            {
+                "tenkan_period": {"type": "integer", "default": 9},
+                "kijun_period": {"type": "integer", "default": 26},
+                "senkou_period": {"type": "integer", "default": 52},
+                "displacement": {"type": "integer", "default": 26},
+            },
+            lambda df, params: compute_ichimoku_from_ohlcv(
+                df,
+                tenkan_period=int(params.get("tenkan_period", 9)),
+                kijun_period=int(params.get("kijun_period", 26)),
+                senkou_period=int(params.get("senkou_period", 52)),
+                displacement=int(params.get("displacement", 26)),
+            ),
+        ),
+        (
+            "vwap",
+            "0.1.0",
+            "Volume Weighted Average Price",
+            {"anchor": {"type": "string", "default": "session"}},
+            lambda df, params: compute_vwap_from_ohlcv(df, anchor=str(params.get("anchor", "session"))),
+        ),
+        (
+            "atr_bands",
+            "0.1.0",
+            "ATR Bands",
+            {
+                "period": {"type": "integer", "default": 20},
+                "atr_period": {"type": "integer", "default": 14},
+                "multiplier": {"type": "number", "default": 2.0},
+                "price_column": {"type": "string"},
+            },
+            lambda df, params: compute_atr_bands_from_ohlcv(
+                df,
+                period=int(params.get("period", 20)),
+                atr_period=int(params.get("atr_period", 14)),
+                multiplier=float(params.get("multiplier", 2.0)),
+                price_column=params.get("price_column", "close"),
+            ),
+        ),
+        (
+            "pivot_points",
+            "0.1.0",
+            "Pivot Points",
+            {},
+            lambda df, params: compute_pivot_points_from_ohlcv(df),
         ),
         (
             "pattern",

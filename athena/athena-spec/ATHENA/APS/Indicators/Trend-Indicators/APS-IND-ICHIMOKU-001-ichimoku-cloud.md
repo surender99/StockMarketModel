@@ -6,7 +6,7 @@
 > **Phase:** 3 — Indicators  
 > **Domain:** Trend Indicators  
 > **Source:** `References/PHASE 3 Architecture.docx`  
-> **Implementation status:** Deferred
+> **Implementation status:** MVP
 
 ## Objective
 
@@ -21,7 +21,7 @@ Ichimoku Cloud for the Athena indicators platform (trend indicators domain).
 
 ## Code Wiring (`athena-core`)
 
-- *(deferred — no MVP wiring yet)*
+- `athena-core/src/athena_core/domain/indicators/ichimoku.py`
 
 ## Dependencies
 

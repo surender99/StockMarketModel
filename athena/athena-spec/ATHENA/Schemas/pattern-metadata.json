@@ -10,9 +10,26 @@
     "aps_id": { "type": "string", "pattern": "^APS-PAT-" },
     "category": {
       "type": "string",
-      "enum": ["Candlestick-Patterns", "Chart-Patterns"]
+      "enum": [
+        "Pattern-Architecture",
+        "Swing-Engine",
+        "Market-Structure",
+        "Support-Resistance",
+        "Trendline-Engine",
+        "Candlestick-Engine",
+        "Chart-Patterns",
+        "Breakout-Engine",
+        "Volume-Confirmation",
+        "Smart-Money-Concepts",
+        "Wyckoff-Engine",
+        "Elliott-Wave-Engine",
+        "Pattern-Scoring",
+        "Pattern-Registry",
+        "Pattern-Validation",
+        "Golden-Datasets"
+      ]
     },
-    "status": { "type": "string", "enum": ["MVP", "Deferred"] }
+    "status": { "type": "string", "enum": ["MVP", "Partial", "Deferred"] }
   },
   "additionalProperties": false
 }

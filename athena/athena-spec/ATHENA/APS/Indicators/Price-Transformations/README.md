@@ -12,4 +12,5 @@ Source: `References/PHASE 3 Architecture.docx`
 | [APS-PRICE-RENKO-001](APS-PRICE-RENKO-001-renko.md) | Renko | REQ-APS-PRICE-RENKO-001 | Deferred |
 | [APS-PRICE-KAGI-001](APS-PRICE-KAGI-001-kagi.md) | Kagi | REQ-APS-PRICE-KAGI-001 | Deferred |
 | [APS-PRICE-LINEBREAK-001](APS-PRICE-LINEBREAK-001-line-break.md) | Line Break | REQ-APS-PRICE-LINEBREAK-001 | Deferred |
+| [APS-PRICE-PIVOT-001](APS-PRICE-PIVOT-001-pivot-points.md) | Pivot Points | REQ-APS-PRICE-PIVOT-001 | MVP |
 | [APS-PRICE-POINTFIGURE-001](APS-PRICE-POINTFIGURE-001-point-and-figure.md) | Point and Figure | REQ-APS-PRICE-POINTFIGURE-001 | Deferred |

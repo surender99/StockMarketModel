@@ -6,7 +6,7 @@
 > **Phase:** 3 — Indicators  
 > **Domain:** Volume Indicators  
 > **Source:** `References/PHASE 3 Architecture.docx`  
-> **Implementation status:** Deferred
+> **Implementation status:** MVP
 
 ## Objective
 
@@ -21,7 +21,7 @@ Volume Weighted Average Price for the Athena indicators platform (volume indicat
 
 ## Code Wiring (`athena-core`)
 
-- *(deferred — no MVP wiring yet)*
+- `athena-core/src/athena_core/domain/indicators/vwap.py`
 
 ## Dependencies
 

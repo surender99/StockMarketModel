@@ -10,4 +10,5 @@ Source: `References/PHASE 3 Architecture.docx`
 | [APS-IND-CHV-001](APS-IND-CHV-001-chaikin-volatility.md) | Chaikin Volatility | REQ-APS-IND-CHV-001 | Deferred |
 | [APS-IND-STDDEV-001](APS-IND-STDDEV-001-standard-deviation.md) | Standard Deviation | REQ-APS-IND-STDDEV-001 | Deferred |
 | [APS-IND-HVOL-001](APS-IND-HVOL-001-historical-volatility.md) | Historical Volatility | REQ-APS-IND-HVOL-001 | Deferred |
+| [APS-IND-ATRBANDS-001](APS-IND-ATRBANDS-001-atr-bands.md) | ATR Bands | REQ-APS-IND-ATRBANDS-001 | MVP |
 | [APS-IND-VSTOP-001](APS-IND-VSTOP-001-volatility-stop.md) | Volatility Stop | REQ-APS-IND-VSTOP-001 | Deferred |

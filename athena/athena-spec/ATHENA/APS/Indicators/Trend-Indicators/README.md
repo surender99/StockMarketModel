@@ -11,6 +11,6 @@ Source: `References/PHASE 3 Architecture.docx`
 | [APS-IND-AROON-001](APS-IND-AROON-001-aroon.md) | Aroon | REQ-APS-IND-AROON-001 | Deferred |
 | [APS-IND-PSAR-001](APS-IND-PSAR-001-parabolic-sar.md) | Parabolic SAR | REQ-APS-IND-PSAR-001 | Deferred |
 | [APS-IND-VORTEX-001](APS-IND-VORTEX-001-vortex-indicator.md) | Vortex Indicator | REQ-APS-IND-VORTEX-001 | Deferred |
-| [APS-IND-ICHIMOKU-001](APS-IND-ICHIMOKU-001-ichimoku-cloud.md) | Ichimoku Cloud | REQ-APS-IND-ICHIMOKU-001 | Deferred |
+| [APS-IND-ICHIMOKU-001](APS-IND-ICHIMOKU-001-ichimoku-cloud.md) | Ichimoku Cloud | REQ-APS-IND-ICHIMOKU-001 | MVP |
 | [APS-IND-DONCHIAN-001](APS-IND-DONCHIAN-001-donchian-channels.md) | Donchian Channels | REQ-APS-IND-DONCHIAN-001 | Deferred |
 | [APS-IND-MARIBBON-001](APS-IND-MARIBBON-001-moving-average-ribbon.md) | Moving Average Ribbon | REQ-APS-IND-MARIBBON-001 | Deferred |

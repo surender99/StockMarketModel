@@ -1,5 +1,6 @@
 # Pattern Architecture — Phase 4 APS
 
-| APS | Title | REQ | Status |
-|-----|-------|-----|--------|
-| [APS-PAT-ARCH-001](Pattern-Architecture/APS-PAT-ARCH-001-pattern-recognition-architecture.md) | Pattern Recognition Architecture | REQ-APS-PAT-ARCH-001 | MVP |
+| APS | Title | Status |
+|-----|-------|--------|
+| [APS-PAT-ARCH-001](APS-PAT-ARCH-001-pattern-detection-framework.md) | Pattern Detection Framework | Partial |
+| [APS-PAT-PIPELINE-001](APS-PAT-PIPELINE-001-pattern-detection-pipeline.md) | Pattern Detection Pipeline | Partial |

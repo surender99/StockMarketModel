@@ -7,17 +7,18 @@ from athena_core.domain.patterns.catalog import PATTERN_CATALOG, lookup_pattern_
 
 
 def test_pattern_catalog_covers_builtin_registry() -> None:
-    """APS-PAT-REGISTRY-001 — catalog matches builtin pattern registry."""
+    """APS-PAT-REGISTRY-CORE-001 — catalog matches builtin pattern registry."""
     builtin_ids = set(builtin_pattern_registry())
     catalog_ids = {e.pattern_id for e in PATTERN_CATALOG}
     assert catalog_ids == builtin_ids
 
 
 def test_pattern_catalog_assigns_category() -> None:
-    """APS-PAT-CANDLE-001 / APS-PAT-CHART-001 — patterns have category metadata."""
+    """APS-CS-HAMMER-001 / APS-CP-DOUBLETOP-001 — patterns have category metadata."""
     hammer = lookup_pattern_aps("hammer")
     assert hammer is not None
-    assert hammer.category == "Candlestick-Patterns"
+    assert hammer.category == "Candlestick-Engine"
     double_top = lookup_pattern_aps("double_top")
     assert double_top is not None
     assert double_top.category == "Chart-Patterns"
+    assert double_top.aps_id == "APS-CP-DOUBLETOP-001"

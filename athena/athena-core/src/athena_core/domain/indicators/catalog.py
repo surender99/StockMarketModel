@@ -40,6 +40,7 @@ INDICATOR_CATALOG: tuple[IndicatorCatalogEntry, ...] = (
     _e("kagi", "APS-PRICE-KAGI-001", "Kagi", "Price-Transformations"),
     _e("line_break", "APS-PRICE-LINEBREAK-001", "Line Break", "Price-Transformations"),
     _e("point_figure", "APS-PRICE-POINTFIGURE-001", "Point and Figure", "Price-Transformations"),
+    _e("pivot_points", "APS-PRICE-PIVOT-001", "Pivot Points", "Price-Transformations", "MVP"),
     # Moving averages
     _e("sma", "APS-IND-SMA-001", "Simple Moving Average", "Moving-Averages", "MVP"),
     _e("ema", "APS-IND-EMA-001", "Exponential Moving Average", "Moving-Averages", "MVP"),
@@ -61,7 +62,7 @@ INDICATOR_CATALOG: tuple[IndicatorCatalogEntry, ...] = (
     _e("aroon", "APS-IND-AROON-001", "Aroon", "Trend-Indicators"),
     _e("psar", "APS-IND-PSAR-001", "Parabolic SAR", "Trend-Indicators"),
     _e("vortex", "APS-IND-VORTEX-001", "Vortex Indicator", "Trend-Indicators"),
-    _e("ichimoku", "APS-IND-ICHIMOKU-001", "Ichimoku Cloud", "Trend-Indicators"),
+    _e("ichimoku", "APS-IND-ICHIMOKU-001", "Ichimoku Cloud", "Trend-Indicators", "MVP"),
     _e("donchian", "APS-IND-DONCHIAN-001", "Donchian Channels", "Trend-Indicators"),
     _e("ma_ribbon", "APS-IND-MARIBBON-001", "Moving Average Ribbon", "Trend-Indicators"),
     # Momentum
@@ -88,11 +89,12 @@ INDICATOR_CATALOG: tuple[IndicatorCatalogEntry, ...] = (
     _e("stddev", "APS-IND-STDDEV-001", "Standard Deviation", "Volatility-Indicators"),
     _e("hvol", "APS-IND-HVOL-001", "Historical Volatility", "Volatility-Indicators"),
     _e("vstop", "APS-IND-VSTOP-001", "Volatility Stop", "Volatility-Indicators"),
+    _e("atr_bands", "APS-IND-ATRBANDS-001", "ATR Bands", "Volatility-Indicators", "MVP"),
     # Volume
     _e("obv", "APS-IND-OBV-001", "On-Balance Volume", "Volume-Indicators", "MVP"),
     _e("cmf", "APS-IND-CMF-001", "Chaikin Money Flow", "Volume-Indicators", "MVP"),
     _e("mfi", "APS-IND-MFI-001", "Money Flow Index", "Volume-Indicators", "MVP"),
-    _e("vwap", "APS-IND-VWAP-001", "Volume Weighted Average Price", "Volume-Indicators"),
+    _e("vwap", "APS-IND-VWAP-001", "Volume Weighted Average Price", "Volume-Indicators", "MVP"),
     _e("adl", "APS-IND-ADL-001", "Accumulation Distribution Line", "Volume-Indicators"),
     _e("eom", "APS-IND-EOM-001", "Ease of Movement", "Volume-Indicators"),
     _e("fi", "APS-IND-FI-001", "Force Index", "Volume-Indicators"),

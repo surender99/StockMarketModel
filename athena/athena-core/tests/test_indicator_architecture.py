@@ -62,8 +62,12 @@ def test_price_transforms_hlc3_hl2_ohlc4() -> None:
 
 
 def test_price_transform_registry_covers_mvp() -> None:
-    """APS-PRICE-*-001 — transform registry matches MVP catalog entries."""
-    mvp_price = [e for e in INDICATOR_CATALOG if e.category == "Price-Transformations" and e.status == "MVP"]
+    """APS-PRICE-*-001 — transform registry matches core MVP price transforms."""
+    mvp_price = [
+        e
+        for e in INDICATOR_CATALOG
+        if e.category == "Price-Transformations" and e.status == "MVP" and e.plugin_id in PRICE_TRANSFORMS
+    ]
     assert len(mvp_price) == 4
     assert set(PRICE_TRANSFORMS) == {e.plugin_id for e in mvp_price}
 
@@ -101,6 +105,6 @@ def test_expanded_catalog_has_deferred_entries() -> None:
 
 
 def test_mvp_indicator_count_includes_price_transforms() -> None:
-    """APS-IND-REGISTRY-001 — MVP count includes 15 builtins + 4 price transforms."""
+    """APS-IND-REGISTRY-001 — MVP count includes builtins + price transforms + deferred batch."""
     mvp = list_mvp_indicators()
-    assert len(mvp) == 19
+    assert len(mvp) == 23
