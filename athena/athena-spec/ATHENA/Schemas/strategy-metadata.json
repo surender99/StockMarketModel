@@ -7,7 +7,7 @@
   "required": ["strategy_id", "aps_id", "name", "status"],
   "properties": {
     "strategy_id": { "type": "string", "minLength": 1 },
-    "aps_id": { "type": "string", "pattern": "^APS-STRAT-" },
+    "aps_id": { "type": "string", "pattern": "^APS-" },
     "name": { "type": "string" },
     "status": { "type": "string", "enum": ["MVP", "Deferred"] }
   },

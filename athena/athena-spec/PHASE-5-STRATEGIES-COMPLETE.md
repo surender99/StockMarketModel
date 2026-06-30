@@ -1,18 +1,18 @@
-# Phase 5 — Strategies APS Complete
+# Phase 5 — Strategies APS Complete (Expanded SIP)
 
 **Validated by:** Master Orchestrator Agent  
 **Date:** 2026-06-30  
 **Repository:** StockMarketModel (`athena/` monorepo)  
-**Source:** `References/REL-006-Strategy Engine.docx` (inferred PHASE-5; no PHASE5 docx found)  
+**Source:** `References/PHASE5 - Strategy Intelligence Platform (SIP).docx`  
 **Structure:** [ATHENA/APS/Strategies/](ATHENA/APS/Strategies/README.md)
 
 ---
 
 ## Executive Summary
 
-Phase 5 Strategies delivers **11 APS implementation specifications** across 11 domains, wired to existing `athena-core` Release-06 strategy modules. Extensions include strategy APS catalog metadata, strategy-metadata JSON schema, and strategy benchmarks.
+Phase 5 Strategies expanded from 11 to **169 APS specifications** across **15 domains**, driven by the SIP reference document. MVP wiring adds strategy intelligence APS catalog, layered decision pipeline, and template APS mapping for builtin strategies.
 
-**Status: COMPLETE**
+**Status: COMPLETE** (specs + MVP extensions)
 
 ---
 
@@ -20,8 +20,8 @@ Phase 5 Strategies delivers **11 APS implementation specifications** across 11 d
 
 | Item | Value |
 |------|-------|
-| **File found** | `References/REL-006-Strategy Engine.docx` (no `PHASE5*.docx`) |
-| **APS count** | 11 specs across 11 domains |
+| **File found** | `References/PHASE5 - Strategy Intelligence Platform (SIP).docx` |
+| **APS count** | 169 specs across 15 domains |
 | **REL index** | [ATH-REL-006-Strategy-Engine.md](ATH-REL-006-Strategy-Engine.md) |
 
 ---
@@ -30,28 +30,34 @@ Phase 5 Strategies delivers **11 APS implementation specifications** across 11 d
 
 | # | Domain | APS count | Index |
 |---|--------|-----------|-------|
-| 1 | Strategy Framework | 1 | [Strategy-Framework/](ATHENA/APS/Strategies/Strategy-Framework/README.md) |
-| 2 | Strategy Registry | 1 | [Strategy-Registry/](ATHENA/APS/Strategies/Strategy-Registry/README.md) |
-| 3 | Signal Engine | 1 | [Signal-Engine/](ATHENA/APS/Strategies/Signal-Engine/README.md) |
-| 4 | Entry Rules | 1 | [Entry-Rules/](ATHENA/APS/Strategies/Entry-Rules/README.md) |
-| 5 | Exit Rules | 1 | [Exit-Rules/](ATHENA/APS/Strategies/Exit-Rules/README.md) |
-| 6 | Risk Management | 1 | [Risk-Management/](ATHENA/APS/Strategies/Risk-Management/README.md) |
-| 7 | Position Sizing | 1 | [Position-Sizing/](ATHENA/APS/Strategies/Position-Sizing/README.md) |
-| 8 | Multi-Timeframe | 1 | [Multi-Timeframe/](ATHENA/APS/Strategies/Multi-Timeframe/README.md) |
-| 9 | Strategy Composition | 1 | [Strategy-Composition/](ATHENA/APS/Strategies/Strategy-Composition/README.md) |
-| 10 | Strategy Validation | 1 | [Strategy-Validation/](ATHENA/APS/Strategies/Strategy-Validation/README.md) |
-| 11 | Expression Engine | 1 | [Expression-Engine/](ATHENA/APS/Strategies/Expression-Engine/README.md) |
+| 1 | Strategy Framework | 8 | [Strategy-Framework/](ATHENA/APS/Strategies/Strategy-Framework/README.md) |
+| 2 | Signal Framework | 12 | [Signal-Framework/](ATHENA/APS/Strategies/Signal-Framework/README.md) |
+| 3 | Entry Engine | 10 | [Entry-Engine/](ATHENA/APS/Strategies/Entry-Engine/README.md) |
+| 4 | Exit Engine | 12 | [Exit-Engine/](ATHENA/APS/Strategies/Exit-Engine/README.md) |
+| 5 | Risk Engine | 15 | [Risk-Engine/](ATHENA/APS/Strategies/Risk-Engine/README.md) |
+| 6 | Position Sizing | 12 | [Position-Sizing/](ATHENA/APS/Strategies/Position-Sizing/README.md) |
+| 7 | Strategy Templates | 20 | [Strategy-Templates/](ATHENA/APS/Strategies/Strategy-Templates/README.md) |
+| 8 | Multi-Timeframe | 8 | [Multi-Timeframe/](ATHENA/APS/Strategies/Multi-Timeframe/README.md) |
+| 9 | Strategy Composition | 10 | [Strategy-Composition/](ATHENA/APS/Strategies/Strategy-Composition/README.md) |
+| 10 | Strategy DSL | 12 | [Strategy-DSL/](ATHENA/APS/Strategies/Strategy-DSL/README.md) |
+| 11 | Strategy Optimizer | 20 | [Strategy-Optimizer/](ATHENA/APS/Strategies/Strategy-Optimizer/README.md) |
+| 12 | Strategy Validation | 10 | [Strategy-Validation/](ATHENA/APS/Strategies/Strategy-Validation/README.md) |
+| 13 | Strategy Registry | 5 | [Strategy-Registry/](ATHENA/APS/Strategies/Strategy-Registry/README.md) |
+| 14 | Strategy Benchmark | 5 | [Strategy-Benchmark/](ATHENA/APS/Strategies/Strategy-Benchmark/README.md) |
+| 15 | Strategy Testing | 10 | [Strategy-Testing/](ATHENA/APS/Strategies/Strategy-Testing/README.md) |
 
 **Spec path:** [ATHENA/APS/Strategies/](ATHENA/APS/Strategies/README.md)
 
 ---
 
-## athena-core Extensions (Phase 5)
+## athena-core Extensions (Phase 5 SIP)
 
 | Module | APS | Change |
 |--------|-----|--------|
-| `domain/strategy/catalog.py` | APS-STRAT-REGISTRY-001 | New — APS catalog for builtin strategies |
-| `tests/test_strategy_aps.py` | — | +2 tests (catalog coverage) |
+| `domain/strategy/catalog.py` | APS-STRAT-REGISTRY-* | Expanded — 169 APS catalog entries |
+| `domain/strategy/pipeline.py` | APS-STRAT-PIPELINE-001 | New — layered decision pipeline |
+| `tests/test_phase45_aps.py` | — | +6 tests (catalog coverage) |
+| `tests/test_strategy_aps.py` | APS-STRAT-TEST-PIPELINE-001 | +5 tests (catalog + pipeline) |
 
 ---
 
@@ -71,10 +77,10 @@ Phase 5 Strategies delivers **11 APS implementation specifications** across 11 d
 
 ## Acceptance Gate
 
-- [x] Source document located (REL-006 docx; no PHASE5 docx)
-- [x] 11 Strategies APS specs with REQ IDs
-- [x] APS wired to `athena-core` (MVP / Deferred per spec)
-- [x] Strategy catalog and metadata schema
+- [x] SIP source document located (PHASE5 docx)
+- [x] 169 Strategies APS specs with REQ IDs
+- [x] APS wired to `athena-core` (MVP / Partial / Deferred per spec)
+- [x] Strategy intelligence catalog and pipeline
 - [x] Navigation updated
 - [x] Full pytest suite passes
 
@@ -82,4 +88,4 @@ Phase 5 Strategies delivers **11 APS implementation specifications** across 11 d
 
 ## Phase 5 Strategies Status
 
-**COMPLETE** — Strategies APS structure, specs, catalog extension, and tests implemented.
+**COMPLETE** — SIP-expanded Strategies APS structure, catalog, pipeline, and tests implemented.
