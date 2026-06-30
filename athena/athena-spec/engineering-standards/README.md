@@ -12,6 +12,7 @@ This index maps the ATH-REL-000 Release-00 folder taxonomy to canonical specs an
 | Section | Zip Status (v0.1) | Canonical Spec | Repo Tooling |
 |---------|-------------------|----------------|--------------|
 | **00 Constitution** | Placeholder | [ATH-000](../ATH-000-Philosophy.md), [AES-0001](../governance/AES-0001-Constitution.md) | — |
+| **ATH-000B extended** | Integrated | [ATH-000B/](ATH-000B/00-README.md) | Coding, testing, DoD, AI agent rules |
 | **01 Governance** | Placeholder | [governance/](../governance/), [adrs/](../adrs/) | — |
 | **02 Repository** | Placeholder | [ATH-003](../ATH-003-Repository-Architecture.md) | Monorepo `athena/` layout |
 | **03 Architecture** | Placeholder | [architecture/](../architecture/) | Clean Architecture in `athena-core/src/` |

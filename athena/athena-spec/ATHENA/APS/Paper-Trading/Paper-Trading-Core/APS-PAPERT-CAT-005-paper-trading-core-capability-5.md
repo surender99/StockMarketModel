@@ -1,0 +1,31 @@
+# APS-PAPERT-CAT-005 — Paper Trading Core Capability 5
+
+> **APS ID:** APS-PAPERT-CAT-005  
+> **Requirement ID:** REQ-APS-PAPERT-CAT-005  
+> **Phase:** 13 — Paper Trading & Execution Validation  
+> **Domain:** Paper Trading Core  
+> **Source:** `References/PHASE13 - Paper Trading & Execution Validation Platform (PTEVP).docx`  
+> **Implementation status:** Deferred
+
+## Objective
+
+Paper Trading Core Capability 5 for the Athena Paper Trading & Execution Validation platform (PTEVP).
+
+## Code Wiring
+
+- `athena-core/src/athena_core/domain/paper/`
+
+## Dependencies
+
+- Phase 1–12 APS prerequisites
+- [ATH-REL-014-Paper-Trading-Engine.md](../../ATH-REL-014-Paper-Trading-Engine.md)
+
+## Acceptance Criteria
+
+- [ ] APS-PAPERT-CAT-005 spec published with REQ ID
+- [ ] MVP modules wired where status is MVP/Partial
+- [ ] Deferred APS have no silent production stub
+
+---
+
+*Template: [ATH-004 Requirement Standard](../../ATH-004-Requirement-Standard.md)*

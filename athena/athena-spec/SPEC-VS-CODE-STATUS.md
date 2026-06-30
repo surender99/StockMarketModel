@@ -1,7 +1,7 @@
 # Spec vs Code Status
 
 > **Purpose:** Distinguish **spec integration complete** (References → `athena-spec`) from **code implementation complete** (running software in `athena-core` and sibling packages).  
-> **Updated:** 2026-06-30 — PHASE 1–9 + REL-000–020 integration sign-off.
+> **Updated:** 2026-06-30 — PHASE 1–15 + ATH-000A–D + REL-000–020 integration.
 
 ---
 
@@ -34,6 +34,21 @@ A package can be **spec-complete** while **code-partial** or **code-absent**.
 | **9** | Research & Experimentation | 140 | ✅ | **MVP** | QREP catalog, hypothesis, reproducibility, events; notebook/collaboration deferred |
 
 **Master sign-off:** [ATHENA/REFERENCES-COMPLETE.md](ATHENA/REFERENCES-COMPLETE.md)
+
+---
+
+## PHASE 10–15 — Spec vs Code
+
+| Phase | Platform | APS | Spec | Code | Honest Notes |
+|-------|----------|-----|------|------|--------------|
+| **10** | Machine Learning | 148 | ✅ | **MVP** | Dataset builder, training, registry, drift; deep learning/serving mostly deferred |
+| **11** | Autonomous Intelligence | 110 | ✅ | **MVP** | Rule-based `athena-ai` agents; LLM orchestration deferred |
+| **12** | Visualization & UX | 106 | ✅ | **MVP** | Streamlit dashboard; full chart/workspace suite deferred |
+| **13** | Paper Trading | 85 | ✅ | **Stub** | Paper trading framework stubs only |
+| **14** | Enterprise Trading | 102 | ✅ | **Stub** | OMS/RMS/broker gateway stubs |
+| **15** | Enterprise Governance | 91 | ✅ | **Partial** | CI/pre-commit; full observability platform deferred |
+
+**ATH-000A–D:** Spec integrated — [ATH-000-SERIES-INDEX.md](ATH-000-SERIES-INDEX.md)
 
 ---
 
@@ -97,7 +112,7 @@ Phase 9 adds `tests/test_qrep_aps.py` (7 tests) in athena-core. Phase 3–8 APS 
 
 | Document | What "complete" means there |
 |----------|----------------------------|
-| [ATHENA/REFERENCES-COMPLETE.md](ATHENA/REFERENCES-COMPLETE.md) | Master sign-off — PHASE 1–9, REL 000–020, packages 01–15 |
+| [ATHENA/REFERENCES-COMPLETE.md](ATHENA/REFERENCES-COMPLETE.md) | Master sign-off — PHASE 1–15, ATH-000A–D, REL 000–020, packages 01–15 |
 | [REFERENCES-INTEGRATION-COMPLETE.md](REFERENCES-INTEGRATION-COMPLETE.md) | References packages 01–15 **specs** integrated |
 | [REL-011-020-INTEGRATION-COMPLETE.md](REL-011-020-INTEGRATION-COMPLETE.md) | REL-011–020 spec + framework tests |
 | [PLATFORM-COMPLETE.md](PLATFORM-COMPLETE.md) | MVP Phases 0–7 **code** + CI sign-off |

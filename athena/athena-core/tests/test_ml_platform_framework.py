@@ -8,6 +8,7 @@ from athena_core.application.bootstrap import bootstrap_athena_core
 from athena_core.application.config import AthenaConfig
 from athena_core.application.ml_manager import MLManager
 from athena_core.domain.ml import (
+    MLP_CATALOG,
     bayesian_search,
     build_dataset_splits,
     build_ml_registry,
@@ -17,6 +18,7 @@ from athena_core.domain.ml import (
     grid_search,
     importance_ranking,
     list_ml_modules,
+    list_mvp_mlp,
     random_search,
     register_builtin_ml_plugins,
     train_supervised,
@@ -126,3 +128,11 @@ def test_ml_plugins_registered() -> None:
     assert len(ml_plugins) >= 7
     assert "feature_selection" in list_ml_modules()
     assert len(build_ml_registry().list_modules()) == 7
+
+
+def test_mlp_catalog_phase10() -> None:
+    """PHASE 10 MLP — catalog MVP entries."""
+    mvp = list_mvp_mlp()
+    assert len(mvp) >= 4
+    assert len(MLP_CATALOG) >= 5
+    assert any(e.aps_id == "APS-ML-CORE-001" for e in MLP_CATALOG)

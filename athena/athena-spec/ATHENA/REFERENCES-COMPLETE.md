@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-All **References planning packages (REL-000 … REL-020)**, **References product packages (01–15)**, and **PHASE 1–9 APS implementation trees** are **spec-integrated** under `athena/athena-spec/`. MVP Python code exists in `athena-core` and sibling packages with **391 passing tests** (10 skipped, optional `pandas-ta` cross-library checks).
+All **References planning packages (REL-000 … REL-020)**, **References product packages (01–15)**, **ATH-000A–D core reference zips**, and **PHASE 1–15 APS implementation trees** are **spec-integrated** under `athena/athena-spec/`. MVP Python code exists in `athena-core` and sibling packages with **391 passing tests** (10 skipped, optional `pandas-ta` cross-library checks).
 
 **Spec integration complete** ≠ **full code implementation**. See [SPEC-VS-CODE-STATUS.md](../SPEC-VS-CODE-STATUS.md) for honest per-phase code depth.
 
@@ -29,7 +29,33 @@ All **References planning packages (REL-000 … REL-020)**, **References product
 | **8** | Quantitative Analytics (QARIP) | 160 | ✅ | **MVP** — analytics catalog, statistics/risk partial wiring | [PHASE-8-ANALYTICS-COMPLETE.md](../PHASE-8-ANALYTICS-COMPLETE.md) |
 | **9** | Research & Experimentation (QREP) | 140 | ✅ | **MVP** — QREP catalog, hypothesis, reproducibility, events | [PHASE-9-QREP-COMPLETE.md](../PHASE-9-QREP-COMPLETE.md) |
 
-**Total APS published:** 929 across PHASE 1–9.
+**Total APS published:** 1571 across PHASE 1–15 (929 prior + 642 new).
+
+---
+
+## ATH-000A–D Status
+
+| Package | Title | Spec | Path |
+|---------|-------|------|------|
+| **ATH-000A** | Core Architecture | ✅ | [ATHENA/Architecture/](../ATHENA/Architecture/00-README.md) |
+| **ATH-000B** | Engineering Standards | ✅ | [engineering-standards/ATH-000B/](../engineering-standards/ATH-000B/00-README.md) |
+| **ATH-000C** | Contracts, Events & APIs | ✅ | [ATHENA/Contracts-Standards/](../ATHENA/Contracts-Standards/00-README.md) |
+| **ATH-000D** | AI Governance & Quality | ✅ | [governance/ATH-000D/](../governance/ATH-000D/00-README.md) |
+
+**Index:** [ATH-000-SERIES-INDEX.md](../ATH-000-SERIES-INDEX.md)
+
+---
+
+## PHASE 10–15 APS Status
+
+| Phase | Platform | APS | Spec | Code | Validation |
+|-------|----------|-----|------|------|------------|
+| **10** | Machine Learning (MLP) | 148 | ✅ | **MVP** — ML framework + catalog | [PHASE-10-MLP-COMPLETE.md](../PHASE-10-MLP-COMPLETE.md) |
+| **11** | Autonomous Quant Intelligence (AQIP) | 110 | ✅ | **MVP** — `athena-ai` agents | [PHASE-11-AQIP-COMPLETE.md](../PHASE-11-AQIP-COMPLETE.md) |
+| **12** | Visualization & UX (VDSUX) | 106 | ✅ | **MVP** — Streamlit dashboard | [PHASE-12-VDSUX-COMPLETE.md](../PHASE-12-VDSUX-COMPLETE.md) |
+| **13** | Paper Trading (PTEVP) | 85 | ✅ | **Stub** — paper trading framework | [PHASE-13-PTEVP-COMPLETE.md](../PHASE-13-PTEVP-COMPLETE.md) |
+| **14** | Enterprise Trading (ETOP) | 102 | ✅ | **Stub** — production gateway stubs | [PHASE-14-ETOP-COMPLETE.md](../PHASE-14-ETOP-COMPLETE.md) |
+| **15** | Enterprise Governance (EGPCI) | 91 | ✅ | **Partial** — CI/DevOps wired | [PHASE-15-EGPCI-COMPLETE.md](../PHASE-15-EGPCI-COMPLETE.md) |
 
 ---
 
@@ -85,6 +111,25 @@ All **References planning packages (REL-000 … REL-020)**, **References product
 
 ---
 
+## New References Integrated (2026-06-30)
+
+| File | Type | Action |
+|------|------|--------|
+| `ATH-000A-Core-Architecture.zip` | Architecture reference | Integrated → `ATHENA/Architecture/` |
+| `ATH-000B-Engineering-Standards.zip` | Engineering standards | Integrated → `engineering-standards/ATH-000B/` |
+| `ATH-000C-Contracts-Events-APIs.zip` | Contracts/events/APIs | Integrated → `ATHENA/Contracts-Standards/` |
+| `ATH-000D-AI-Governance-Quality.zip` | AI governance | Integrated → `governance/ATH-000D/` |
+| `PHASE10 … MLP.docx` | Phase 10 APS | 148 APS → `ATHENA/APS/Machine-Learning/` |
+| `PHASE11 … AQIP.docx` | Phase 11 APS | 110 APS → `ATHENA/APS/Autonomous-Intelligence/` |
+| `PHASE12 … VDSUX.docx` | Phase 12 APS | 106 APS → `ATHENA/APS/Visualization-UX/` |
+| `PHASE13 … PTEVP.docx` | Phase 13 APS | 85 APS → `ATHENA/APS/Paper-Trading/` |
+| `PHASE14 … ETOP.docx` | Phase 14 APS | 102 APS → `ATHENA/APS/Enterprise-Trading/` |
+| `PHASE15 … EGPCI.docx` | Phase 15 APS | 91 APS → `ATHENA/APS/Enterprise-Governance/` |
+
+**Already integrated (no action):** REL zips, Athena-Package 01–15 zips, PHASE 1–9 docx, REL-006–010 individual docx.
+
+---
+
 ## Test Suite Sign-off (2026-06-30)
 
 | Package | Passed | Skipped |
@@ -114,4 +159,4 @@ Skipped tests require optional `pandas-ta` cross-library validation (Python 3.11
 
 ## Sign-off
 
-**References integration is complete.** All PHASE 1–9 APS trees, REL-000–020 release packages, and References packages 01–15 are published under `athena/athena-spec/`. MVP code and tests are green across the monorepo. Deferred APS entries (catalog-only) are documented per spec with explicit MVP / Partial / Deferred status in each APS file.
+**References integration is complete.** All PHASE 1–15 APS trees, ATH-000A–D reference packages, REL-000–020 release packages, and References packages 01–15 are published under `athena/athena-spec/`. MVP code and tests are green across the monorepo. Deferred APS entries (catalog-only) are documented per spec with explicit MVP / Partial / Deferred status in each APS file.

@@ -1,5 +1,6 @@
-"""Machine learning domain — ATH-REL-011."""
+"""Machine learning domain — ATH-REL-011, PHASE 10 MLP."""
 
+from athena_core.domain.ml.catalog import MLP_CATALOG, list_mvp_mlp
 from athena_core.domain.ml.context import MLContext, ModelMetadata
 from athena_core.domain.ml.dataset_builder import DatasetSplit, build_dataset_splits
 from athena_core.domain.ml.drift import DriftReport, detect_drift
@@ -24,6 +25,7 @@ from athena_core.domain.ml.model_registry import ModelRegistry, ModelVersion
 from athena_core.domain.ml.training import TrainingResult, train_supervised
 
 __all__ = [
+    "MLP_CATALOG",
     "ClassificationMetrics",
     "DatasetSplit",
     "DriftReport",
@@ -42,6 +44,7 @@ __all__ = [
     "grid_search",
     "importance_ranking",
     "list_ml_modules",
+    "list_mvp_mlp",
     "random_search",
     "recursive_elimination",
     "register_builtin_ml_plugins",

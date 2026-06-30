@@ -57,9 +57,17 @@ See [DEPENDENCY-RULES.md](DEPENDENCY-RULES.md) and [ADR-0005](../adrs/ADR-0005-a
 8. [APS/Portfolio-Intelligence/](APS/Portfolio-Intelligence/README.md) — Phase 7 portfolio APS
 9. [APS/Quantitative-Analytics/](APS/Quantitative-Analytics/README.md) — Phase 8 analytics APS
 10. [APS/Research-Experimentation/](APS/Research-Experimentation/README.md) — Phase 9 QREP APS (140 specs)
-11. [APS/](APS/README.md) — domain implementation specs (Backtesting, Portfolio, …)
-12. [ADR/](ADR/README.md) — accepted architecture decisions
-13. [Golden-Datasets/](Golden-Datasets/README.md) — reproducible test inputs
+11. [APS/Machine-Learning/](APS/Machine-Learning/README.md) — Phase 10 MLP APS (148 specs)
+12. [APS/Autonomous-Intelligence/](APS/Autonomous-Intelligence/README.md) — Phase 11 AQIP APS (110 specs)
+13. [APS/Visualization-UX/](APS/Visualization-UX/README.md) — Phase 12 VDSUX APS (106 specs)
+14. [APS/Paper-Trading/](APS/Paper-Trading/README.md) — Phase 13 PTEVP APS (85 specs)
+15. [APS/Enterprise-Trading/](APS/Enterprise-Trading/README.md) — Phase 14 ETOP APS (102 specs)
+16. [APS/Enterprise-Governance/](APS/Enterprise-Governance/README.md) — Phase 15 EGPCI APS (91 specs)
+17. [Architecture/](Architecture/00-README.md) — ATH-000A core architecture reference
+18. [Contracts-Standards/](Contracts-Standards/00-README.md) — ATH-000C contracts/events/API standards
+19. [APS/](APS/README.md) — domain implementation specs (Backtesting, Portfolio, …)
+20. [ADR/](ADR/README.md) — accepted architecture decisions
+21. [Golden-Datasets/](Golden-Datasets/README.md) — reproducible test inputs
 
 ## Relationship to Legacy Paths
 
@@ -92,4 +100,18 @@ Existing documents under `athena-spec/` remain authoritative. This tree adds **i
 
 **Phase 9 validation:** [PHASE-9-QREP-COMPLETE.md](../PHASE-9-QREP-COMPLETE.md)
 
-**Source documents:** `References/PHASE1 -ATHENA FOUNDATION APS.docx` through `References/PHASE9 - Quantitative Research & Experimentation Platform (QREP).docx` (not committed; content captured in APS/).
+**Phase 10 validation:** [PHASE-10-MLP-COMPLETE.md](../PHASE-10-MLP-COMPLETE.md)
+
+**Phase 11 validation:** [PHASE-11-AQIP-COMPLETE.md](../PHASE-11-AQIP-COMPLETE.md)
+
+**Phase 12 validation:** [PHASE-12-VDSUX-COMPLETE.md](../PHASE-12-VDSUX-COMPLETE.md)
+
+**Phase 13 validation:** [PHASE-13-PTEVP-COMPLETE.md](../PHASE-13-PTEVP-COMPLETE.md)
+
+**Phase 14 validation:** [PHASE-14-ETOP-COMPLETE.md](../PHASE-14-ETOP-COMPLETE.md)
+
+**Phase 15 validation:** [PHASE-15-EGPCI-COMPLETE.md](../PHASE-15-EGPCI-COMPLETE.md)
+
+**ATH-000 series:** [ATH-000-SERIES-INDEX.md](../ATH-000-SERIES-INDEX.md)
+
+**Source documents:** `References/PHASE1 -ATHENA FOUNDATION APS.docx` through `References/PHASE15 - Enterprise Governance...docx` and `References/ATH-000*.zip` (not committed; content captured in spec).

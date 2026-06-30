@@ -33,6 +33,16 @@ This index tracks integration of the Athena References package series and Releas
 | **REL-018** | DevOps & Platform Engineering (Release-18) | CI/CD, artifacts, deployment pipelines | ✅ Complete |
 | **REL-019** | Observability & Monitoring (Release-19) | Metrics, tracing, alerting, SLA/SLO reporting | ✅ Complete |
 | **REL-020** | SDK & Public APIs (Release-20) | Python SDK, REST/WS stubs, rate limiting, API versioning | ✅ Complete |
+| **ATH-000A** | Core Architecture | Vision, layers, AthenaOS, dependency rules | ✅ Complete |
+| **ATH-000B** | Engineering Standards (extended) | Coding, naming, testing, DoD, AI agent rules | ✅ Complete |
+| **ATH-000C** | Contracts, Events & APIs | Interface/DTO/event/API standards, templates | ✅ Complete |
+| **ATH-000D** | AI Governance & Quality | AI coding, reviews, quality gates, release governance | ✅ Complete |
+| **PHASE 10** | Machine Learning Platform (MLP) | 148 APS — training, registry, drift, prediction | ✅ Complete |
+| **PHASE 11** | Autonomous Quant Intelligence (AQIP) | 110 APS — multi-agent research orchestration | ✅ Complete |
+| **PHASE 12** | Visualization & UX (VDSUX) | 106 APS — dashboards, charts, decision support | ✅ Complete |
+| **PHASE 13** | Paper Trading (PTEVP) | 85 APS — paper broker, live feed, validation | ✅ Complete |
+| **PHASE 14** | Enterprise Trading (ETOP) | 102 APS — OMS, RMS, broker gateway | ✅ Complete |
+| **PHASE 15** | Enterprise Governance (EGPCI) | 91 APS — platform engineering, CI/CD, observability | ✅ Complete |
 | **REL-002** | Data Platform (Release-02) | OHLCV ingest, calendar, quality, cleaning, versioning, registry | ✅ Complete |
 | **01** | Governance | Constitution, execution plan, quant & AI standards, templates, DoD | ✅ Complete |
 | **02** | Architecture | System architecture, clean architecture, plugin model, repo structure | ✅ Complete |
@@ -77,6 +87,16 @@ This index tracks integration of the Athena References package series and Releas
 | REL-018 | [ATH-REL-018-DevOps-and-Platform-Engineering.md](ATH-REL-018-DevOps-and-Platform-Engineering.md), [release-18/](release-18/) | [PACKAGE-REL-018-COMPLETE.md](packages/PACKAGE-REL-018-COMPLETE.md) |
 | REL-019 | [ATH-REL-019-Observability-and-Monitoring.md](ATH-REL-019-Observability-and-Monitoring.md), [release-19/](release-19/) | [PACKAGE-REL-019-COMPLETE.md](packages/PACKAGE-REL-019-COMPLETE.md) |
 | REL-020 | [ATH-REL-020-SDK-and-Public-APIs.md](ATH-REL-020-SDK-and-Public-APIs.md), [release-20/](release-20/) | [PACKAGE-REL-020-COMPLETE.md](packages/PACKAGE-REL-020-COMPLETE.md) |
+| ATH-000A | [ATHENA/Architecture/](ATHENA/Architecture/00-README.md) | [ATH-000-SERIES-INDEX.md](ATH-000-SERIES-INDEX.md) |
+| ATH-000B | [engineering-standards/ATH-000B/](engineering-standards/ATH-000B/00-README.md) | [ATH-000-SERIES-INDEX.md](ATH-000-SERIES-INDEX.md) |
+| ATH-000C | [ATHENA/Contracts-Standards/](ATHENA/Contracts-Standards/00-README.md) | [ATH-000-SERIES-INDEX.md](ATH-000-SERIES-INDEX.md) |
+| ATH-000D | [governance/ATH-000D/](governance/ATH-000D/00-README.md) | [ATH-000-SERIES-INDEX.md](ATH-000-SERIES-INDEX.md) |
+| PHASE 10 | [ATHENA/APS/Machine-Learning/](ATHENA/APS/Machine-Learning/README.md) | [PHASE-10-MLP-COMPLETE.md](PHASE-10-MLP-COMPLETE.md) |
+| PHASE 11 | [ATHENA/APS/Autonomous-Intelligence/](ATHENA/APS/Autonomous-Intelligence/README.md) | [PHASE-11-AQIP-COMPLETE.md](PHASE-11-AQIP-COMPLETE.md) |
+| PHASE 12 | [ATHENA/APS/Visualization-UX/](ATHENA/APS/Visualization-UX/README.md) | [PHASE-12-VDSUX-COMPLETE.md](PHASE-12-VDSUX-COMPLETE.md) |
+| PHASE 13 | [ATHENA/APS/Paper-Trading/](ATHENA/APS/Paper-Trading/README.md) | [PHASE-13-PTEVP-COMPLETE.md](PHASE-13-PTEVP-COMPLETE.md) |
+| PHASE 14 | [ATHENA/APS/Enterprise-Trading/](ATHENA/APS/Enterprise-Trading/README.md) | [PHASE-14-ETOP-COMPLETE.md](PHASE-14-ETOP-COMPLETE.md) |
+| PHASE 15 | [ATHENA/APS/Enterprise-Governance/](ATHENA/APS/Enterprise-Governance/README.md) | [PHASE-15-EGPCI-COMPLETE.md](PHASE-15-EGPCI-COMPLETE.md) |
 | REL-002 | [ATH-REL-002-Data-Platform.md](ATH-REL-002-Data-Platform.md), [release-02/](release-02/) | [PACKAGE-REL-002-COMPLETE.md](packages/PACKAGE-REL-002-COMPLETE.md) |
 | 01 | [governance/](governance/), [templates/](templates/), [checklists/](checklists/) | [PACKAGE-01-COMPLETE.md](packages/PACKAGE-01-COMPLETE.md) |
 | 02 | [architecture/](architecture/), [contracts/](contracts/), [diagrams/](diagrams/) | [PACKAGE-02-COMPLETE.md](packages/PACKAGE-02-COMPLETE.md) |

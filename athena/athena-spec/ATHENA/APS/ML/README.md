@@ -1,8 +1,5 @@
-# APS — Machine Learning
+# ML — Phase 10 redirect
 
-| Spec | Path |
-|------|------|
-| ML Platform | [ATH-REL-011](../../ATH-REL-011-Machine-Learning-Platform.md) |
-| Domain folder | [machine-learning/](../../machine-learning/) |
-| REQ backlog | `REQ-ML-*` |
-| Code | `athena-core/domain/ml/` |
+Phase 10 Machine Learning APS moved to [Machine-Learning/](../Machine-Learning/README.md).
+
+Legacy REL-011 stub index retained for backward links.
