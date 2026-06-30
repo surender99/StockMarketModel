@@ -7,11 +7,25 @@ requires-python = ">=3.11"
 
 [tool.uv.workspace]
 members = [
+    "athena/athena-os",
+    "athena/athena-common",
+    "athena/athena-domain",
     "athena/athena-core",
+    "athena/athena-data",
+    "athena/athena-indicators",
+    "athena/athena-patterns",
+    "athena/athena-strategies",
+    "athena/athena-risk",
+    "athena/athena-portfolio",
+    "athena/athena-execution",
+    "athena/athena-math",
+    "athena/athena-research",
+    "athena/athena-platform",
     "athena/athena-sdk",
     "athena/athena-ai",
     "athena/athena-cli",
     "athena/athena-dashboard",
+    "athena/athena-testing",
 ]
 
 [tool.uv]

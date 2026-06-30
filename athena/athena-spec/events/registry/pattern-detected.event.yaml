@@ -1,0 +1,11 @@
+name: PatternDetected
+publisher: Pattern
+consumers: [Strategy, Dashboard]
+version: 1
+compatibility: additive
+description: Chart or candlestick pattern detected
+payload:
+  symbol: string
+  pattern_id: string
+  confidence: float
+  bar_index: integer

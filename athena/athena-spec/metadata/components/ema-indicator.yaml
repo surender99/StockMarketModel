@@ -1,0 +1,9 @@
+name: EMA Indicator
+capability: Indicators / EMA
+owner: Quant
+status: complete
+description: Exponential moving average indicator with configurable periods.
+apis:
+  - athena_core.domain.indicators.ema
+dependencies:
+  - athena-indicators

@@ -1,0 +1,12 @@
+name: athena-common
+version: "0.1.0"
+layer: foundation
+description: Shared domain types and generated event contracts
+dependencies:
+  - none
+publishes_events: []
+consumes_events: []
+public_apis:
+  - athena_common.types
+  - athena_common.timeframe
+  - athena_common.enums

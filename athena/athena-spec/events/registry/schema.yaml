@@ -1,0 +1,34 @@
+# Event specification schema
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: AthenaEventSpec
+type: object
+required:
+  - name
+  - publisher
+  - consumers
+  - version
+  - payload
+properties:
+  name:
+    type: string
+    description: PascalCase event name (e.g. IndicatorCalculated)
+  publisher:
+    type: string
+    description: Bounded context or module that publishes
+  consumers:
+    type: array
+    items:
+      type: string
+  version:
+    type: integer
+    minimum: 1
+  compatibility:
+    type: string
+    enum: [additive, backward, breaking]
+    default: additive
+  payload:
+    type: object
+    additionalProperties:
+      type: string
+  description:
+    type: string

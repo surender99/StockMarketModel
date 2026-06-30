@@ -9,6 +9,7 @@ authors = [{ name = "Athena Contributors" }]
 
 dependencies = [
     "athena-os @ file:../athena-os",
+    "athena-common @ file:../athena-common",
     "pandas>=2.2",
     "numpy>=1.26",
     "yfinance>=0.2",

@@ -1,0 +1,28 @@
+# Component metadata schema
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: AthenaComponentMetadata
+type: object
+required:
+  - name
+  - capability
+  - description
+properties:
+  name:
+    type: string
+  capability:
+    type: string
+  owner:
+    type: string
+  status:
+    type: string
+    enum: [draft, mvp, partial, complete]
+  description:
+    type: string
+  apis:
+    type: array
+    items:
+      type: string
+  dependencies:
+    type: array
+    items:
+      type: string

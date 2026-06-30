@@ -1,0 +1,11 @@
+name: SecurityAudit
+publisher: AthenaOS
+consumers: [Compliance, Logging]
+version: 1
+compatibility: additive
+description: Security audit trail entry
+payload:
+  actor: string
+  action: string
+  resource: string
+  outcome: string

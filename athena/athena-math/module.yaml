@@ -1,0 +1,12 @@
+name: athena-math
+version: "0.1.0"
+layer: domain
+description: Statistics, regression, probability — independent from trading logic
+dependencies:
+  - athena-os
+  - athena-common
+  - athena-core
+publishes_events: []
+consumes_events: []
+public_apis:
+  - athena_math.statistics

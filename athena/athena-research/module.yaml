@@ -1,0 +1,13 @@
+name: athena-research
+version: "0.1.0"
+layer: research
+description: Research workspace separate from production
+dependencies:
+  - athena-os
+  - athena-common
+  - athena-core
+publishes_events:
+  - research.experiment_started
+consumes_events: []
+public_apis:
+  - athena_research.workspace

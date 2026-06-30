@@ -1,0 +1,10 @@
+name: ResearchExperimentStarted
+publisher: Research
+consumers: [Reproducibility, Events]
+version: 1
+compatibility: additive
+description: Research experiment execution started
+payload:
+  project_id: string
+  experiment_id: string
+  hypothesis_id: string

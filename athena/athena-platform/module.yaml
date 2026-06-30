@@ -1,0 +1,21 @@
+name: athena-platform
+version: "0.1.0"
+layer: platform
+description: Executable product assembly and production runtime
+dependencies:
+  - athena-os
+  - athena-common
+  - athena-core
+  - athena-domain
+  - athena-data
+  - athena-indicators
+  - athena-patterns
+  - athena-strategies
+  - athena-risk
+  - athena-portfolio
+  - athena-execution
+publishes_events: []
+consumes_events: []
+public_apis:
+  - athena_platform.bootstrap
+  - athena_platform.runtime

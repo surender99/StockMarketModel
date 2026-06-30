@@ -8,5 +8,7 @@ Canonical ADRs for the Athena platform. Use [ADR-Template.md](../templates/ADR-T
 | [ADR-0002](ADR-0002-yfinance-mvp-data-source.md) | yfinance as MVP data source | Accepted |
 | [ADR-0003](ADR-0003-in-process-plugin-registry.md) | In-process plugin registry (AES-0202) | Accepted |
 | [ADR-0004](ADR-0004-consolidated-monorepo.md) | Consolidated monorepo packages | Accepted |
+| [ADR-0005](ADR-0005-athena-os.md) | AthenaOS infrastructure layer | Accepted |
+| [ADR-0006](ADR-0006-bounded-contexts.md) | Bounded context facade packages | Accepted |
 
 See also [decision-log/](../decision-log/) for process and scope decisions (DEC-*).

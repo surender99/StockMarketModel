@@ -1,0 +1,10 @@
+name: IndicatorRegistered
+publisher: Indicator
+consumers: [PluginRegistry]
+version: 1
+compatibility: additive
+description: New indicator plugin registered
+payload:
+  indicator_id: string
+  version: string
+  author: string

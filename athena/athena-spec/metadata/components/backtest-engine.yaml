@@ -1,0 +1,11 @@
+name: Backtest Engine
+capability: Execution / Backtest
+owner: Platform
+status: mvp
+description: Event-driven backtest engine with slippage and cost models.
+apis:
+  - athena_core.application.backtest_manager
+  - athena_execution.ExecutionEngineFacade
+dependencies:
+  - athena-execution
+  - athena-core

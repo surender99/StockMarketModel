@@ -1,0 +1,11 @@
+name: StrategyEvaluated
+publisher: Strategy
+consumers: [Portfolio, Reporting]
+version: 1
+compatibility: additive
+description: Strategy evaluation cycle completed
+payload:
+  strategy_id: string
+  symbol: string
+  signal_count: integer
+  passed_risk: boolean

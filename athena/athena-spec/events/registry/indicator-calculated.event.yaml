@@ -1,0 +1,11 @@
+name: IndicatorCalculated
+publisher: Indicator
+consumers: [Pattern, Strategy]
+version: 1
+compatibility: additive
+description: Indicator values computed for a symbol
+payload:
+  symbol: string
+  indicator_id: string
+  timeframe: string
+  row_count: integer

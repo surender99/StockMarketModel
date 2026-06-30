@@ -1,0 +1,10 @@
+name: IngestFailed
+publisher: Data
+consumers: [Observability, RetryJobs]
+version: 1
+compatibility: additive
+description: Historical ingest failed
+payload:
+  symbol: string
+  error: string
+  source: string

@@ -3,6 +3,8 @@
 from dataclasses import dataclass
 from datetime import date
 
+from athena_common.types import OHLC
+
 
 @dataclass(frozen=True, slots=True)
 class OHLCVBar:
@@ -17,12 +19,7 @@ class OHLCVBar:
     volume: float
 
     def __post_init__(self) -> None:
-        if self.high < max(self.open, self.close):
-            msg = f"high {self.high} must be >= max(open, close) for {self.symbol}"
-            raise ValueError(msg)
-        if self.low > min(self.open, self.close):
-            msg = f"low {self.low} must be <= min(open, close) for {self.symbol}"
-            raise ValueError(msg)
+        OHLC(open=self.open, high=self.high, low=self.low, close=self.close)
         if self.volume < 0:
             msg = f"volume must be non-negative for {self.symbol}"
             raise ValueError(msg)

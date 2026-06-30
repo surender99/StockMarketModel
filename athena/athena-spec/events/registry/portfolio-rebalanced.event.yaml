@@ -1,0 +1,10 @@
+name: PortfolioRebalanced
+publisher: Portfolio
+consumers: [Risk, Audit]
+version: 1
+compatibility: additive
+description: Portfolio rebalance completed
+payload:
+  portfolio_id: string
+  turnover: float
+  position_count: integer

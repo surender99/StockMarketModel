@@ -1,0 +1,10 @@
+name: DataValidated
+publisher: Data
+consumers: [Ingest, Registry]
+version: 1
+compatibility: additive
+description: OHLCV frame passed quality checks
+payload:
+  symbol: string
+  quality_score: float
+  issue_count: integer

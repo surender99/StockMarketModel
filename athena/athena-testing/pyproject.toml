@@ -10,6 +10,7 @@ authors = [{ name = "Athena Contributors" }]
 dependencies = [
     "athena-os @ file:../athena-os",
     "athena-core @ file:../athena-core",
+    "athena-common @ file:../athena-common",
     "pandas>=2.2",
     "pyarrow>=15.0",
     "pytest>=8.0",
@@ -31,6 +32,6 @@ allow-direct-references = true
 packages = ["src/athena_testing"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "architecture"]
 pythonpath = ["src"]
 addopts = "-ra"

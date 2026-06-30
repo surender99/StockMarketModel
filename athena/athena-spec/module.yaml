@@ -1,0 +1,35 @@
+# Module manifest schema
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: AthenaModuleManifest
+type: object
+required:
+  - name
+  - version
+  - layer
+  - description
+properties:
+  name:
+    type: string
+  version:
+    type: string
+  layer:
+    type: string
+    enum: [foundation, domain, platform, research, interface]
+  description:
+    type: string
+  dependencies:
+    type: array
+    items:
+      type: string
+  publishes_events:
+    type: array
+    items:
+      type: string
+  consumes_events:
+    type: array
+    items:
+      type: string
+  public_apis:
+    type: array
+    items:
+      type: string

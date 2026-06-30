@@ -22,12 +22,13 @@ athena-spec/events/
   README.md              ← this file
   00-README.md           ← ATH-003 reference package index
   EVENT-CATALOG.md       ← implementation-aware master index (20 events)
+  registry/              ← YAML source of truth for codegen
+    schema.yaml
+    *.event.yaml         ← machine-readable event specs (13+ events)
   catalog/               ← domain-level Master-Event-Catalog.md
-  01-Event-Naming.md …   ← ATH-003 governance standards
-  examples/              ← sample event payloads
-  templates/             ← Event-Specification-Template.md
-  EVT-*.md               ← individual event specs (optional detail files)
 ```
+
+**YAML registry:** Event classes are generated into `athena-common/src/athena_common/events_generated.py` via `make codegen`. See [codegen/CODEGEN-STANDARD.md](../codegen/CODEGEN-STANDARD.md).
 
 ## Adding Events
 

@@ -1,0 +1,11 @@
+name: Indicator Registry
+capability: Indicators
+owner: Platform
+status: mvp
+description: Central registry for technical indicator plugins and metadata.
+apis:
+  - athena_core.domain.features.indicator_plugins
+  - athena_indicators.IndicatorEngineFacade
+dependencies:
+  - athena-os
+  - athena-core

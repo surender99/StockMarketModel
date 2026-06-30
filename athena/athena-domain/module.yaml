@@ -1,0 +1,11 @@
+name: athena-domain
+version: "0.1.0"
+layer: domain
+description: Domain engine interface contracts (Protocol/ABC)
+dependencies:
+  - athena-common
+  - athena-os
+publishes_events: []
+consumes_events: []
+public_apis:
+  - athena_domain.contracts.protocols

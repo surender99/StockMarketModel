@@ -1,0 +1,46 @@
+[project]
+name = "athena-platform"
+version = "0.1.0"
+description = "Athena executable product assembly layer"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Athena Contributors" }]
+
+dependencies = [
+    "athena-os @ file:../athena-os",
+    "athena-common @ file:../athena-common",
+    "athena-core @ file:../athena-core",
+    "athena-domain @ file:../athena-domain",
+    "athena-data @ file:../athena-data",
+    "athena-indicators @ file:../athena-indicators",
+    "athena-patterns @ file:../athena-patterns",
+    "athena-strategies @ file:../athena-strategies",
+    "athena-risk @ file:../athena-risk",
+    "athena-portfolio @ file:../athena-portfolio",
+    "athena-execution @ file:../athena-execution",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.4",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/athena_platform"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"
+
+[project.scripts]
+athena-platform = "athena_platform.bootstrap:main"

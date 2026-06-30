@@ -6,6 +6,7 @@ from pathlib import Path
 
 from pydantic import BaseModel, Field
 
+from athena_common.timeframe import TimeFrame
 from athena_core.application.backtest_config import BacktestSettings, ExperimentTrackingConfig
 from athena_core.application.explainability_config import ExplainabilityConfig
 from athena_core.application.ml_scorer_config import MLScorerConfig
@@ -33,7 +34,7 @@ class DataIngestConfig(BaseModel):
     source: str = "yfinance"
     base_path: Path = Field(default=Path("./data/ohlcv"))
     symbol_suffix: str = ".NS"
-    bar_frequency: str = "1d"
+    bar_frequency: str = TimeFrame.D1.value
     max_attempts: int = 3
     backoff_seconds: float = 2.0
     schema_columns: list[str] = Field(

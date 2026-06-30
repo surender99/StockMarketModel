@@ -9,15 +9,43 @@ from pathlib import Path
 
 ATHENA_ROOT = Path(__file__).resolve().parents[1]
 
+_BOUNDED = {
+    "athena-data",
+    "athena-indicators",
+    "athena-patterns",
+    "athena-strategies",
+    "athena-risk",
+    "athena-portfolio",
+    "athena-execution",
+}
+
+_FOUNDATION = {
+    "athena-common": set(),
+    "athena-os": set(),
+    "athena-domain": {"athena-common", "athena-os"},
+    "athena-core": {"athena-os", "athena-common"},
+}
+
+_BOUNDED_ALLOWED = {"athena-os", "athena-common", "athena-core"}
+
 # package_name -> allowed athena-* dependency package names
 ALLOWED: dict[str, set[str]] = {
-    "athena-os": set(),
-    "athena-core": {"athena-os"},
+    **_FOUNDATION,
+    **{pkg: _BOUNDED_ALLOWED for pkg in _BOUNDED},
+    "athena-math": {"athena-os", "athena-common", "athena-core"},
+    "athena-research": {"athena-os", "athena-common", "athena-core"},
+    "athena-platform": {
+        "athena-os",
+        "athena-common",
+        "athena-core",
+        "athena-domain",
+        *_BOUNDED,
+    },
     "athena-sdk": {"athena-os", "athena-core"},
-    "athena-cli": {"athena-os", "athena-core", "athena-sdk", "athena-ai"},  # ai: research assistant commands
+    "athena-cli": {"athena-os", "athena-core", "athena-sdk", "athena-ai"},
     "athena-ai": {"athena-os", "athena-core", "athena-sdk"},
     "athena-dashboard": {"athena-os", "athena-core", "athena-sdk"},
-    "athena-testing": {"athena-os", "athena-core"},
+    "athena-testing": {"athena-os", "athena-core", "athena-common"},
 }
 
 ATHENA_PKG_PATTERN = re.compile(r"^athena[-_]")
@@ -67,8 +95,7 @@ def check_package(package_dir: Path) -> list[str]:
 
 def main() -> int:
     all_errors: list[str] = []
-    for pkg in sorted(ALLOWED):
-        pkg_dir = ATHENA_ROOT / pkg
+    for pkg_dir in sorted(ATHENA_ROOT.glob("athena-*")):
         if pkg_dir.is_dir():
             all_errors.extend(check_package(pkg_dir))
     if all_errors:

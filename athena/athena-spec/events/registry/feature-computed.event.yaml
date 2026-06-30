@@ -1,0 +1,10 @@
+name: FeatureComputed
+publisher: FeaturePipeline
+consumers: [Strategy, Research]
+version: 1
+compatibility: additive
+description: Feature vector computed for a symbol
+payload:
+  symbol: string
+  feature_set_id: string
+  row_count: integer

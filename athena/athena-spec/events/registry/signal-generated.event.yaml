@@ -1,0 +1,11 @@
+name: SignalGenerated
+publisher: Strategy
+consumers: [Backtest, PaperTrading]
+version: 1
+compatibility: additive
+description: Trade signal emitted by strategy engine
+payload:
+  strategy_id: string
+  symbol: string
+  direction: string
+  strength: float

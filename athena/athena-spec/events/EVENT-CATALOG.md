@@ -1,6 +1,7 @@
 # Event Catalog — Master Index
 
 > **Updated:** 2026-06-30  
+> **YAML sources:** [registry/](registry/) — run `make codegen` to regenerate Python event classes  
 > **Infrastructure bus:** `athena_os.event_bus.EventBus`  
 > **Domain buses:** simulation, research (see below)
 

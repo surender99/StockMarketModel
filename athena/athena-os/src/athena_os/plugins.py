@@ -43,6 +43,28 @@ class Plugin:
     lifecycle: PluginLifecycle = PluginLifecycle.REGISTERED
 
 
+@dataclass(frozen=True)
+class PluginManifest:
+    """Marketplace-ready plugin descriptor — see ATHENA/Plugins/MARKETPLACE.md."""
+
+    id: str
+    version: str
+    plugin_type: PluginType
+    metadata: PluginMetadata
+    entry_point: str = ""
+    dependencies: tuple[str, ...] = ()
+    marketplace_url: str = ""
+
+    def to_plugin(self, execute: Callable[..., Any] | None = None) -> Plugin:
+        return Plugin(
+            id=self.id,
+            version=self.version,
+            plugin_type=self.plugin_type,
+            metadata=self.metadata,
+            execute=execute,
+        )
+
+
 class PluginRegistry:
     """In-memory plugin registry with lifecycle management."""
 

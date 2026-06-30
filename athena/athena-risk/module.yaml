@@ -1,0 +1,12 @@
+name: athena-risk
+version: "0.1.0"
+layer: domain
+description: Risk analytics bounded context
+dependencies:
+  - athena-os
+  - athena-common
+  - athena-core
+publishes_events: []
+consumes_events: []
+public_apis:
+  - athena_risk

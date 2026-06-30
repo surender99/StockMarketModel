@@ -6,12 +6,21 @@
 ## Layer Model
 
 ```
+athena-common                ← pure domain types (no infra)
 athena-os                    ← infrastructure only (no domain deps)
     ↑
-athena-core                  ← domain + application (depends on athena-os)
+athena-domain                ← Protocol contracts
+athena-core                  ← domain + application (depends on athena-os, athena-common)
+    ↑
+{ athena-data, athena-indicators, athena-patterns, athena-strategies,
+  athena-risk, athena-portfolio, athena-execution }   ← facade bounded contexts
+    ↑
+athena-platform              ← production assembly
     ↑
 { athena-ai, athena-dashboard, athena-sdk, athena-cli }   ← interface adapters
 ```
+
+See [ADR-0006](../adrs/ADR-0006-bounded-contexts.md) for facade extraction strategy.
 
 ## Rules
 
