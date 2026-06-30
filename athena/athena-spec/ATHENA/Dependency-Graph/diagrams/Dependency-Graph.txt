@@ -1,0 +1,19 @@
+AthenaOS
+  |
+Core
+  |
+Data
+  |
+Indicators
+  |
+Patterns
+  |
+Strategies
+  |
+Simulation
+  |
+Portfolio
+  |
+Paper
+  |
+Production

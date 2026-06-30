@@ -457,13 +457,165 @@ def integrate_ath000() -> list[str]:
     return integrated
 
 
+def _extract_zip_inner(zip_name: str, label: str) -> Path:
+    zpath = REFERENCES / zip_name
+    if not zpath.exists():
+        raise FileNotFoundError(f"Missing References/{zip_name}")
+    tmp = REPO / ".tmp-extract" / label
+    if tmp.exists():
+        shutil.rmtree(tmp)
+    tmp.mkdir(parents=True)
+    with zipfile.ZipFile(zpath) as zf:
+        zf.extractall(tmp)
+    return next(tmp.iterdir())
+
+
+def _stamp_source(root: Path, zip_name: str) -> None:
+    readme = root / "00-README.md"
+    if readme.exists():
+        content = readme.read_text(encoding="utf-8")
+        if f"References/{zip_name}" not in content:
+            readme.write_text(
+                f"> **Source:** `References/{zip_name}`\n\n{content}",
+                encoding="utf-8",
+            )
+
+
+def _copy_tree_merge(src: Path, dest: Path, *, preserve: set[str] | None = None) -> None:
+    preserve = preserve or set()
+    dest.mkdir(parents=True, exist_ok=True)
+    for item in src.rglob("*"):
+        rel = item.relative_to(src)
+        if rel.parts and rel.parts[0] in preserve:
+            continue
+        target = dest / rel
+        if item.is_dir():
+            target.mkdir(parents=True, exist_ok=True)
+        else:
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(item, target)
+
+
+def integrate_ath001_batch() -> list[str]:
+    """Copy ATH-001–005 and ATH-IP-Starter-Pack zips into athena-spec."""
+    integrated: list[str] = []
+
+    # ATH-001 AthenaOS runtime spec (distinct from ATH-001-Vision-PRD.md)
+    zip_name = "ATH-001-AthenaOS.zip"
+    inner = _extract_zip_inner(zip_name, "ATH-001")
+    dest = SPEC / "ATHENA" / "AthenaOS"
+    if dest.exists():
+        shutil.rmtree(dest)
+    shutil.copytree(inner, dest)
+    _stamp_source(dest, zip_name)
+    integrated.append(zip_name)
+
+    # ATH-002 Dependency Graph
+    zip_name = "ATH-002-Dependency-Graph.zip"
+    inner = _extract_zip_inner(zip_name, "ATH-002")
+    dest = SPEC / "ATHENA" / "Dependency-Graph"
+    if dest.exists():
+        shutil.rmtree(dest)
+    shutil.copytree(inner, dest)
+    _stamp_source(dest, zip_name)
+    integrated.append(zip_name)
+
+    # ATH-003 Event catalog standards (preserve implementation-aware EVENT-CATALOG.md)
+    zip_name = "ATH-003-Master-Event-Catalog.zip"
+    inner = _extract_zip_inner(zip_name, "ATH-003")
+    events_root = SPEC / "events"
+    _copy_tree_merge(inner, events_root, preserve=set())
+    _stamp_source(events_root, zip_name)
+    integrated.append(zip_name)
+
+    # ATH-004 Interface catalog standards (preserve INTERFACE-CATALOG.md)
+    zip_name = "ATH-004-Master-Interface-Catalog.zip"
+    inner = _extract_zip_inner(zip_name, "ATH-004")
+    iface_root = SPEC / "interfaces"
+    _copy_tree_merge(inner, iface_root, preserve=set())
+    _stamp_source(iface_root, zip_name)
+    integrated.append(zip_name)
+
+    # ATH-005 Database catalog
+    zip_name = "ATH-005-Master-Database-Catalog.zip"
+    inner = _extract_zip_inner(zip_name, "ATH-005")
+    dest = SPEC / "database"
+    if dest.exists():
+        shutil.rmtree(dest)
+    shutil.copytree(inner, dest)
+    _stamp_source(dest, zip_name)
+    integrated.append(zip_name)
+
+    # ATH-IP Starter Pack
+    zip_name = "ATH-IP-Starter-Pack.zip"
+    inner = _extract_zip_inner(zip_name, "ATH-IP")
+    dest = SPEC / "implementation-packages" / "ATH-IP-Starter-Pack"
+    if dest.exists():
+        shutil.rmtree(dest)
+    shutil.copytree(inner, dest)
+    readme = dest / "README.md"
+    if readme.exists() and f"References/{zip_name}" not in readme.read_text(encoding="utf-8"):
+        readme.write_text(
+            f"> **Source:** `References/{zip_name}`\n\n"
+            + readme.read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
+    integrated.append(zip_name)
+
+    # Master index for ATH-001–005 + IP pack
+    master = SPEC / "ATH-001-SERIES-INDEX.md"
+    master.write_text(
+        "# ATH-001 Series — Platform Reference Packages\n\n"
+        "> **Source:** `References/ATH-001*.zip` … `ATH-005*.zip`, `ATH-IP-Starter-Pack.zip` "
+        "(read-only; integrated 2026-06-30 batch 2)\n\n"
+        "| Package | Title | Path |\n|---------|-------|------|\n"
+        "| **ATH-001** | AthenaOS Runtime | [ATHENA/AthenaOS/](ATHENA/AthenaOS/00-README.md) |\n"
+        "| **ATH-002** | Dependency Graph | [ATHENA/Dependency-Graph/](ATHENA/Dependency-Graph/00-README.md) |\n"
+        "| **ATH-003** | Master Event Catalog | [events/](events/00-README.md) |\n"
+        "| **ATH-004** | Master Interface Catalog | [interfaces/](interfaces/00-README.md) |\n"
+        "| **ATH-005** | Master Database Catalog | [database/](database/00-README.md) |\n"
+        "| **ATH-IP** | Implementation Starter Pack | "
+        "[implementation-packages/ATH-IP-Starter-Pack/](implementation-packages/ATH-IP-Starter-Pack/README.md) |\n\n"
+        "> **Note:** [ATH-001-Vision-PRD.md](ATH-001-Vision-PRD.md) is the product vision document; "
+        "ATH-001 AthenaOS is the runtime/infrastructure specification.\n",
+        encoding="utf-8",
+    )
+
+    complete = SPEC / "ATH-001-SERIES-COMPLETE.md"
+    complete.write_text(
+        "# ATH-001 Series — Integration Complete\n\n"
+        "**Date:** 2026-06-30  \n"
+        "**Batch:** References second batch (post e999722)\n\n"
+        "## Integrated Packages\n\n"
+        "| Zip | Destination | Files |\n|-----|-------------|-------|\n"
+        "| ATH-001-AthenaOS.zip | ATHENA/AthenaOS/ | Runtime architecture, module model, extension points |\n"
+        "| ATH-002-Dependency-Graph.zip | ATHENA/Dependency-Graph/ | Layering, matrix, build integration |\n"
+        "| ATH-003-Master-Event-Catalog.zip | events/ | Standards + Master-Event-Catalog + examples |\n"
+        "| ATH-004-Master-Interface-Catalog.zip | interfaces/ | Standards + Master-Interface-Catalog + DTO guidelines |\n"
+        "| ATH-005-Master-Database-Catalog.zip | database/ | Schema catalog, migrations, audit standards |\n"
+        "| ATH-IP-Starter-Pack.zip | implementation-packages/ | IP-000001–000003 starter packages |\n\n"
+        "## Preserved Implementation Catalogs\n\n"
+        "- [events/EVENT-CATALOG.md](events/EVENT-CATALOG.md) — 20 wired events (athena-os + domain buses)\n"
+        "- [interfaces/INTERFACE-CATALOG.md](interfaces/INTERFACE-CATALOG.md) — 23 public interfaces\n\n"
+        "## Code Wiring\n\n"
+        "- `athena-os` — [ADR-0005](adrs/ADR-0005-athena-os.md)\n"
+        "- Dependency enforcement — [ATHENA/DEPENDENCY-RULES.md](ATHENA/DEPENDENCY-RULES.md), "
+        "`athena/scripts/check_dependencies.py`\n\n"
+        "**Status: COMPLETE** (spec integration)\n",
+        encoding="utf-8",
+    )
+    return integrated
+
+
 def main() -> None:
     totals: dict[int, int] = {}
     for cfg in PHASES:
         totals[cfg.phase] = integrate_phase(cfg)
     ath = integrate_ath000()
+    ath1 = integrate_ath001_batch()
     print("PHASE APS totals:", totals)
     print("ATH-000 integrated:", ath)
+    print("ATH-001 series integrated:", ath1)
     print("Grand total APS:", sum(totals.values()))
 
 

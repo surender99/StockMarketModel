@@ -1,7 +1,8 @@
 # Event Catalog
 
 > **Purpose:** Canonical registry of domain and infrastructure events across Athena packages.  
-> **Schema:** Each event spec documents name, publisher, subscribers, payload, version, and compatibility.
+> **Schema:** Each event spec documents name, publisher, subscribers, payload, version, and compatibility.  
+> **Reference package:** [ATH-003 Master Event Catalog](00-README.md) (integrated from `References/ATH-003-Master-Event-Catalog.zip`)
 
 ## Event Spec Schema
 
@@ -19,7 +20,12 @@
 ```
 athena-spec/events/
   README.md              ← this file
-  EVENT-CATALOG.md       ← master index
+  00-README.md           ← ATH-003 reference package index
+  EVENT-CATALOG.md       ← implementation-aware master index (20 events)
+  catalog/               ← domain-level Master-Event-Catalog.md
+  01-Event-Naming.md …   ← ATH-003 governance standards
+  examples/              ← sample event payloads
+  templates/             ← Event-Specification-Template.md
   EVT-*.md               ← individual event specs (optional detail files)
 ```
 

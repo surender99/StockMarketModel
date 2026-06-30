@@ -37,6 +37,12 @@ This index tracks integration of the Athena References package series and Releas
 | **ATH-000B** | Engineering Standards (extended) | Coding, naming, testing, DoD, AI agent rules | ✅ Complete |
 | **ATH-000C** | Contracts, Events & APIs | Interface/DTO/event/API standards, templates | ✅ Complete |
 | **ATH-000D** | AI Governance & Quality | AI coding, reviews, quality gates, release governance | ✅ Complete |
+| **ATH-001** | AthenaOS Runtime | Module model, service lifecycle, extension points | ✅ Complete |
+| **ATH-002** | Dependency Graph | Layering policy, dependency matrix, build integration | ✅ Complete |
+| **ATH-003** | Master Event Catalog | Event naming, versioning, governance standards | ✅ Complete |
+| **ATH-004** | Master Interface Catalog | Interface principles, DTO ownership, compatibility | ✅ Complete |
+| **ATH-005** | Master Database Catalog | Schema catalog, migrations, audit standards | ✅ Complete |
+| **ATH-IP** | Implementation Starter Pack | EventBus, WorkflowEngine, PluginRegistry IPs | ✅ Complete |
 | **PHASE 10** | Machine Learning Platform (MLP) | 148 APS — training, registry, drift, prediction | ✅ Complete |
 | **PHASE 11** | Autonomous Quant Intelligence (AQIP) | 110 APS — multi-agent research orchestration | ✅ Complete |
 | **PHASE 12** | Visualization & UX (VDSUX) | 106 APS — dashboards, charts, decision support | ✅ Complete |
@@ -91,6 +97,12 @@ This index tracks integration of the Athena References package series and Releas
 | ATH-000B | [engineering-standards/ATH-000B/](engineering-standards/ATH-000B/00-README.md) | [ATH-000-SERIES-INDEX.md](ATH-000-SERIES-INDEX.md) |
 | ATH-000C | [ATHENA/Contracts-Standards/](ATHENA/Contracts-Standards/00-README.md) | [ATH-000-SERIES-INDEX.md](ATH-000-SERIES-INDEX.md) |
 | ATH-000D | [governance/ATH-000D/](governance/ATH-000D/00-README.md) | [ATH-000-SERIES-INDEX.md](ATH-000-SERIES-INDEX.md) |
+| ATH-001 | [ATHENA/AthenaOS/](ATHENA/AthenaOS/00-README.md) | [ATH-001-SERIES-INDEX.md](ATH-001-SERIES-INDEX.md) |
+| ATH-002 | [ATHENA/Dependency-Graph/](ATHENA/Dependency-Graph/00-README.md) | [ATH-001-SERIES-INDEX.md](ATH-001-SERIES-INDEX.md) |
+| ATH-003 | [events/](events/00-README.md) | [ATH-001-SERIES-INDEX.md](ATH-001-SERIES-INDEX.md) |
+| ATH-004 | [interfaces/](interfaces/00-README.md) | [ATH-001-SERIES-INDEX.md](ATH-001-SERIES-INDEX.md) |
+| ATH-005 | [database/](database/00-README.md) | [ATH-001-SERIES-INDEX.md](ATH-001-SERIES-INDEX.md) |
+| ATH-IP | [implementation-packages/ATH-IP-Starter-Pack/](implementation-packages/ATH-IP-Starter-Pack/README.md) | [ATH-001-SERIES-COMPLETE.md](ATH-001-SERIES-COMPLETE.md) |
 | PHASE 10 | [ATHENA/APS/Machine-Learning/](ATHENA/APS/Machine-Learning/README.md) | [PHASE-10-MLP-COMPLETE.md](PHASE-10-MLP-COMPLETE.md) |
 | PHASE 11 | [ATHENA/APS/Autonomous-Intelligence/](ATHENA/APS/Autonomous-Intelligence/README.md) | [PHASE-11-AQIP-COMPLETE.md](PHASE-11-AQIP-COMPLETE.md) |
 | PHASE 12 | [ATHENA/APS/Visualization-UX/](ATHENA/APS/Visualization-UX/README.md) | [PHASE-12-VDSUX-COMPLETE.md](PHASE-12-VDSUX-COMPLETE.md) |
@@ -129,10 +141,14 @@ This index tracks integration of the Athena References package series and Releas
 
 | Package | Path | ADR | Status |
 |---------|------|-----|--------|
+| **ATH-001 AthenaOS** | [ATHENA/AthenaOS/](ATHENA/AthenaOS/00-README.md) | [ADR-0005](adrs/ADR-0005-athena-os.md) | ✅ Spec + MVP code |
+| **ATH-002 Dependency Graph** | [ATHENA/Dependency-Graph/](ATHENA/Dependency-Graph/00-README.md) | — | ✅ Spec integrated |
+| **ATH-003 Event Catalog** | [events/](events/00-README.md) | — | ✅ Standards + 20 wired events |
+| **ATH-004 Interface Catalog** | [interfaces/](interfaces/00-README.md) | — | ✅ Standards + 23 interfaces |
+| **ATH-005 Database Catalog** | [database/](database/00-README.md) | — | ✅ Spec integrated |
+| **ATH-IP Starter Pack** | [implementation-packages/](implementation-packages/ATH-IP-Starter-Pack/README.md) | — | ✅ 3 starter IPs |
 | **athena-os** | `athena/athena-os/` | [ADR-0005](adrs/ADR-0005-athena-os.md) | ✅ MVP — infrastructure layer |
 | **athena-testing** | `athena/athena-testing/` | — | ✅ MVP — golden datasets, benchmarks |
-| **Event catalog** | `athena-spec/events/` | — | ✅ 20 events documented |
-| **Interface catalog** | `athena-spec/interfaces/` | — | ✅ 23 interfaces documented |
 | **APS traceability** | `ATHENA/APS/TRACEABILITY-INDEX.md` | [ATH-005](ATH-005-DOCUMENTATION-STANDARD.md) | ✅ Template + 12 sample APS |
 
 ---

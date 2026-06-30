@@ -111,7 +111,20 @@ All **References planning packages (REL-000 … REL-020)**, **References product
 
 ---
 
-## New References Integrated (2026-06-30)
+## New References Integrated (2026-06-30 batch 2)
+
+| File | Type | Action |
+|------|------|--------|
+| `ATH-001-AthenaOS.zip` | Runtime architecture | Integrated → `ATHENA/AthenaOS/` |
+| `ATH-002-Dependency-Graph.zip` | Dependency graph | Integrated → `ATHENA/Dependency-Graph/` |
+| `ATH-003-Master-Event-Catalog.zip` | Event standards | Integrated → `events/` (standards + catalog; preserves EVENT-CATALOG.md) |
+| `ATH-004-Master-Interface-Catalog.zip` | Interface standards | Integrated → `interfaces/` (standards + catalog; preserves INTERFACE-CATALOG.md) |
+| `ATH-005-Master-Database-Catalog.zip` | Database catalog | Integrated → `database/` |
+| `ATH-IP-Starter-Pack.zip` | Implementation packages | Integrated → `implementation-packages/ATH-IP-Starter-Pack/` |
+
+**Index:** [ATH-001-SERIES-INDEX.md](../ATH-001-SERIES-INDEX.md) · **Sign-off:** [ATH-001-SERIES-COMPLETE.md](../ATH-001-SERIES-COMPLETE.md)
+
+## New References Integrated (2026-06-30 batch 1)
 
 | File | Type | Action |
 |------|------|--------|

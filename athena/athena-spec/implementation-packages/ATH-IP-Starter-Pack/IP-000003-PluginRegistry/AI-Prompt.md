@@ -1,0 +1,1 @@
+Implement IP-000003-PluginRegistry according to ATH-000 and ATH-001. Do not modify public interfaces. Include tests, documentation and production-ready code.

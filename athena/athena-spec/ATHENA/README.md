@@ -64,10 +64,16 @@ See [DEPENDENCY-RULES.md](DEPENDENCY-RULES.md) and [ADR-0005](../adrs/ADR-0005-a
 15. [APS/Enterprise-Trading/](APS/Enterprise-Trading/README.md) — Phase 14 ETOP APS (102 specs)
 16. [APS/Enterprise-Governance/](APS/Enterprise-Governance/README.md) — Phase 15 EGPCI APS (91 specs)
 17. [Architecture/](Architecture/00-README.md) — ATH-000A core architecture reference
-18. [Contracts-Standards/](Contracts-Standards/00-README.md) — ATH-000C contracts/events/API standards
-19. [APS/](APS/README.md) — domain implementation specs (Backtesting, Portfolio, …)
-20. [ADR/](ADR/README.md) — accepted architecture decisions
-21. [Golden-Datasets/](Golden-Datasets/README.md) — reproducible test inputs
+18. [AthenaOS/](AthenaOS/00-README.md) — ATH-001 runtime/infrastructure specification
+19. [Dependency-Graph/](Dependency-Graph/00-README.md) — ATH-002 module dependency graph
+20. [Contracts-Standards/](Contracts-Standards/00-README.md) — ATH-000C contracts/events/API standards
+21. [../events/](../events/README.md) — ATH-003 event catalog + standards
+22. [../interfaces/](../interfaces/README.md) — ATH-004 interface catalog + standards
+23. [../database/](../database/00-README.md) — ATH-005 database catalog
+24. [../implementation-packages/](../implementation-packages/ATH-IP-Starter-Pack/README.md) — ATH-IP starter IPs
+25. [APS/](APS/README.md) — domain implementation specs (Backtesting, Portfolio, …)
+26. [ADR/](ADR/README.md) — accepted architecture decisions
+27. [Golden-Datasets/](Golden-Datasets/README.md) — reproducible test inputs
 
 ## Relationship to Legacy Paths
 
@@ -114,4 +120,6 @@ Existing documents under `athena-spec/` remain authoritative. This tree adds **i
 
 **ATH-000 series:** [ATH-000-SERIES-INDEX.md](../ATH-000-SERIES-INDEX.md)
 
-**Source documents:** `References/PHASE1 -ATHENA FOUNDATION APS.docx` through `References/PHASE15 - Enterprise Governance...docx` and `References/ATH-000*.zip` (not committed; content captured in spec).
+**ATH-001 series:** [ATH-001-SERIES-INDEX.md](../ATH-001-SERIES-INDEX.md)
+
+**Source documents:** `References/PHASE1 -ATHENA FOUNDATION APS.docx` through `References/PHASE15 - Enterprise Governance...docx`, `References/ATH-000*.zip`, and `References/ATH-001*.zip` … `ATH-005*.zip`, `ATH-IP-Starter-Pack.zip` (not committed; content captured in spec).
