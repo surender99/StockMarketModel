@@ -2,20 +2,22 @@
 
 > **APS ID:** APS-IND-MFI-001  
 > **Requirement ID:** REQ-APS-IND-MFI-001  
-> **Maps to:** REQ-IND-MFI-001  
+> **Maps to:** REQ-IND-IND-MFI-001  
 > **Phase:** 3 — Indicators  
 > **Domain:** Volume Indicators  
-> **Source:** `References/ATH-REL-004-Indicator-Framework.zip (inferred PHASE-3)`  
+> **Source:** `References/PHASE 3 Architecture.docx`  
 > **Implementation status:** MVP
 
 ## Objective
 
-Money Flow Index for the Athena indicators (volume indicators domain).
+Money Flow Index for the Athena indicators platform (volume indicators domain).
 
 ## Responsibilities
 
-- Volume-weighted RSI
-- Configurable period
+- Money Flow Index computation
+- Configurable parameters
+- OHLCV input contract
+- NaN/warmup policy
 
 ## Code Wiring (`athena-core`)
 
@@ -30,17 +32,17 @@ Money Flow Index for the Athena indicators (volume indicators domain).
 ## Acceptance Criteria
 
 - [ ] APS-IND-MFI-001 responsibilities covered by wired `athena-core` modules
-- [ ] Maps to REQ-IND-MFI-001 where applicable
+- [ ] Maps to REQ-IND-IND-MFI-001 where applicable
 - [ ] Unit tests pass for implemented behavior
 
 ## Unit Tests
 
-`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`
+`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`, `tests/test_indicator_architecture.py`
 
 ## Future Enhancements
 
-- Full coverage of all responsibilities listed in source release package
-- Extract to dedicated packages when surface area grows
+- Full coverage per Indicator Specification Standard (formula, validation, benchmarks)
+- Layered architecture: formulas / execution / adapters separation per CTO recommendation
 
 ---
 

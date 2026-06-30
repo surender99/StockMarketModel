@@ -2,25 +2,35 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://athena.local/schemas/indicator-metadata.json",
   "title": "IndicatorMetadata",
-  "description": "APS-IND-REGISTRY-001 indicator catalog entry metadata",
+  "description": "APS-IND-REGISTRY-001 / APS-IND-METADATA-001 indicator catalog entry metadata",
   "type": "object",
   "required": ["plugin_id", "aps_id", "name", "category", "status"],
   "properties": {
     "plugin_id": { "type": "string", "minLength": 1 },
-    "aps_id": { "type": "string", "pattern": "^APS-IND-" },
+    "aps_id": { "type": "string", "pattern": "^APS-(IND|PRICE|VALIDATE)-" },
     "name": { "type": "string" },
     "category": {
       "type": "string",
       "enum": [
+        "Price-Transformations",
         "Moving-Averages",
         "Trend-Indicators",
         "Momentum-Indicators",
         "Volume-Indicators",
         "Volatility-Indicators",
-        "Oscillators"
+        "Oscillators",
+        "Market-Breadth",
+        "Cycle-Indicators",
+        "Composite-Indicators"
       ]
     },
-    "status": { "type": "string", "enum": ["MVP", "Partial", "Deferred"] }
+    "status": { "type": "string", "enum": ["MVP", "Partial", "Deferred"] },
+    "description": { "type": "string" },
+    "formula": { "type": "string" },
+    "complexity_time": { "type": "string", "enum": ["O(n)", "O(n·p)", "O(n·log n)"] },
+    "complexity_space": { "type": "string", "enum": ["O(n)", "O(n·p)", "O(n·log n)"] },
+    "references": { "type": "array", "items": { "type": "string" } },
+    "author": { "type": "string" }
   },
   "additionalProperties": false
 }

@@ -2,20 +2,22 @@
 
 > **APS ID:** APS-IND-WMA-001  
 > **Requirement ID:** REQ-APS-IND-WMA-001  
-> **Maps to:** REQ-IND-WMA-001  
+> **Maps to:** REQ-IND-IND-WMA-001  
 > **Phase:** 3 — Indicators  
 > **Domain:** Moving Averages  
-> **Source:** `References/ATH-REL-004-Indicator-Framework.zip (inferred PHASE-3)`  
+> **Source:** `References/PHASE 3 Architecture.docx`  
 > **Implementation status:** MVP
 
 ## Objective
 
-Weighted Moving Average for the Athena indicators (moving averages domain).
+Weighted Moving Average for the Athena indicators platform (moving averages domain).
 
 ## Responsibilities
 
-- Linear weights
-- Configurable period
+- Weighted Moving Average computation
+- Configurable parameters
+- OHLCV input contract
+- NaN/warmup policy
 
 ## Code Wiring (`athena-core`)
 
@@ -30,17 +32,17 @@ Weighted Moving Average for the Athena indicators (moving averages domain).
 ## Acceptance Criteria
 
 - [ ] APS-IND-WMA-001 responsibilities covered by wired `athena-core` modules
-- [ ] Maps to REQ-IND-WMA-001 where applicable
+- [ ] Maps to REQ-IND-IND-WMA-001 where applicable
 - [ ] Unit tests pass for implemented behavior
 
 ## Unit Tests
 
-`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`
+`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`, `tests/test_indicator_architecture.py`
 
 ## Future Enhancements
 
-- Full coverage of all responsibilities listed in source release package
-- Extract to dedicated packages when surface area grows
+- Full coverage per Indicator Specification Standard (formula, validation, benchmarks)
+- Layered architecture: formulas / execution / adapters separation per CTO recommendation
 
 ---
 

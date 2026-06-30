@@ -2,21 +2,22 @@
 
 > **APS ID:** APS-IND-ADX-001  
 > **Requirement ID:** REQ-APS-IND-ADX-001  
-> **Maps to:** REQ-IND-ADX-001  
+> **Maps to:** REQ-IND-IND-ADX-001  
 > **Phase:** 3 — Indicators  
 > **Domain:** Trend Indicators  
-> **Source:** `References/ATH-REL-004-Indicator-Framework.zip (inferred PHASE-3)`  
+> **Source:** `References/PHASE 3 Architecture.docx`  
 > **Implementation status:** MVP
 
 ## Objective
 
-Average Directional Index for the Athena indicators (trend indicators domain).
+Average Directional Index for the Athena indicators platform (trend indicators domain).
 
 ## Responsibilities
 
-- Trend strength
-- +DI/-DI
-- Configurable period
+- Average Directional Index computation
+- Configurable parameters
+- OHLCV input contract
+- NaN/warmup policy
 
 ## Code Wiring (`athena-core`)
 
@@ -31,17 +32,17 @@ Average Directional Index for the Athena indicators (trend indicators domain).
 ## Acceptance Criteria
 
 - [ ] APS-IND-ADX-001 responsibilities covered by wired `athena-core` modules
-- [ ] Maps to REQ-IND-ADX-001 where applicable
+- [ ] Maps to REQ-IND-IND-ADX-001 where applicable
 - [ ] Unit tests pass for implemented behavior
 
 ## Unit Tests
 
-`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`
+`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`, `tests/test_indicator_architecture.py`
 
 ## Future Enhancements
 
-- Full coverage of all responsibilities listed in source release package
-- Extract to dedicated packages when surface area grows
+- Full coverage per Indicator Specification Standard (formula, validation, benchmarks)
+- Layered architecture: formulas / execution / adapters separation per CTO recommendation
 
 ---
 

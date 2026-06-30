@@ -2,20 +2,22 @@
 
 > **APS ID:** APS-IND-ROC-001  
 > **Requirement ID:** REQ-APS-IND-ROC-001  
-> **Maps to:** REQ-IND-ROC-001  
+> **Maps to:** REQ-IND-IND-ROC-001  
 > **Phase:** 3 — Indicators  
 > **Domain:** Momentum Indicators  
-> **Source:** `References/ATH-REL-004-Indicator-Framework.zip (inferred PHASE-3)`  
+> **Source:** `References/PHASE 3 Architecture.docx`  
 > **Implementation status:** MVP
 
 ## Objective
 
-Rate of Change for the Athena indicators (momentum indicators domain).
+Rate of Change for the Athena indicators platform (momentum indicators domain).
 
 ## Responsibilities
 
-- Momentum percent change
-- Configurable period
+- Rate of Change computation
+- Configurable parameters
+- OHLCV input contract
+- NaN/warmup policy
 
 ## Code Wiring (`athena-core`)
 
@@ -30,17 +32,17 @@ Rate of Change for the Athena indicators (momentum indicators domain).
 ## Acceptance Criteria
 
 - [ ] APS-IND-ROC-001 responsibilities covered by wired `athena-core` modules
-- [ ] Maps to REQ-IND-ROC-001 where applicable
+- [ ] Maps to REQ-IND-IND-ROC-001 where applicable
 - [ ] Unit tests pass for implemented behavior
 
 ## Unit Tests
 
-`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`
+`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`, `tests/test_indicator_architecture.py`
 
 ## Future Enhancements
 
-- Full coverage of all responsibilities listed in source release package
-- Extract to dedicated packages when surface area grows
+- Full coverage per Indicator Specification Standard (formula, validation, benchmarks)
+- Layered architecture: formulas / execution / adapters separation per CTO recommendation
 
 ---
 

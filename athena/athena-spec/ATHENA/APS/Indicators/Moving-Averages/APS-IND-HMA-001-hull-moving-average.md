@@ -2,20 +2,22 @@
 
 > **APS ID:** APS-IND-HMA-001  
 > **Requirement ID:** REQ-APS-IND-HMA-001  
-> **Maps to:** REQ-IND-HMA-001  
+> **Maps to:** REQ-IND-IND-HMA-001  
 > **Phase:** 3 — Indicators  
 > **Domain:** Moving Averages  
-> **Source:** `References/ATH-REL-004-Indicator-Framework.zip (inferred PHASE-3)`  
+> **Source:** `References/PHASE 3 Architecture.docx`  
 > **Implementation status:** Deferred
 
 ## Objective
 
-Hull Moving Average for the Athena indicators (moving averages domain).
+Hull Moving Average for the Athena indicators platform (moving averages domain).
 
 ## Responsibilities
 
-- Hull smoothing
-- Low-lag trend
+- Hull Moving Average computation
+- Configurable parameters
+- OHLCV input contract
+- NaN/warmup policy
 
 ## Code Wiring (`athena-core`)
 
@@ -31,16 +33,16 @@ Hull Moving Average for the Athena indicators (moving averages domain).
 
 - [ ] APS-IND-HMA-001 spec published with REQ ID
 - [ ] Deferred — no silent stub in production path
-- [ ] Future implementation traces to REQ-IND-HMA-001
+- [ ] Future implementation traces to REQ-IND-IND-HMA-001
 
 ## Unit Tests
 
-`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`
+`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`, `tests/test_indicator_architecture.py`
 
 ## Future Enhancements
 
-- Full coverage of all responsibilities listed in source release package
-- Extract to dedicated packages when surface area grows
+- Full coverage per Indicator Specification Standard (formula, validation, benchmarks)
+- Layered architecture: formulas / execution / adapters separation per CTO recommendation
 
 ---
 

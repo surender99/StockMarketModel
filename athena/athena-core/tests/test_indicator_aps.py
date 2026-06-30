@@ -29,7 +29,7 @@ def _ohlcv(n: int = 500) -> pd.DataFrame:
 def test_indicator_catalog_maps_mvp_plugins() -> None:
     """APS-IND-REGISTRY-001 — catalog covers all MVP builtin indicators."""
     mvp = list_mvp_indicators()
-    assert len(mvp) == 15
+    assert len(mvp) == 19
     assert lookup_indicator_aps("ema") is not None
     assert lookup_indicator_aps("ema").aps_id == "APS-IND-EMA-001"
 

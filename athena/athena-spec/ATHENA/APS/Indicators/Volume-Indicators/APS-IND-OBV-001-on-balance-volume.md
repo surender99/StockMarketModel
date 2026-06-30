@@ -2,20 +2,22 @@
 
 > **APS ID:** APS-IND-OBV-001  
 > **Requirement ID:** REQ-APS-IND-OBV-001  
-> **Maps to:** REQ-IND-OBV-001  
+> **Maps to:** REQ-IND-IND-OBV-001  
 > **Phase:** 3 — Indicators  
 > **Domain:** Volume Indicators  
-> **Source:** `References/ATH-REL-004-Indicator-Framework.zip (inferred PHASE-3)`  
+> **Source:** `References/PHASE 3 Architecture.docx`  
 > **Implementation status:** MVP
 
 ## Objective
 
-On-Balance Volume for the Athena indicators (volume indicators domain).
+On-Balance Volume for the Athena indicators platform (volume indicators domain).
 
 ## Responsibilities
 
-- Cumulative volume flow
-- Close direction
+- On-Balance Volume computation
+- Configurable parameters
+- OHLCV input contract
+- NaN/warmup policy
 
 ## Code Wiring (`athena-core`)
 
@@ -30,17 +32,17 @@ On-Balance Volume for the Athena indicators (volume indicators domain).
 ## Acceptance Criteria
 
 - [ ] APS-IND-OBV-001 responsibilities covered by wired `athena-core` modules
-- [ ] Maps to REQ-IND-OBV-001 where applicable
+- [ ] Maps to REQ-IND-IND-OBV-001 where applicable
 - [ ] Unit tests pass for implemented behavior
 
 ## Unit Tests
 
-`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`
+`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`, `tests/test_indicator_architecture.py`
 
 ## Future Enhancements
 
-- Full coverage of all responsibilities listed in source release package
-- Extract to dedicated packages when surface area grows
+- Full coverage per Indicator Specification Standard (formula, validation, benchmarks)
+- Layered architecture: formulas / execution / adapters separation per CTO recommendation
 
 ---
 

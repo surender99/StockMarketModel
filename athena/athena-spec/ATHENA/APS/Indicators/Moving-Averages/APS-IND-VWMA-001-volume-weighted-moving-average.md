@@ -2,20 +2,22 @@
 
 > **APS ID:** APS-IND-VWMA-001  
 > **Requirement ID:** REQ-APS-IND-VWMA-001  
-> **Maps to:** REQ-IND-VWMA-001  
+> **Maps to:** REQ-IND-IND-VWMA-001  
 > **Phase:** 3 — Indicators  
 > **Domain:** Moving Averages  
-> **Source:** `References/ATH-REL-004-Indicator-Framework.zip (inferred PHASE-3)`  
+> **Source:** `References/PHASE 3 Architecture.docx`  
 > **Implementation status:** Deferred
 
 ## Objective
 
-Volume Weighted Moving Average for the Athena indicators (moving averages domain).
+Volume Weighted Moving Average for the Athena indicators platform (moving averages domain).
 
 ## Responsibilities
 
-- Volume-weighted prices
-- Configurable period
+- Volume Weighted Moving Average computation
+- Configurable parameters
+- OHLCV input contract
+- NaN/warmup policy
 
 ## Code Wiring (`athena-core`)
 
@@ -31,16 +33,16 @@ Volume Weighted Moving Average for the Athena indicators (moving averages domain
 
 - [ ] APS-IND-VWMA-001 spec published with REQ ID
 - [ ] Deferred — no silent stub in production path
-- [ ] Future implementation traces to REQ-IND-VWMA-001
+- [ ] Future implementation traces to REQ-IND-IND-VWMA-001
 
 ## Unit Tests
 
-`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`
+`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`, `tests/test_indicator_architecture.py`
 
 ## Future Enhancements
 
-- Full coverage of all responsibilities listed in source release package
-- Extract to dedicated packages when surface area grows
+- Full coverage per Indicator Specification Standard (formula, validation, benchmarks)
+- Layered architecture: formulas / execution / adapters separation per CTO recommendation
 
 ---
 

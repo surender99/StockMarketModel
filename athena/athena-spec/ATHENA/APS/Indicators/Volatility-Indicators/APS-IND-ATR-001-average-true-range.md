@@ -2,20 +2,22 @@
 
 > **APS ID:** APS-IND-ATR-001  
 > **Requirement ID:** REQ-APS-IND-ATR-001  
-> **Maps to:** REQ-IND-ATR-001  
+> **Maps to:** REQ-IND-IND-ATR-001  
 > **Phase:** 3 — Indicators  
 > **Domain:** Volatility Indicators  
-> **Source:** `References/ATH-REL-004-Indicator-Framework.zip (inferred PHASE-3)`  
+> **Source:** `References/PHASE 3 Architecture.docx`  
 > **Implementation status:** MVP
 
 ## Objective
 
-Average True Range for the Athena indicators (volatility indicators domain).
+Average True Range for the Athena indicators platform (volatility indicators domain).
 
 ## Responsibilities
 
-- True range smoothing
-- Volatility measure
+- Average True Range computation
+- Configurable parameters
+- OHLCV input contract
+- NaN/warmup policy
 
 ## Code Wiring (`athena-core`)
 
@@ -30,17 +32,17 @@ Average True Range for the Athena indicators (volatility indicators domain).
 ## Acceptance Criteria
 
 - [ ] APS-IND-ATR-001 responsibilities covered by wired `athena-core` modules
-- [ ] Maps to REQ-IND-ATR-001 where applicable
+- [ ] Maps to REQ-IND-IND-ATR-001 where applicable
 - [ ] Unit tests pass for implemented behavior
 
 ## Unit Tests
 
-`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`
+`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`, `tests/test_indicator_architecture.py`
 
 ## Future Enhancements
 
-- Full coverage of all responsibilities listed in source release package
-- Extract to dedicated packages when surface area grows
+- Full coverage per Indicator Specification Standard (formula, validation, benchmarks)
+- Layered architecture: formulas / execution / adapters separation per CTO recommendation
 
 ---
 

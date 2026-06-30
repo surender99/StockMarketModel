@@ -2,20 +2,22 @@
 
 > **APS ID:** APS-IND-RSI-001  
 > **Requirement ID:** REQ-APS-IND-RSI-001  
-> **Maps to:** REQ-IND-RSI-001  
+> **Maps to:** REQ-IND-IND-RSI-001  
 > **Phase:** 3 — Indicators  
 > **Domain:** Momentum Indicators  
-> **Source:** `References/ATH-REL-004-Indicator-Framework.zip (inferred PHASE-3)`  
+> **Source:** `References/PHASE 3 Architecture.docx`  
 > **Implementation status:** MVP
 
 ## Objective
 
-Relative Strength Index for the Athena indicators (momentum indicators domain).
+Relative Strength Index for the Athena indicators platform (momentum indicators domain).
 
 ## Responsibilities
 
-- Overbought/oversold
-- Configurable period
+- Relative Strength Index computation
+- Configurable parameters
+- OHLCV input contract
+- NaN/warmup policy
 
 ## Code Wiring (`athena-core`)
 
@@ -30,17 +32,17 @@ Relative Strength Index for the Athena indicators (momentum indicators domain).
 ## Acceptance Criteria
 
 - [ ] APS-IND-RSI-001 responsibilities covered by wired `athena-core` modules
-- [ ] Maps to REQ-IND-RSI-001 where applicable
+- [ ] Maps to REQ-IND-IND-RSI-001 where applicable
 - [ ] Unit tests pass for implemented behavior
 
 ## Unit Tests
 
-`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`
+`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`, `tests/test_indicator_architecture.py`
 
 ## Future Enhancements
 
-- Full coverage of all responsibilities listed in source release package
-- Extract to dedicated packages when surface area grows
+- Full coverage per Indicator Specification Standard (formula, validation, benchmarks)
+- Layered architecture: formulas / execution / adapters separation per CTO recommendation
 
 ---
 

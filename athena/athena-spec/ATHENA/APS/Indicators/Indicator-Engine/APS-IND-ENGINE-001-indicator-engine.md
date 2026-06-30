@@ -2,21 +2,23 @@
 
 > **APS ID:** APS-IND-ENGINE-001  
 > **Requirement ID:** REQ-APS-IND-ENGINE-001  
-> **Maps to:** REQ-IND-ENGINE-001  
+> **Maps to:** REQ-IND-IND-ENGINE-001  
 > **Phase:** 3 — Indicators  
 > **Domain:** Indicator Engine  
-> **Source:** `References/ATH-REL-004-Indicator-Framework.zip (inferred PHASE-3)`  
+> **Source:** `References/PHASE 3 Architecture.docx`  
 > **Implementation status:** MVP
 
 ## Objective
 
-Indicator Engine for the Athena indicators (indicator engine domain).
+Indicator Engine for the Athena indicators platform (indicator engine domain).
 
 ## Responsibilities
 
-- Resolve indicators via registry
-- Validate output alignment
-- Parameter injection
+- Execute indicators
+- Pipeline execution
+- Dependency resolution
+- Incremental updates
+- Batch execution
 
 ## Code Wiring (`athena-core`)
 
@@ -31,17 +33,17 @@ Indicator Engine for the Athena indicators (indicator engine domain).
 ## Acceptance Criteria
 
 - [ ] APS-IND-ENGINE-001 responsibilities covered by wired `athena-core` modules
-- [ ] Maps to REQ-IND-ENGINE-001 where applicable
+- [ ] Maps to REQ-IND-IND-ENGINE-001 where applicable
 - [ ] Unit tests pass for implemented behavior
 
 ## Unit Tests
 
-`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`
+`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`, `tests/test_indicator_architecture.py`
 
 ## Future Enhancements
 
-- Full coverage of all responsibilities listed in source release package
-- Extract to dedicated packages when surface area grows
+- Full coverage per Indicator Specification Standard (formula, validation, benchmarks)
+- Layered architecture: formulas / execution / adapters separation per CTO recommendation
 
 ---
 

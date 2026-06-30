@@ -2,20 +2,22 @@
 
 > **APS ID:** APS-IND-SUPERTREND-001  
 > **Requirement ID:** REQ-APS-IND-SUPERTREND-001  
-> **Maps to:** REQ-IND-SUPERTREND-001  
+> **Maps to:** REQ-IND-IND-SUPERTREND-001  
 > **Phase:** 3 — Indicators  
 > **Domain:** Trend Indicators  
-> **Source:** `References/ATH-REL-004-Indicator-Framework.zip (inferred PHASE-3)`  
+> **Source:** `References/PHASE 3 Architecture.docx`  
 > **Implementation status:** Deferred
 
 ## Objective
 
-SuperTrend for the Athena indicators (trend indicators domain).
+SuperTrend for the Athena indicators platform (trend indicators domain).
 
 ## Responsibilities
 
-- ATR bands
-- Trend flip signals
+- SuperTrend computation
+- Configurable parameters
+- OHLCV input contract
+- NaN/warmup policy
 
 ## Code Wiring (`athena-core`)
 
@@ -31,16 +33,16 @@ SuperTrend for the Athena indicators (trend indicators domain).
 
 - [ ] APS-IND-SUPERTREND-001 spec published with REQ ID
 - [ ] Deferred — no silent stub in production path
-- [ ] Future implementation traces to REQ-IND-SUPERTREND-001
+- [ ] Future implementation traces to REQ-IND-IND-SUPERTREND-001
 
 ## Unit Tests
 
-`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`
+`tests/test_indicator_framework.py`, `tests/test_indicator_aps.py`, `tests/test_indicator_architecture.py`
 
 ## Future Enhancements
 
-- Full coverage of all responsibilities listed in source release package
-- Extract to dedicated packages when surface area grows
+- Full coverage per Indicator Specification Standard (formula, validation, benchmarks)
+- Layered architecture: formulas / execution / adapters separation per CTO recommendation
 
 ---
 
