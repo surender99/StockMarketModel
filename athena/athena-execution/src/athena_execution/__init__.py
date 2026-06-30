@@ -1,6 +1,7 @@
 """Execution/backtest — facade over athena_core simulation and backtest."""
 from athena_execution.engine import ExecutionEngineFacade
 from athena_core.application.backtest_manager import BacktestManager
+from athena_core.application.paper_trading_engine import PaperTradingEngine
 from athena_core.domain.simulation.catalog import (
     SIMULATION_CATALOG,
     SimulationCatalogEntry,
@@ -10,6 +11,7 @@ from athena_core.domain.simulation.catalog import (
 __all__ = [
     "BacktestManager",
     "ExecutionEngineFacade",
+    "PaperTradingEngine",
     "SIMULATION_CATALOG",
     "SimulationCatalogEntry",
     "list_mvp_simulation",

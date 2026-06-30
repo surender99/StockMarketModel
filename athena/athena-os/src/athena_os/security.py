@@ -10,6 +10,14 @@ from enum import StrEnum
 from typing import Any
 
 
+@dataclass
+class SecurityContext:
+    """Active principal context for request-scoped authorization."""
+
+    principal: str
+    role: Role | None = None
+
+
 class Role(StrEnum):
     ADMIN = "admin"
     RESEARCHER = "researcher"

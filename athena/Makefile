@@ -31,7 +31,7 @@ install:
 	$(PIP) install -e "../athena-testing[dev]"
 
 # Hatch editable installs leave stale shadow dirs if force-reinstall was used; remove them.
-	-$(PY) -c "from pathlib import Path; sp=Path('$(VENV)/Lib/site-packages'); [__import__('shutil').rmtree(sp/n, ignore_errors=True) for n in ('athena_core','athena_os','athena_common') if (sp/f'_editable_impl_{n}.pth').exists() and (sp/n).is_dir()]"
+	-$(PY) -c "from pathlib import Path; sp=Path('$(VENV)/Lib/site-packages'); names=('athena_core','athena_os','athena_common','athena_domain','athena_data','athena_indicators','athena_patterns','athena_strategies','athena_risk','athena_portfolio','athena_execution','athena_math','athena_research','athena_platform'); import shutil; [shutil.rmtree(sp/n, ignore_errors=True) for n in names if (sp/f'_editable_impl_{n}.pth').exists() and (sp/n).is_dir()]"
 
 test:
 	cd athena-os && ../athena-core/$(PY) -m pytest -q
