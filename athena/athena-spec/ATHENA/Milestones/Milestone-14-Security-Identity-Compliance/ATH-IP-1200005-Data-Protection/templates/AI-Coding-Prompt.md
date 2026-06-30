@@ -1,0 +1,1 @@
+Implement ATH-IP-1200005-Data-Protection according to Athena architecture. Enforce zero-trust principles, auditing, testing and documentation.

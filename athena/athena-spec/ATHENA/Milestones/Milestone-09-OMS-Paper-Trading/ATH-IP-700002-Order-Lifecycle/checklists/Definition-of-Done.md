@@ -1,0 +1,5 @@
+- Build passes
+- Unit & integration tests
+- Paper trading scenarios pass
+- Golden dataset matched
+- Documentation updated

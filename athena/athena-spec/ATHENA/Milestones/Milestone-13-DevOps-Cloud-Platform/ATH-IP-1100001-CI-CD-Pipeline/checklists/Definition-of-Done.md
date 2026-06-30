@@ -1,0 +1,4 @@
+- CI passes
+- Security scan
+- IaC validated
+- Documentation complete

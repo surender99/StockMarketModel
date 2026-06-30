@@ -1,0 +1,1 @@
+Implement ATH-IP-300002-Swing-Detection following ATH-000 through ATH-009. Ensure deterministic detection, streaming compatibility, tests, benchmarks and documentation.

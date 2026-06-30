@@ -1,0 +1,1 @@
+Implement ATH-IP-600007-VaR-Engine according to ATH-000 through ATH-009. Preserve contracts, integrate with strategy and simulation, include tests, benchmarks and documentation.

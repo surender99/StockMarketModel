@@ -1,0 +1,1 @@
+Implement ATH-IP-300010-Pattern-Validation following ATH-000 through ATH-009. Ensure deterministic detection, streaming compatibility, tests, benchmarks and documentation.

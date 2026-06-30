@@ -1,0 +1,1 @@
+Implement ATH-IP-700003-Broker-Abstraction following ATH-000 through ATH-009. Preserve contracts, support idempotency, retries, auditing, tests and documentation.

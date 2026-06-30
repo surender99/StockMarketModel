@@ -1,0 +1,1 @@
+Implement ATH-IP-1200007-Threat-Detection according to Athena architecture. Enforce zero-trust principles, auditing, testing and documentation.

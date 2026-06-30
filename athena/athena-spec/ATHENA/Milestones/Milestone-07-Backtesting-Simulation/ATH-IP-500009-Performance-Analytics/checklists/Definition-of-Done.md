@@ -1,0 +1,5 @@
+- Build passes
+- Unit & integration tests
+- Reproducible results
+- Golden dataset matched
+- Documentation updated

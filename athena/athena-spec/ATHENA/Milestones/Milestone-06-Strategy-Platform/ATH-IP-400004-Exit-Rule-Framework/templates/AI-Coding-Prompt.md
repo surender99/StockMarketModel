@@ -1,0 +1,1 @@
+Implement ATH-IP-400004-Exit-Rule-Framework following ATH-000 through ATH-009. Preserve contracts, integrate with indicators, patterns and risk, include tests and benchmarks.

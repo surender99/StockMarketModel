@@ -1,0 +1,1 @@
+Implement ATH-IP-000010-Metrics-Observability following ATH-000 through ATH-009. Preserve contracts, include tests and documentation.

@@ -1,0 +1,1 @@
+Implement ATH-IP-1400009-Integration-Hub following Athena standards. Maintain backward compatibility, provide samples, tests and documentation.

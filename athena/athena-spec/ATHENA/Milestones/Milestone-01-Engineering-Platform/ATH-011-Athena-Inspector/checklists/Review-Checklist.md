@@ -1,0 +1,5 @@
+- Architecture
+- Security
+- Performance
+- Tests
+- Documentation

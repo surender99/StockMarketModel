@@ -1,0 +1,1 @@
+Implement ATH-IP-400007-Strategy-Composition following ATH-000 through ATH-009. Preserve contracts, integrate with indicators, patterns and risk, include tests and benchmarks.

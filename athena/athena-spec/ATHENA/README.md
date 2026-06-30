@@ -12,6 +12,7 @@ ATHENA
 ├── Golden-Datasets/   Small fixtures for tests and validation
 ├── Benchmarks/          Performance targets and test references
 ├── Prompts/             AI coding agent prompts (index)
+├── Milestones/          Delivery milestones MS-1 … MS-17 (engineering + IPs)
 ├── Reviews/             CTO and revision review archives
 ├── events/              Event catalog (publisher/subscriber contracts)
 └── interfaces/          Public API interface catalog
@@ -38,9 +39,15 @@ Every APS document must include the traceability block defined in [APS/_TEMPLATE
 
 | Package | Role |
 |---------|------|
+| `athena-common` | Shared domain types (Money, OHLC, TimeFrame, enums) |
 | `athena-os` | Infrastructure layer (event bus, config, plugins, logging) |
+| `athena-domain` | Engine interface contracts (Protocol) |
 | `athena-core` | Domain and application logic |
-| `athena-testing` | Golden datasets, benchmarks, smoke tests |
+| `athena-data`, `athena-indicators`, `athena-patterns`, `athena-strategies`, `athena-risk`, `athena-portfolio`, `athena-execution` | Bounded-context facades (re-export core) |
+| `athena-platform` | Production runtime assembly |
+| `athena-math` | Statistics/math utilities (independent from trading logic) |
+| `athena-research` | Research workspace (non-production) |
+| `athena-testing` | Golden datasets, benchmarks, architecture tests |
 | `athena-sdk`, `athena-cli`, `athena-ai`, `athena-dashboard` | Interface adapters |
 
 See [DEPENDENCY-RULES.md](DEPENDENCY-RULES.md) and [ADR-0005](../adrs/ADR-0005-athena-os.md).
@@ -71,9 +78,10 @@ See [DEPENDENCY-RULES.md](DEPENDENCY-RULES.md) and [ADR-0005](../adrs/ADR-0005-a
 22. [../interfaces/](../interfaces/README.md) — ATH-004 interface catalog + standards
 23. [../database/](../database/00-README.md) — ATH-005 database catalog
 24. [../implementation-packages/](../implementation-packages/ATH-IP-Starter-Pack/README.md) — ATH-IP starter IPs
-25. [APS/](APS/README.md) — domain implementation specs (Backtesting, Portfolio, …)
-26. [ADR/](ADR/README.md) — accepted architecture decisions
-27. [Golden-Datasets/](Golden-Datasets/README.md) — reproducible test inputs
+25. [Milestones/](Milestones/README.md) — MS-1 … MS-17 milestone delivery specs
+26. [APS/](APS/README.md) — domain implementation specs (Backtesting, Portfolio, …)
+27. [ADR/](ADR/README.md) — accepted architecture decisions
+28. [Golden-Datasets/](Golden-Datasets/README.md) — reproducible test inputs
 
 ## Relationship to Legacy Paths
 
@@ -122,4 +130,6 @@ Existing documents under `athena-spec/` remain authoritative. This tree adds **i
 
 **ATH-001 series:** [ATH-001-SERIES-INDEX.md](../ATH-001-SERIES-INDEX.md)
 
-**Source documents:** `References/PHASE1 -ATHENA FOUNDATION APS.docx` through `References/PHASE15 - Enterprise Governance...docx`, `References/ATH-000*.zip`, and `References/ATH-001*.zip` … `ATH-005*.zip`, `ATH-IP-Starter-Pack.zip` (not committed; content captured in spec).
+**Milestone series:** [MILESTONE-SERIES-INDEX.md](../MILESTONE-SERIES-INDEX.md)
+
+**Source documents:** `References/PHASE1 -ATHENA FOUNDATION APS.docx` through `References/PHASE15 - Enterprise Governance...docx`, `References/ATH-000*.zip`, and `References/ATH-001*.zip` … `ATH-005*.zip`, `ATH-IP-Starter-Pack.zip`, `ATH-Milestone-*.zip` (not committed; content captured in spec).

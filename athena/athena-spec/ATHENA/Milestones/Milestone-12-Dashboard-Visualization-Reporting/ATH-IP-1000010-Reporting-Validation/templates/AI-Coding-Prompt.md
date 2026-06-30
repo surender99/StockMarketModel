@@ -1,0 +1,1 @@
+Implement ATH-IP-1000010-Reporting-Validation following Athena standards. Ensure responsive UI, accessibility, tests and documentation.

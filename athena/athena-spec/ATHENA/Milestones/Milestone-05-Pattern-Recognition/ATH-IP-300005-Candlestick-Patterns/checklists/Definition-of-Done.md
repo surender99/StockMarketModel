@@ -1,0 +1,5 @@
+- Build passes
+- Unit & integration tests
+- Golden dataset validated
+- Pattern accuracy benchmark met
+- Documentation updated

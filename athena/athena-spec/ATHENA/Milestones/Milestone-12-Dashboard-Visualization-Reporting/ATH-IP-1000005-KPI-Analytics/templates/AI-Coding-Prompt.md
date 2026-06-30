@@ -1,0 +1,1 @@
+Implement ATH-IP-1000005-KPI-Analytics following Athena standards. Ensure responsive UI, accessibility, tests and documentation.

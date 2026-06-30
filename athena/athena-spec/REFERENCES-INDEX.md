@@ -43,6 +43,24 @@ This index tracks integration of the Athena References package series and Releas
 | **ATH-004** | Master Interface Catalog | Interface principles, DTO ownership, compatibility | ✅ Complete |
 | **ATH-005** | Master Database Catalog | Schema catalog, migrations, audit standards | ✅ Complete |
 | **ATH-IP** | Implementation Starter Pack | EventBus, WorkflowEngine, PluginRegistry IPs | ✅ Complete |
+| **MS-01** | Engineering Platform | engineering-spec | ✅ Complete |
+| **MS-02** | AthenaOS Implementation | implementation-package | ✅ Complete |
+| **MS-03** | Data Platform | implementation-package | ✅ Complete |
+| **MS-04** | Indicator Platform | implementation-package | ✅ Complete |
+| **MS-05** | Pattern Recognition | implementation-package | ✅ Complete |
+| **MS-06** | Strategy Platform | implementation-package | ✅ Complete |
+| **MS-07** | Backtesting & Simulation | implementation-package | ✅ Complete |
+| **MS-08** | Portfolio & Risk Platform | implementation-package | ✅ Complete |
+| **MS-09** | OMS & Paper Trading | implementation-package | ✅ Complete |
+| **MS-10** | Live Trading Platform | implementation-package | ✅ Complete |
+| **MS-11** | AI Research & Analytics | implementation-package | ✅ Complete |
+| **MS-12** | Dashboard, Visualization & Reporting | implementation-package | ✅ Complete |
+| **MS-13** | DevOps, CI/CD & Cloud Platform | implementation-package | ✅ Complete |
+| **MS-14** | Security, Identity & Compliance | implementation-package | ✅ Complete |
+| **MS-15** | Enterprise Governance & Operations | implementation-package | ✅ Complete |
+| **MS-16** | Ecosystem Platform | implementation-package | ✅ Complete |
+| **MS-17** | Athena Enterprise & Productization | implementation-package | ✅ Complete |
+| **ADR-0006** | Bounded Context Packages | Facade-first extraction, athena-platform | ✅ Complete |
 | **PHASE 10** | Machine Learning Platform (MLP) | 148 APS — training, registry, drift, prediction | ✅ Complete |
 | **PHASE 11** | Autonomous Quant Intelligence (AQIP) | 110 APS — multi-agent research orchestration | ✅ Complete |
 | **PHASE 12** | Visualization & UX (VDSUX) | 106 APS — dashboards, charts, decision support | ✅ Complete |
@@ -103,6 +121,23 @@ This index tracks integration of the Athena References package series and Releas
 | ATH-004 | [interfaces/](interfaces/00-README.md) | [ATH-001-SERIES-INDEX.md](ATH-001-SERIES-INDEX.md) |
 | ATH-005 | [database/](database/00-README.md) | [ATH-001-SERIES-INDEX.md](ATH-001-SERIES-INDEX.md) |
 | ATH-IP | [implementation-packages/ATH-IP-Starter-Pack/](implementation-packages/ATH-IP-Starter-Pack/README.md) | [ATH-001-SERIES-COMPLETE.md](ATH-001-SERIES-COMPLETE.md) |
+| MS-01 | [ATHENA/Milestones/Milestone-01-Engineering-Platform/](ATHENA/Milestones/Milestone-01-Engineering-Platform/README.md) | [MILESTONE-1-COMPLETE.md](MILESTONE-1-COMPLETE.md) |
+| MS-02 | [ATHENA/Milestones/Milestone-02-AthenaOS-Implementation/](ATHENA/Milestones/Milestone-02-AthenaOS-Implementation/README.md) | [MILESTONE-2-COMPLETE.md](MILESTONE-2-COMPLETE.md) |
+| MS-03 | [ATHENA/Milestones/Milestone-03-Data-Platform/](ATHENA/Milestones/Milestone-03-Data-Platform/README.md) | [MILESTONE-3-COMPLETE.md](MILESTONE-3-COMPLETE.md) |
+| MS-04 | [ATHENA/Milestones/Milestone-04-Indicator-Platform/](ATHENA/Milestones/Milestone-04-Indicator-Platform/README.md) | [MILESTONE-4-COMPLETE.md](MILESTONE-4-COMPLETE.md) |
+| MS-05 | [ATHENA/Milestones/Milestone-05-Pattern-Recognition/](ATHENA/Milestones/Milestone-05-Pattern-Recognition/README.md) | [MILESTONE-5-COMPLETE.md](MILESTONE-5-COMPLETE.md) |
+| MS-06 | [ATHENA/Milestones/Milestone-06-Strategy-Platform/](ATHENA/Milestones/Milestone-06-Strategy-Platform/README.md) | [MILESTONE-6-COMPLETE.md](MILESTONE-6-COMPLETE.md) |
+| MS-07 | [ATHENA/Milestones/Milestone-07-Backtesting-Simulation/](ATHENA/Milestones/Milestone-07-Backtesting-Simulation/README.md) | [MILESTONE-7-COMPLETE.md](MILESTONE-7-COMPLETE.md) |
+| MS-08 | [ATHENA/Milestones/Milestone-08-Portfolio-Risk-Platform/](ATHENA/Milestones/Milestone-08-Portfolio-Risk-Platform/README.md) | [MILESTONE-8-COMPLETE.md](MILESTONE-8-COMPLETE.md) |
+| MS-09 | [ATHENA/Milestones/Milestone-09-OMS-Paper-Trading/](ATHENA/Milestones/Milestone-09-OMS-Paper-Trading/README.md) | [MILESTONE-9-COMPLETE.md](MILESTONE-9-COMPLETE.md) |
+| MS-10 | [ATHENA/Milestones/Milestone-10-Live-Trading-Platform/](ATHENA/Milestones/Milestone-10-Live-Trading-Platform/README.md) | [MILESTONE-10-COMPLETE.md](MILESTONE-10-COMPLETE.md) |
+| MS-11 | [ATHENA/Milestones/Milestone-11-AI-Research-Analytics/](ATHENA/Milestones/Milestone-11-AI-Research-Analytics/README.md) | [MILESTONE-11-COMPLETE.md](MILESTONE-11-COMPLETE.md) |
+| MS-12 | [ATHENA/Milestones/Milestone-12-Dashboard-Visualization-Reporting/](ATHENA/Milestones/Milestone-12-Dashboard-Visualization-Reporting/README.md) | [MILESTONE-12-COMPLETE.md](MILESTONE-12-COMPLETE.md) |
+| MS-13 | [ATHENA/Milestones/Milestone-13-DevOps-Cloud-Platform/](ATHENA/Milestones/Milestone-13-DevOps-Cloud-Platform/README.md) | [MILESTONE-13-COMPLETE.md](MILESTONE-13-COMPLETE.md) |
+| MS-14 | [ATHENA/Milestones/Milestone-14-Security-Identity-Compliance/](ATHENA/Milestones/Milestone-14-Security-Identity-Compliance/README.md) | [MILESTONE-14-COMPLETE.md](MILESTONE-14-COMPLETE.md) |
+| MS-15 | [ATHENA/Milestones/Milestone-15-Enterprise-Governance-Operations/](ATHENA/Milestones/Milestone-15-Enterprise-Governance-Operations/README.md) | [MILESTONE-15-COMPLETE.md](MILESTONE-15-COMPLETE.md) |
+| MS-16 | [ATHENA/Milestones/Milestone-16-Ecosystem-Platform/](ATHENA/Milestones/Milestone-16-Ecosystem-Platform/README.md) | [MILESTONE-16-COMPLETE.md](MILESTONE-16-COMPLETE.md) |
+| MS-17 | [ATHENA/Milestones/Milestone-17-Athena-Enterprise-Productization/](ATHENA/Milestones/Milestone-17-Athena-Enterprise-Productization/README.md) | [MILESTONE-17-COMPLETE.md](MILESTONE-17-COMPLETE.md) |
 | PHASE 10 | [ATHENA/APS/Machine-Learning/](ATHENA/APS/Machine-Learning/README.md) | [PHASE-10-MLP-COMPLETE.md](PHASE-10-MLP-COMPLETE.md) |
 | PHASE 11 | [ATHENA/APS/Autonomous-Intelligence/](ATHENA/APS/Autonomous-Intelligence/README.md) | [PHASE-11-AQIP-COMPLETE.md](PHASE-11-AQIP-COMPLETE.md) |
 | PHASE 12 | [ATHENA/APS/Visualization-UX/](ATHENA/APS/Visualization-UX/README.md) | [PHASE-12-VDSUX-COMPLETE.md](PHASE-12-VDSUX-COMPLETE.md) |
@@ -149,6 +184,7 @@ This index tracks integration of the Athena References package series and Releas
 | **ATH-IP Starter Pack** | [implementation-packages/](implementation-packages/ATH-IP-Starter-Pack/README.md) | — | ✅ 3 starter IPs |
 | **athena-os** | `athena/athena-os/` | [ADR-0005](adrs/ADR-0005-athena-os.md) | ✅ MVP — infrastructure layer |
 | **athena-testing** | `athena/athena-testing/` | — | ✅ MVP — golden datasets, benchmarks |
+| **MS-01–17 Milestones** | [ATHENA/Milestones/](ATHENA/Milestones/README.md) | — | ✅ 17 milestone archives |
 | **APS traceability** | `ATHENA/APS/TRACEABILITY-INDEX.md` | [ATH-005](ATH-005-DOCUMENTATION-STANDARD.md) | ✅ Template + 12 sample APS |
 
 ---

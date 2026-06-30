@@ -1,0 +1,4 @@
+- Tests pass
+- Reproducible training
+- Drift checks
+- Documentation complete

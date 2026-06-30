@@ -1,0 +1,4 @@
+- Build passes
+- Tests pass
+- Coverage achieved
+- Documentation updated

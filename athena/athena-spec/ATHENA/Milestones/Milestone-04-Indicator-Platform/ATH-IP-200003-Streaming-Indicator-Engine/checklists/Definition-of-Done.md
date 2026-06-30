@@ -1,0 +1,5 @@
+- Build passes
+- Unit tests
+- Streaming validation
+- Golden dataset matched
+- Documentation updated

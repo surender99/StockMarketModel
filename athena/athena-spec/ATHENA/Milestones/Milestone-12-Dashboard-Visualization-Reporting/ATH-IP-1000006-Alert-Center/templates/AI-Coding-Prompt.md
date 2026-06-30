@@ -1,0 +1,1 @@
+Implement ATH-IP-1000006-Alert-Center following Athena standards. Ensure responsive UI, accessibility, tests and documentation.

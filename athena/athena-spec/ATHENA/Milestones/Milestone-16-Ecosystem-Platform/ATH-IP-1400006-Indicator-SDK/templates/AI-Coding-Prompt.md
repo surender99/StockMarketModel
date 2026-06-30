@@ -1,0 +1,1 @@
+Implement ATH-IP-1400006-Indicator-SDK following Athena standards. Maintain backward compatibility, provide samples, tests and documentation.

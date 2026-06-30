@@ -1,0 +1,1 @@
+Implement ATH-IP-400006-Risk-Integration following ATH-000 through ATH-009. Preserve contracts, integrate with indicators, patterns and risk, include tests and benchmarks.

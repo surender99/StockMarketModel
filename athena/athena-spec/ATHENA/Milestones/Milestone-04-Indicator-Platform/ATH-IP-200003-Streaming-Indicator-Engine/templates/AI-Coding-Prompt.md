@@ -1,0 +1,1 @@
+Implement ATH-IP-200003-Streaming-Indicator-Engine following ATH-000 to ATH-009. Use streaming-safe algorithms, preserve interfaces, add tests and benchmarks.

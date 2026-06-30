@@ -1,0 +1,1 @@
+Implement ATH-IP-300006-Chart-Patterns following ATH-000 through ATH-009. Ensure deterministic detection, streaming compatibility, tests, benchmarks and documentation.

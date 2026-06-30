@@ -1,0 +1,5 @@
+- Build passes
+- Unit & integration tests
+- Risk policies validated
+- Golden dataset matched
+- Documentation updated

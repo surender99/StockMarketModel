@@ -1,0 +1,1 @@
+Implement ATH-IP-400002-Signal-Generation following ATH-000 through ATH-009. Preserve contracts, integrate with indicators, patterns and risk, include tests and benchmarks.

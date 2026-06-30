@@ -9,9 +9,11 @@
 
 ## Executive Summary
 
-All **References planning packages (REL-000 … REL-020)**, **References product packages (01–15)**, **ATH-000A–D core reference zips**, and **PHASE 1–15 APS implementation trees** are **spec-integrated** under `athena/athena-spec/`. MVP Python code exists in `athena-core` and sibling packages with **391 passing tests** (10 skipped, optional `pandas-ta` cross-library checks).
+All **References planning packages (REL-000 … REL-020)**, **References product packages (01–15)**, **ATH-000A–D core reference zips**, **PHASE 1–15 APS implementation trees**, and **ATH-Milestone-1 … 17 delivery archives** are **spec-integrated** under `athena/athena-spec/`. MVP Python code exists in `athena-core` and sibling packages with **432 passing tests** (10 skipped, optional `pandas-ta` cross-library checks).
 
 **Spec integration complete** ≠ **full code implementation**. See [SPEC-VS-CODE-STATUS.md](../SPEC-VS-CODE-STATUS.md) for honest per-phase code depth.
+
+**Milestone series:** 17 archives (170 implementation/engineering packages) — [MILESTONE-SERIES-INDEX.md](../MILESTONE-SERIES-INDEX.md).
 
 ---
 
@@ -111,6 +113,30 @@ All **References planning packages (REL-000 … REL-020)**, **References product
 
 ---
 
+
+## New References Integrated (2026-06-30 batch 3 — Milestones)
+
+| File | Type | Action |
+|------|------|--------|
+| `ATH-Milestone-1-Engineering-Platform.zip` | Milestone 1 | Integrated → `ATHENA/Milestones/Milestone-01-Engineering-Platform/` |
+| `ATH-Milestone-2-AthenaOS-Implementation.zip` | Milestone 2 | Integrated → `ATHENA/Milestones/Milestone-02-AthenaOS-Implementation/` |
+| `ATH-Milestone-3-Data-Platform.zip` | Milestone 3 | Integrated → `ATHENA/Milestones/Milestone-03-Data-Platform/` |
+| `ATH-Milestone-4-Indicator-Platform.zip` | Milestone 4 | Integrated → `ATHENA/Milestones/Milestone-04-Indicator-Platform/` |
+| `ATH-Milestone-5-Pattern-Recognition.zip` | Milestone 5 | Integrated → `ATHENA/Milestones/Milestone-05-Pattern-Recognition/` |
+| `ATH-Milestone-6-Strategy-Platform.zip` | Milestone 6 | Integrated → `ATHENA/Milestones/Milestone-06-Strategy-Platform/` |
+| `ATH-Milestone-7-Backtesting-Simulation.zip` | Milestone 7 | Integrated → `ATHENA/Milestones/Milestone-07-Backtesting-Simulation/` |
+| `ATH-Milestone-8-Portfolio-Risk-Platform.zip` | Milestone 8 | Integrated → `ATHENA/Milestones/Milestone-08-Portfolio-Risk-Platform/` |
+| `ATH-Milestone-9-OMS-Paper-Trading.zip` | Milestone 9 | Integrated → `ATHENA/Milestones/Milestone-09-OMS-Paper-Trading/` |
+| `ATH-Milestone-10-Live-Trading-Platform.zip` | Milestone 10 | Integrated → `ATHENA/Milestones/Milestone-10-Live-Trading-Platform/` |
+| `ATH-Milestone-11-AI-Research-Analytics.zip` | Milestone 11 | Integrated → `ATHENA/Milestones/Milestone-11-AI-Research-Analytics/` |
+| `ATH-Milestone-12-Dashboard-Visualization-Reporting.zip` | Milestone 12 | Integrated → `ATHENA/Milestones/Milestone-12-Dashboard-Visualization-Reporting/` |
+| `ATH-Milestone-13-DevOps-Cloud-Platform.zip` | Milestone 13 | Integrated → `ATHENA/Milestones/Milestone-13-DevOps-Cloud-Platform/` |
+| `ATH-Milestone-14-Security-Identity-Compliance.zip` | Milestone 14 | Integrated → `ATHENA/Milestones/Milestone-14-Security-Identity-Compliance/` |
+| `ATH-Milestone-15-Enterprise-Governance-Operations.zip` | Milestone 15 | Integrated → `ATHENA/Milestones/Milestone-15-Enterprise-Governance-Operations/` |
+| `ATH-Milestone-16-Ecosystem-Platform.zip` | Milestone 16 | Integrated → `ATHENA/Milestones/Milestone-16-Ecosystem-Platform/` |
+| `ATH-Milestone-17-Athena-Enterprise-Productization.zip` | Milestone 17 | Integrated → `ATHENA/Milestones/Milestone-17-Athena-Enterprise-Productization/` |
+
+**Index:** [MILESTONE-SERIES-INDEX.md](../MILESTONE-SERIES-INDEX.md) · **Sign-off:** [MILESTONE-SERIES-COMPLETE.md](../MILESTONE-SERIES-COMPLETE.md)
 ## New References Integrated (2026-06-30 batch 2)
 
 | File | Type | Action |
@@ -147,12 +173,26 @@ All **References planning packages (REL-000 … REL-020)**, **References product
 
 | Package | Passed | Skipped |
 |---------|--------|---------|
-| athena-core | 354 | 10 |
+| athena-os | 12 | 0 |
+| athena-common | 5 | 0 |
+| athena-domain | 1 | 0 |
+| athena-core | 355 | 10 |
+| athena-data | 1 | 0 |
+| athena-indicators | 1 | 0 |
+| athena-patterns | 1 | 0 |
+| athena-strategies | 1 | 0 |
+| athena-risk | 1 | 0 |
+| athena-portfolio | 1 | 0 |
+| athena-execution | 1 | 0 |
+| athena-math | 1 | 0 |
+| athena-research | 1 | 0 |
+| athena-platform | 2 | 0 |
 | athena-sdk | 6 | 0 |
 | athena-ai | 21 | 0 |
 | athena-cli | 4 | 0 |
 | athena-dashboard | 6 | 0 |
-| **Total** | **391** | **10** |
+| athena-testing | 11 | 0 |
+| **Total** | **432** | **10** |
 
 Skipped tests require optional `pandas-ta` cross-library validation (Python 3.11).
 
