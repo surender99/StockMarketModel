@@ -17,6 +17,7 @@ class PortfolioCatalogEntry:
 
 
 PORTFOLIO_CATALOG: tuple[PortfolioCatalogEntry, ...] = (
+    PortfolioCatalogEntry("APS-PORT-CORE-001", "Portfolio Framework", "Portfolio-Core", "Partial"),
     PortfolioCatalogEntry("APS-PORT-MANAGER-001", "Portfolio Manager", "Portfolio-Core", "MVP"),
     PortfolioCatalogEntry("APS-PORT-CONTEXT-001", "Portfolio Context", "Portfolio-Core", "MVP"),
     PortfolioCatalogEntry("APS-POS-FIXED-001", "Fixed Quantity", "Portfolio-Position-Sizing", "MVP"),
@@ -24,7 +25,10 @@ PORTFOLIO_CATALOG: tuple[PortfolioCatalogEntry, ...] = (
     PortfolioCatalogEntry("APS-RB-CORE-001", "Risk Budget Engine", "Risk-Budget", "MVP"),
     PortfolioCatalogEntry("APS-EXPOSURE-NET-001", "Net Exposure", "Exposure-Engine", "MVP"),
     PortfolioCatalogEntry("APS-EXPOSURE-GROSS-001", "Gross Exposure", "Exposure-Engine", "MVP"),
+    PortfolioCatalogEntry("APS-OPT-MEANVAR-001", "Mean Variance Optimization", "Portfolio-Optimizer", "Partial"),
+    PortfolioCatalogEntry("APS-OPT-RISKPARITY-001", "Risk Parity Optimization", "Portfolio-Optimizer", "Partial"),
     PortfolioCatalogEntry("APS-PA-PERFORMANCE-001", "Portfolio Returns", "Portfolio-Analytics", "MVP"),
+    PortfolioCatalogEntry("APS-PA-RISK-001", "Risk Attribution", "Portfolio-Analytics", "Partial"),
 )
 
 
