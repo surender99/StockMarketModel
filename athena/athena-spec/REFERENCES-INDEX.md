@@ -68,11 +68,7 @@ This index tracks integration of the Athena References package series and Releas
 | **DEL-STO** | Stories Master | 32 packages | ✅ Complete |
 | **DEL-TAS** | Tasks Master | 32 packages | ✅ Complete |
 | **PR-REQ** | Product Phase Requirements (Paper Trader) | 10 phases | ✅ Complete |
-| **DEL-EPI** | Epics Master | 15 packages | ✅ Complete |
-| **DEL-FEA** | Features Master | 75 packages | ✅ Complete |
-| **DEL-IMP** | Implementation Packages Master | 33 packages | ✅ Complete |
-| **DEL-STO** | Stories Master | 32 packages | ✅ Complete |
-| **DEL-TAS** | Tasks Master | 32 packages | ✅ Complete |
+| **RES-RMR** | Research Master Roadmap | 8 workstreams | ✅ Complete |
 | **M1–M17** | Engineering → Enterprise Milestones | 170 IPs across 17 milestone zips | ✅ Spec + MVP code — [Milestones/ATHENA/Milestones/](ATHENA/Milestones/00-README.md) |
 | **PHASE 10** | Machine Learning Platform (MLP) | 148 APS — training, registry, drift, prediction | ✅ Complete |
 | **PHASE 11** | Autonomous Quant Intelligence (AQIP) | 110 APS — multi-agent research orchestration | ✅ Complete |
@@ -80,7 +76,6 @@ This index tracks integration of the Athena References package series and Releas
 | **PHASE 13** | Paper Trading (PTEVP) | 85 APS — paper broker, live feed, validation | ✅ Complete |
 | **PHASE 14** | Enterprise Trading (ETOP) | 102 APS — OMS, RMS, broker gateway | ✅ Complete |
 | **PHASE 15** | Enterprise Governance (EGPCI) | 91 APS — platform engineering, CI/CD, observability | ✅ Complete |
-| **REL-002** | Data Platform (Release-02) | OHLCV ingest, calendar, quality, cleaning, versioning, registry | ✅ Complete |
 | **01** | Governance | Constitution, execution plan, quant & AI standards, templates, DoD | ✅ Complete |
 | **02** | Architecture | System architecture, clean architecture, plugin model, repo structure | ✅ Complete |
 | **03** | Data Platform | DataProvider contract, OHLCV schema, data quality | ✅ Complete |
@@ -139,12 +134,8 @@ This index tracks integration of the Athena References package series and Releas
 | DEL-IP | [implementation-packages/](implementation-packages/README.md) | [DELIVERY-HIERARCHY-COMPLETE.md](DELIVERY-HIERARCHY-COMPLETE.md) |
 | DEL-Sto | [ATHENA/Stories/](ATHENA/Stories/README.md) | [DELIVERY-HIERARCHY-COMPLETE.md](DELIVERY-HIERARCHY-COMPLETE.md) |
 | DEL-Tas | [ATHENA/Tasks/](ATHENA/Tasks/README.md) | [DELIVERY-HIERARCHY-COMPLETE.md](DELIVERY-HIERARCHY-COMPLETE.md) |
-| DEL-Epi | [ATHENA/Epics/](ATHENA/Epics/README.md) | [DELIVERY-HIERARCHY-COMPLETE.md](DELIVERY-HIERARCHY-COMPLETE.md) |
-| DEL-Fea | [ATHENA/Features/](ATHENA/Features/README.md) | [DELIVERY-HIERARCHY-COMPLETE.md](DELIVERY-HIERARCHY-COMPLETE.md) |
-| DEL-IP | [implementation-packages/](implementation-packages/README.md) | [DELIVERY-HIERARCHY-COMPLETE.md](DELIVERY-HIERARCHY-COMPLETE.md) |
-| DEL-Sto | [ATHENA/Stories/](ATHENA/Stories/README.md) | [DELIVERY-HIERARCHY-COMPLETE.md](DELIVERY-HIERARCHY-COMPLETE.md) |
-| DEL-Tas | [ATHENA/Tasks/](ATHENA/Tasks/README.md) | [DELIVERY-HIERARCHY-COMPLETE.md](DELIVERY-HIERARCHY-COMPLETE.md) |
 | PR-REQ | [ATHENA/Phase-Requirements/](ATHENA/Phase-Requirements/README.md) | [PHASE-REQUIREMENTS-COMPLETE.md](PHASE-REQUIREMENTS-COMPLETE.md) |
+| RES-RMR | [ATHENA/Research-Master-Roadmap/](ATHENA/Research-Master-Roadmap/README.md) | [RESEARCH-MASTER-ROADMAP-COMPLETE.md](RESEARCH-MASTER-ROADMAP-COMPLETE.md) |
 | MS-01 | [ATHENA/Milestones/Milestone-01-Engineering-Platform/](ATHENA/Milestones/Milestone-01-Engineering-Platform/README.md) | [MILESTONE-1-COMPLETE.md](MILESTONE-1-COMPLETE.md) |
 | MS-02 | [ATHENA/Milestones/Milestone-02-AthenaOS-Implementation/](ATHENA/Milestones/Milestone-02-AthenaOS-Implementation/README.md) | [MILESTONE-2-COMPLETE.md](MILESTONE-2-COMPLETE.md) |
 | MS-03 | [ATHENA/Milestones/Milestone-03-Data-Platform/](ATHENA/Milestones/Milestone-03-Data-Platform/README.md) | [MILESTONE-3-COMPLETE.md](MILESTONE-3-COMPLETE.md) |
@@ -209,6 +200,7 @@ This index tracks integration of the Athena References package series and Releas
 | **athena-os** | `athena/athena-os/` | [ADR-0005](adrs/ADR-0005-athena-os.md) | ✅ MVP — infrastructure layer |
 | **athena-testing** | `athena/athena-testing/` | — | ✅ MVP — golden datasets, benchmarks |
 | **MS-01–17 Milestones** | [ATHENA/Milestones/](ATHENA/Milestones/00-README.md) | [ADR-0006](adrs/ADR-0006-bounded-contexts.md) | ✅ Spec + MVP code |
+| **Research master roadmap** | [RESEARCH-MASTER-ROADMAP-INDEX.md](RESEARCH-MASTER-ROADMAP-INDEX.md) | — | ✅ 8 research workstreams |
 | **Product phase requirements** | [PHASE-REQUIREMENTS-INDEX.md](PHASE-REQUIREMENTS-INDEX.md) | — | ✅ 10 Paper Trader phases |
 | **Delivery hierarchy** | [DELIVERY-HIERARCHY-INDEX.md](DELIVERY-HIERARCHY-INDEX.md) | — | ✅ 5 MASTER archives |
 | **APS traceability** | `ATHENA/APS/TRACEABILITY-INDEX.md` | [ATH-005](ATH-005-DOCUMENTATION-STANDARD.md) | ✅ Template + 12 sample APS |

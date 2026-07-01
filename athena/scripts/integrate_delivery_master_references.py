@@ -6,6 +6,8 @@ import zipfile
 from dataclasses import dataclass
 from pathlib import Path
 
+from fs_utils import safe_rmtree
+
 REPO = Path(__file__).resolve().parents[2]
 REFERENCES = REPO / "References"
 SPEC = REPO / "athena" / "athena-spec"
@@ -62,7 +64,7 @@ def _extract_outer(zip_name: str, label: str) -> Path:
         raise FileNotFoundError(f"Missing References/{zip_name}")
     tmp = REPO / ".tmp-extract" / label
     if tmp.exists():
-        shutil.rmtree(tmp)
+        safe_rmtree(tmp)
     tmp.mkdir(parents=True)
     with zipfile.ZipFile(zpath) as zf:
         zf.extractall(tmp)
@@ -87,7 +89,7 @@ def _extract_nested_zips(inner: Path, dest: Path, zip_name: str) -> int:
         rel_parent = zpath.parent.relative_to(inner)
         out = dest / rel_parent / zpath.stem
         if out.exists():
-            shutil.rmtree(out)
+            safe_rmtree(out)
         out.mkdir(parents=True)
         with zipfile.ZipFile(zpath) as zf:
             zf.extractall(out)
@@ -98,7 +100,7 @@ def _extract_nested_zips(inner: Path, dest: Path, zip_name: str) -> int:
 
 def _copy_flat(inner: Path, dest: Path, zip_name: str) -> int:
     if dest.exists():
-        shutil.rmtree(dest)
+        safe_rmtree(dest)
     shutil.copytree(inner, dest)
     _stamp_readme(dest, zip_name)
     for child in dest.rglob("*"):
@@ -119,7 +121,7 @@ def integrate_master(cfg: MasterArchive) -> tuple[str, int, str]:
     if cfg.preserve_starter_pack:
         dest.mkdir(parents=True, exist_ok=True)
     elif dest.exists() and not cfg.nested_zips:
-        shutil.rmtree(dest)
+        safe_rmtree(dest)
 
     if cfg.nested_zips:
         count = _extract_nested_zips(inner, dest, cfg.zip_name)
@@ -228,7 +230,7 @@ def write_delivery_index(results: list[tuple[str, int, str]]) -> None:
 def update_references_index(results: list[tuple[str, int, str]]) -> None:
     path = SPEC / "REFERENCES-INDEX.md"
     content = path.read_text(encoding="utf-8")
-    if "**DEL-EPIC**" in content:
+    if "**DEL-EPI**" in content:
         return
 
     status_rows = "\n".join(
@@ -257,7 +259,7 @@ def update_references_index(results: list[tuple[str, int, str]]) -> None:
         content = content.replace(ip_marker, arch_block + ip_marker)
 
     insert_after = "| ATH-IP | [implementation-packages/"
-    if "DEL-EPIC |" not in content:
+    if "DEL-Epi |" not in content and "DEL-EPI |" not in content:
         idx = content.find(insert_after)
         if idx != -1:
             line_end = content.find("\n", idx)

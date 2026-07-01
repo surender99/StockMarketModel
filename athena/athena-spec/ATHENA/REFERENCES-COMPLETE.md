@@ -116,6 +116,14 @@ All **References planning packages (REL-000 … REL-020)**, **References product
 
 
 
+
+## New References Integrated (2026-07-01 batch — Research Master Roadmap)
+
+| File | Type | Action |
+|------|------|--------|
+| `ATH-RESEARCH-MASTER-ROADMAP.zip` | Research roadmap | 8 workstreams → [ATHENA/Research-Master-Roadmap/](../ATHENA/Research-Master-Roadmap/README.md) |
+
+**Index:** [RESEARCH-MASTER-ROADMAP-INDEX.md](../RESEARCH-MASTER-ROADMAP-INDEX.md) · **Sign-off:** [RESEARCH-MASTER-ROADMAP-COMPLETE.md](../RESEARCH-MASTER-ROADMAP-COMPLETE.md)
 ## New References Integrated (2026-07-01 batch — Product Phase Requirements)
 
 | File | Type | Action |

@@ -5,6 +5,8 @@ import shutil
 import zipfile
 from pathlib import Path
 
+from fs_utils import safe_rmtree
+
 REPO = Path(__file__).resolve().parents[2]
 REFERENCES = REPO / "References"
 SPEC = REPO / "athena" / "athena-spec"
@@ -33,7 +35,7 @@ def _extract_inner() -> Path:
         raise FileNotFoundError(f"Missing References/{ZIP_NAME}")
     tmp = REPO / ".tmp-extract" / "Phase-Requirements"
     if tmp.exists():
-        shutil.rmtree(tmp)
+        safe_rmtree(tmp)
     tmp.mkdir(parents=True)
     with zipfile.ZipFile(zpath) as zf:
         zf.extractall(tmp)
@@ -53,7 +55,7 @@ def _stamp_source(root: Path) -> None:
 def integrate() -> int:
     inner = _extract_inner()
     if DEST.exists():
-        shutil.rmtree(DEST)
+        safe_rmtree(DEST)
     shutil.copytree(inner, DEST)
     _stamp_source(DEST)
 

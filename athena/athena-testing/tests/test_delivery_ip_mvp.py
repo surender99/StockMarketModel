@@ -43,3 +43,14 @@ def test_delivery_ip_mvp_probe(ip: DeliveryIP) -> None:
 
 def test_delivery_ip_registry_count() -> None:
     assert len(DELIVERY_IPS) == 33
+
+
+def test_paper_trading_ip_behavioral() -> None:
+    """ATH-IP-000031 — beyond import probe: place and fill a paper order."""
+    from athena_core.application.paper_trading_engine import PaperTradingEngine
+    from athena_core.domain.paper.orders import OrderSide, OrderStatus
+
+    engine = PaperTradingEngine(initial_cash=10_000.0)
+    order = engine.place_order("AAPL", OrderSide.BUY, 1, 100.0)
+    assert order.status == OrderStatus.FILLED
+    assert engine.broker.account.portfolio.positions["AAPL"].quantity == 1
