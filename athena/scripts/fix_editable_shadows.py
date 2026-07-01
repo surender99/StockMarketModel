@@ -28,6 +28,23 @@ NAMES = (
 )
 
 
+def _package_src(repo: Path, name: str) -> Path | None:
+    folder = "athena-" + name.removeprefix("athena_").replace("_", "-")
+    if name == "athena_core":
+        folder = "athena-core"
+    src = repo / folder / "src"
+    return src if src.is_dir() else None
+
+
+def _is_corrupted_shadow(shadow: Path) -> bool:
+    if not shadow.is_dir():
+        return False
+    for child in shadow.rglob("*"):
+        if child.is_dir() and child.name.startswith("~"):
+            return True
+    return False
+
+
 def main() -> int:
     repo = Path(__file__).resolve().parents[1]
     site_packages = repo / "athena-core" / ".venv" / "Lib" / "site-packages"
@@ -38,9 +55,16 @@ def main() -> int:
     for name in NAMES:
         shadow = site_packages / name
         pth = site_packages / f"_editable_impl_{name}.pth"
-        if shadow.is_dir() and pth.is_file():
-            shutil.rmtree(shadow, ignore_errors=True)
-            removed.append(name)
+        src = _package_src(repo, name)
+        if not shadow.is_dir():
+            continue
+        stale = pth.is_file() or _is_corrupted_shadow(shadow) or src is not None
+        if not stale:
+            continue
+        shutil.rmtree(shadow, ignore_errors=True)
+        removed.append(name)
+        if src is not None and not pth.is_file():
+            pth.write_text(str(src.resolve()) + "\n", encoding="utf-8")
 
     if removed:
         print("Removed stale editable shadows:", ", ".join(removed))
