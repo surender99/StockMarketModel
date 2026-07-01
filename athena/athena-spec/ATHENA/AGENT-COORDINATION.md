@@ -1,7 +1,7 @@
 # Agent Coordination — Parallel Workstream Ownership
 
 > **Purpose:** Prevent duplicate agent work after parallel sessions (2026-06-30).  
-> **Baseline:** `7a7b803` on `master` (post dedup commit if applied).
+> **Baseline:** `fb031ed` → dedup commit on `master`
 
 ---
 
@@ -14,7 +14,7 @@
 | **1a3cc939** — Gap analysis | Read-only audit; no repo writes | **DONE** | (no commit) |
 | **45ad587c** — End-to-end milestone implementation | Full M1–M17 code delivery | **NOT STARTED** (spec-only integration exists) | — |
 
-**No duplicate packages or duplicate milestone spec trees in git.** Two sequential commits; no merge conflicts.
+**Dedup note (2026-07-01):** Agent 45ad587c left duplicate `M01-*` … `M17-*` spec folders (untracked, removed) and duplicate `MILESTONE-N-TITLE-COMPLETE.md` sign-offs (removed; canonical names are `MILESTONE-N-COMPLETE.md`). Canonical spec folders: `Milestone-01-*` … `Milestone-17-*`.
 
 ---
 
