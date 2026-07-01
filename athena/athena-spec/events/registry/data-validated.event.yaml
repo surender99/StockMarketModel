@@ -1,6 +1,8 @@
 name: DataValidated
 publisher: Data
-consumers: [Ingest, Registry]
+consumers:
+- Ingest
+- Registry
 version: 1
 compatibility: additive
 description: OHLCV frame passed quality checks
@@ -8,3 +10,16 @@ payload:
   symbol: string
   quality_score: float
   issue_count: integer
+schema:
+  type: object
+  required:
+  - symbol
+  - quality_score
+  - issue_count
+  properties:
+    symbol:
+      type: string
+    quality_score:
+      type: number
+    issue_count:
+      type: integer

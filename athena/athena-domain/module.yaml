@@ -1,11 +1,23 @@
 name: athena-domain
+owner: platform-team
+bounded_context: contracts
 version: "0.1.0"
-layer: domain
 description: Domain engine interface contracts (Protocol/ABC)
 dependencies:
-  - athena-common
-  - athena-os
-publishes_events: []
-consumes_events: []
-public_apis:
+  packages:
+    - athena-common
+    - athena-os
+events:
+  publishes: []
+  consumes: []
+interfaces:
   - athena_domain.contracts.protocols
+api:
+  modules:
+    - athena_domain.contracts.protocols
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

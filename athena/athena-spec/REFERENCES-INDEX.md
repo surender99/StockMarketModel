@@ -61,6 +61,7 @@ This index tracks integration of the Athena References package series and Releas
 | **MS-16** | Ecosystem Platform | implementation-package | ✅ Complete |
 | **MS-17** | Athena Enterprise & Productization | implementation-package | ✅ Complete |
 | **ADR-0006** | Bounded Context Packages | Facade-first extraction, athena-platform | ✅ Complete |
+| **ADR-0007** | Rich Module Manifests | MANIFEST-SCHEMA.yaml, fitness tests, codegen | ✅ Complete |
 | **M1–M17** | Engineering → Enterprise Milestones | 170 IPs across 17 milestone zips | ✅ Spec + MVP code — [Milestones/ATHENA/Milestones/](ATHENA/Milestones/00-README.md) |
 | **PHASE 10** | Machine Learning Platform (MLP) | 148 APS — training, registry, drift, prediction | ✅ Complete |
 | **PHASE 11** | Autonomous Quant Intelligence (AQIP) | 110 APS — multi-agent research orchestration | ✅ Complete |

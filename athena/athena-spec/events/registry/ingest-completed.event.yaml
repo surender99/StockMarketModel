@@ -1,6 +1,8 @@
 name: IngestCompleted
 publisher: Data
-consumers: [FeaturePipeline, DatasetRegistry]
+consumers:
+- FeaturePipeline
+- DatasetRegistry
 version: 1
 compatibility: additive
 description: Historical ingest finished successfully
@@ -9,3 +11,19 @@ payload:
   rows: integer
   source: string
   bar_frequency: string
+schema:
+  type: object
+  required:
+  - symbol
+  - rows
+  - source
+  - bar_frequency
+  properties:
+    symbol:
+      type: string
+    rows:
+      type: integer
+    source:
+      type: string
+    bar_frequency:
+      type: string

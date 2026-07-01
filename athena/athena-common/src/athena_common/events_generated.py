@@ -1,8 +1,6 @@
-"""AUTO-GENERATED — do not edit by hand.
-
-Source: athena-spec/events/registry/*.event.yaml
-Regenerate: make codegen  OR  python athena/scripts/generate_events.py
-"""
+# GENERATED — DO NOT EDIT
+# Source: athena-spec/events/registry/*.event.yaml
+# Regenerate: make codegen  OR  python athena/scripts/generate_events.py
 
 from __future__ import annotations
 
@@ -17,6 +15,7 @@ class DataValidatedEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'Data'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('Ingest', 'Registry')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['symbol', 'quality_score', 'issue_count'], 'properties': {'symbol': {'type': 'string'}, 'quality_score': {'type': 'number'}, 'issue_count': {'type': 'integer'}}}
 
     symbol: str
     quality_score: float
@@ -30,6 +29,7 @@ class FeatureComputedEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'FeaturePipeline'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('Strategy', 'Research')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['symbol', 'feature_set_id', 'row_count'], 'properties': {'symbol': {'type': 'string'}, 'feature_set_id': {'type': 'string'}, 'row_count': {'type': 'integer'}}}
 
     symbol: str
     feature_set_id: str
@@ -43,6 +43,7 @@ class IndicatorCalculatedEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'Indicator'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('Pattern', 'Strategy')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['symbol', 'indicator_id', 'timeframe', 'row_count'], 'properties': {'symbol': {'type': 'string'}, 'indicator_id': {'type': 'string'}, 'timeframe': {'type': 'string'}, 'row_count': {'type': 'integer'}}}
 
     symbol: str
     indicator_id: str
@@ -57,6 +58,7 @@ class IndicatorRegisteredEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'Indicator'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('PluginRegistry')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['indicator_id', 'version', 'author'], 'properties': {'indicator_id': {'type': 'string'}, 'version': {'type': 'string'}, 'author': {'type': 'string'}}}
 
     indicator_id: str
     version: str
@@ -70,6 +72,7 @@ class IngestCompletedEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'Data'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('FeaturePipeline', 'DatasetRegistry')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['symbol', 'rows', 'source', 'bar_frequency'], 'properties': {'symbol': {'type': 'string'}, 'rows': {'type': 'integer'}, 'source': {'type': 'string'}, 'bar_frequency': {'type': 'string'}}}
 
     symbol: str
     rows: int
@@ -84,6 +87,7 @@ class IngestFailedEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'Data'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('Observability', 'RetryJobs')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['symbol', 'error', 'source'], 'properties': {'symbol': {'type': 'string'}, 'error': {'type': 'string'}, 'source': {'type': 'string'}}}
 
     symbol: str
     error: str
@@ -97,6 +101,7 @@ class PatternDetectedEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'Pattern'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('Strategy', 'Dashboard')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['symbol', 'pattern_id', 'confidence', 'bar_index'], 'properties': {'symbol': {'type': 'string'}, 'pattern_id': {'type': 'string'}, 'confidence': {'type': 'number'}, 'bar_index': {'type': 'integer'}}}
 
     symbol: str
     pattern_id: str
@@ -111,6 +116,7 @@ class PortfolioRebalancedEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'Portfolio'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('Risk', 'Audit')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['portfolio_id', 'turnover', 'position_count'], 'properties': {'portfolio_id': {'type': 'string'}, 'turnover': {'type': 'number'}, 'position_count': {'type': 'integer'}}}
 
     portfolio_id: str
     turnover: float
@@ -124,6 +130,7 @@ class ResearchExperimentStartedEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'Research'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('Reproducibility', 'Events')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['project_id', 'experiment_id', 'hypothesis_id'], 'properties': {'project_id': {'type': 'string'}, 'experiment_id': {'type': 'string'}, 'hypothesis_id': {'type': 'string'}}}
 
     project_id: str
     experiment_id: str
@@ -137,6 +144,7 @@ class SecurityAuditEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'AthenaOS'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('Compliance', 'Logging')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['actor', 'action', 'resource', 'outcome'], 'properties': {'actor': {'type': 'string'}, 'action': {'type': 'string'}, 'resource': {'type': 'string'}, 'outcome': {'type': 'string'}}}
 
     actor: str
     action: str
@@ -151,6 +159,7 @@ class SignalGeneratedEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'Strategy'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('Backtest', 'PaperTrading')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['strategy_id', 'symbol', 'direction', 'strength'], 'properties': {'strategy_id': {'type': 'string'}, 'symbol': {'type': 'string'}, 'direction': {'type': 'string'}, 'strength': {'type': 'number'}}}
 
     strategy_id: str
     symbol: str
@@ -165,6 +174,7 @@ class SimulationOrderEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'Execution'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('TradeJournal', 'Portfolio')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['order_id', 'symbol', 'side', 'quantity', 'status'], 'properties': {'order_id': {'type': 'string'}, 'symbol': {'type': 'string'}, 'side': {'type': 'string'}, 'quantity': {'type': 'integer'}, 'status': {'type': 'string'}}}
 
     order_id: str
     symbol: str
@@ -180,6 +190,7 @@ class StrategyEvaluatedEvent:
     VERSION: ClassVar[int] = 1
     PUBLISHER: ClassVar[str] = 'Strategy'
     CONSUMERS: ClassVar[tuple[str, ...]] = ('Portfolio', 'Reporting')
+    SCHEMA: ClassVar[dict[str, Any]] = {'type': 'object', 'required': ['strategy_id', 'symbol', 'signal_count', 'passed_risk'], 'properties': {'strategy_id': {'type': 'string'}, 'symbol': {'type': 'string'}, 'signal_count': {'type': 'integer'}, 'passed_risk': {'type': 'boolean'}}}
 
     strategy_id: str
     symbol: str

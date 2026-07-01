@@ -1,6 +1,8 @@
 name: FeatureComputed
 publisher: FeaturePipeline
-consumers: [Strategy, Research]
+consumers:
+- Strategy
+- Research
 version: 1
 compatibility: additive
 description: Feature vector computed for a symbol
@@ -8,3 +10,16 @@ payload:
   symbol: string
   feature_set_id: string
   row_count: integer
+schema:
+  type: object
+  required:
+  - symbol
+  - feature_set_id
+  - row_count
+  properties:
+    symbol:
+      type: string
+    feature_set_id:
+      type: string
+    row_count:
+      type: integer

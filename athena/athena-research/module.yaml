@@ -1,13 +1,25 @@
 name: athena-research
+owner: research-team
+bounded_context: research
 version: "0.1.0"
-layer: research
 description: Research workspace separate from production
 dependencies:
-  - athena-os
-  - athena-common
-  - athena-core
-publishes_events:
-  - research.experiment_started
-consumes_events: []
-public_apis:
-  - athena_research.workspace
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes:
+    - ResearchExperimentStarted
+  consumes: []
+interfaces: []
+api:
+  modules:
+    - athena_research.workspace
+  openapi: null
+database:
+  schemas:
+    - experiments
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

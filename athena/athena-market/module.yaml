@@ -1,0 +1,27 @@
+name: athena-market
+owner: data-team
+bounded_context: market
+version: "0.1.0"
+description: Market calendar, exchange, instrument, and session metadata
+dependencies:
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes: []
+  consumes: []
+interfaces:
+  - athena_core.domain.ports.trading_calendar
+  - athena_core.domain.ports.instrument_registry
+api:
+  modules:
+    - athena_market.calendar
+    - athena_market.instrument
+  openapi: null
+database:
+  schemas:
+    - instruments
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

@@ -1,35 +1,37 @@
-# Code Generation Standard
+# Codegen Standard
 
-> **Location:** `athena/codegen/`  
-> **Makefile target:** `make codegen`
+> **Rule:** NEVER manually edit generated code.
 
-## Principles
+## Generated artifacts
 
-1. **Source of truth** — YAML specs under `athena-spec/` (events, interfaces, metadata).
-2. **Generated output** — committed to version control; CI verifies regeneration is a no-op.
-3. **Idempotent** — running codegen twice produces identical output.
-4. **No hand-edits** — generated files include an AUTO-GENERATED banner.
+| Generator | Output | Source |
+|-----------|--------|--------|
+| `generate_events.py` | `athena-common/.../events_generated.py` | `athena-spec/events/registry/*.event.yaml` |
+| `generate_dtos.py` | `athena-common/.../dtos_generated.py` | `athena-spec/schemas/dtos/*.dto.yaml` |
+| `generate_openapi.py` | `athena-spec/metadata/generated/openapi-stub.yaml` | module `api` sections (stub) |
+| `generate_proto.py` | `athena-spec/metadata/generated/athena.proto` | interface catalog (stub) |
+| `generate_clients.py` | `athena-sdk/.../clients_generated.py` | OpenAPI (stub) |
+| `generate_docs.py` | `athena-spec/metadata/generated/MODULE-INDEX.md` | `athena-*/module.yaml` |
+| `generate_manifests.py` | `athena-spec/metadata/generated/manifests/` | component metadata YAML |
 
-## Generators
-
-| Script | Status | Input | Output |
-|--------|--------|-------|--------|
-| `generate_events.py` | **Working** | `athena-spec/events/registry/*.event.yaml` | `athena-common/src/athena_common/events_generated.py` |
-| `generate_dtos.py` | Stub | `athena-spec/interfaces/` | TBD |
-| `generate_interfaces.py` | Stub | `athena-spec/interfaces/catalog/` | TBD |
-
-## Usage
+## Regeneration
 
 ```bash
-make codegen
-# or
-python athena/scripts/generate_events.py
+cd athena && make codegen
 ```
 
-## Event YAML Schema
+All generated files are marked with:
 
-See [events/registry/schema.yaml](../events/registry/schema.yaml).
+```
+# GENERATED — DO NOT EDIT
+```
 
-## Link to EVENT-CATALOG
+## CI
 
-Human-readable index: [events/EVENT-CATALOG.md](../events/EVENT-CATALOG.md) — links to YAML sources in `events/registry/`.
+- Architecture tests validate event YAML ↔ generated Python parity.
+- PRs that change registry YAML must include regenerated outputs.
+
+## References
+
+- [ADR-0007](../adrs/ADR-0007-rich-module-manifests.md)
+- [EVENT-REGISTRY-STANDARD.md](../events/EVENT-REGISTRY-STANDARD.md)

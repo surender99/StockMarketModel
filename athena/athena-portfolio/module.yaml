@@ -1,12 +1,27 @@
 name: athena-portfolio
+owner: portfolio-team
+bounded_context: portfolio
 version: "0.1.0"
-layer: domain
 description: Portfolio management bounded context
 dependencies:
-  - athena-os
-  - athena-common
-  - athena-core
-publishes_events: []
-consumes_events: []
-public_apis:
-  - athena_portfolio
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes:
+    - PortfolioRebalanced
+  consumes:
+    - SignalGenerated
+interfaces:
+  - athena_domain.contracts.protocols.PortfolioEngine
+api:
+  modules:
+    - athena_portfolio
+  openapi: null
+database:
+  schemas:
+    - positions
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

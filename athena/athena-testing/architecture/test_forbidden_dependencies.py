@@ -1,4 +1,4 @@
-"""Enforce bounded-context import rules — Python ArchUnit equivalent."""
+"""Enforce forbidden cross-bounded-context imports — build breaker."""
 
 from __future__ import annotations
 
@@ -12,6 +12,10 @@ FORBIDDEN_IMPORTS: dict[str, set[str]] = {
     "athena_indicators": {"athena_portfolio", "athena_execution", "athena_strategies"},
     "athena_patterns": {"athena_portfolio", "athena_execution"},
     "athena_data": {"athena_strategies", "athena_portfolio"},
+    "athena_research": {
+        "athena_execution",
+        "athena_platform",
+    },
 }
 
 PACKAGE_SRC = {
@@ -22,6 +26,7 @@ PACKAGE_SRC = {
     "athena-risk": "athena_risk",
     "athena-portfolio": "athena_portfolio",
     "athena-execution": "athena_execution",
+    "athena-research": "athena_research",
 }
 
 
@@ -31,13 +36,17 @@ def _imports_in_file(path: Path) -> set[str]:
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
-                found.add(alias.name.split(".")[0])
+                found.add(alias.name)
         elif isinstance(node, ast.ImportFrom) and node.module:
-            found.add(node.module.split(".")[0])
+            found.add(node.module)
     return found
 
 
-def test_bounded_context_import_rules() -> None:
+def _violates(forbidden: str, imp: str) -> bool:
+    return imp == forbidden or imp.startswith(forbidden + ".")
+
+
+def test_forbidden_bounded_context_imports() -> None:
     violations: list[str] = []
     for pkg_dir, module_prefix in PACKAGE_SRC.items():
         forbidden = FORBIDDEN_IMPORTS.get(module_prefix, set())
@@ -48,7 +57,10 @@ def test_bounded_context_import_rules() -> None:
             continue
         for py_file in src.rglob("*.py"):
             imports = _imports_in_file(py_file)
-            for bad in forbidden:
-                if bad in imports:
-                    violations.append(f"{py_file.relative_to(ATHENA_ROOT)} imports forbidden {bad}")
+            for imp in imports:
+                for bad in forbidden:
+                    if _violates(bad, imp):
+                        violations.append(
+                            f"{py_file.relative_to(ATHENA_ROOT)} imports forbidden {bad} via {imp}"
+                        )
     assert not violations, "\n".join(violations)

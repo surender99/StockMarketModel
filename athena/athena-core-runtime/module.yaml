@@ -1,0 +1,24 @@
+name: athena-core-runtime
+owner: platform-team
+bounded_context: runtime
+version: "0.1.0"
+description: Core runtime bootstrap facade — ADR-0006 Phase 3 extraction
+dependencies:
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes: []
+  consumes: []
+interfaces:
+  - athena_core.application.bootstrap
+api:
+  modules:
+    - athena_core_runtime
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

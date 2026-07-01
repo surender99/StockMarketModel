@@ -1,6 +1,8 @@
 name: IndicatorCalculated
 publisher: Indicator
-consumers: [Pattern, Strategy]
+consumers:
+- Pattern
+- Strategy
 version: 1
 compatibility: additive
 description: Indicator values computed for a symbol
@@ -9,3 +11,19 @@ payload:
   indicator_id: string
   timeframe: string
   row_count: integer
+schema:
+  type: object
+  required:
+  - symbol
+  - indicator_id
+  - timeframe
+  - row_count
+  properties:
+    symbol:
+      type: string
+    indicator_id:
+      type: string
+    timeframe:
+      type: string
+    row_count:
+      type: integer

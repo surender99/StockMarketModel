@@ -1,12 +1,28 @@
 name: athena-execution
+owner: execution-team
+bounded_context: execution
 version: "0.1.0"
-layer: domain
 description: Simulation and execution bounded context
 dependencies:
-  - athena-os
-  - athena-common
-  - athena-core
-publishes_events: []
-consumes_events: []
-public_apis:
-  - athena_execution
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes:
+    - SimulationOrder
+  consumes:
+    - SignalGenerated
+interfaces:
+  - athena_domain.contracts.protocols.ExecutionEngine
+api:
+  modules:
+    - athena_execution
+  openapi: null
+database:
+  schemas:
+    - orders
+    - trades
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

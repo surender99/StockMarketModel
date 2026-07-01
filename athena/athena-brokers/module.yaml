@@ -1,0 +1,24 @@
+name: athena-brokers
+owner: execution-team
+bounded_context: brokers
+version: "0.1.0"
+description: Plugin-based broker adapters (stubs)
+dependencies:
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes: []
+  consumes: []
+interfaces:
+  - athena_brokers.base.BrokerPlugin
+api:
+  modules:
+    - athena_brokers.registry
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

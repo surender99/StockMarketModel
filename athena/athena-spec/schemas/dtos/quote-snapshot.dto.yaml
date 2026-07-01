@@ -1,0 +1,7 @@
+name: QuoteSnapshot
+version: 1
+description: Minimal quote DTO for codegen validation
+fields:
+  symbol: string
+  price: float
+  timestamp: string

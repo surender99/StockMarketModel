@@ -28,10 +28,26 @@ _FOUNDATION = {
 
 _BOUNDED_ALLOWED = {"athena-os", "athena-common", "athena-core"}
 
+_CORE_FACADE = {
+    "athena-core-runtime",
+    "athena-core-events",
+    "athena-core-engine",
+    "athena-core-metadata",
+}
+
+_EXTENSION = {
+    "athena-metadata",
+    "athena-observability",
+    "athena-market",
+    "athena-brokers",
+}
+
 # package_name -> allowed athena-* dependency package names
 ALLOWED: dict[str, set[str]] = {
     **_FOUNDATION,
     **{pkg: _BOUNDED_ALLOWED for pkg in _BOUNDED},
+    **{pkg: _BOUNDED_ALLOWED for pkg in _CORE_FACADE},
+    **{pkg: _BOUNDED_ALLOWED for pkg in _EXTENSION},
     "athena-math": {"athena-os", "athena-common", "athena-core"},
     "athena-research": {"athena-os", "athena-common", "athena-core"},
     "athena-platform": {

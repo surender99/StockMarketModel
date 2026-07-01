@@ -1,12 +1,23 @@
 name: athena-math
+owner: quant-team
+bounded_context: analytics
 version: "0.1.0"
-layer: domain
 description: Statistics, regression, probability — independent from trading logic
 dependencies:
-  - athena-os
-  - athena-common
-  - athena-core
-publishes_events: []
-consumes_events: []
-public_apis:
-  - athena_math.statistics
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes: []
+  consumes: []
+interfaces: []
+api:
+  modules:
+    - athena_math.statistics
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

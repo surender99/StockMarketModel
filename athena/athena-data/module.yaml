@@ -1,12 +1,29 @@
 name: athena-data
+owner: data-team
+bounded_context: data
 version: "0.1.0"
-layer: domain
 description: Data pipeline bounded context
 dependencies:
-  - athena-os
-  - athena-common
-  - athena-core
-publishes_events: []
-consumes_events: []
-public_apis:
-  - athena_data
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes:
+    - DataValidated
+    - IngestCompleted
+    - IngestFailed
+  consumes: []
+interfaces:
+  - athena_domain.contracts.protocols.DataProvider
+api:
+  modules:
+    - athena_data
+  openapi: null
+database:
+  schemas:
+    - ohlcv
+    - instruments
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

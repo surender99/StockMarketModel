@@ -1,21 +1,36 @@
 name: athena-platform
+owner: platform-team
+bounded_context: platform
 version: "0.1.0"
-layer: platform
 description: Executable product assembly and production runtime
 dependencies:
-  - athena-os
-  - athena-common
-  - athena-core
-  - athena-domain
-  - athena-data
-  - athena-indicators
-  - athena-patterns
-  - athena-strategies
-  - athena-risk
-  - athena-portfolio
-  - athena-execution
-publishes_events: []
-consumes_events: []
-public_apis:
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+    - athena-domain
+    - athena-data
+    - athena-indicators
+    - athena-patterns
+    - athena-strategies
+    - athena-risk
+    - athena-portfolio
+    - athena-execution
+events:
+  publishes:
+    - SecurityAudit
+  consumes:
+    - SimulationOrder
+    - PortfolioRebalanced
+interfaces:
   - athena_platform.bootstrap
-  - athena_platform.runtime
+api:
+  modules:
+    - athena_platform.bootstrap
+    - athena_platform.runtime
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

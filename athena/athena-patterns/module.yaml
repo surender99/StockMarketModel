@@ -1,12 +1,26 @@
 name: athena-patterns
+owner: patterns-team
+bounded_context: patterns
 version: "0.1.0"
-layer: domain
 description: Pattern recognition bounded context
 dependencies:
-  - athena-os
-  - athena-common
-  - athena-core
-publishes_events: []
-consumes_events: []
-public_apis:
-  - athena_patterns
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes:
+    - PatternDetected
+  consumes:
+    - IndicatorCalculated
+interfaces:
+  - athena_domain.contracts.protocols.PatternEngine
+api:
+  modules:
+    - athena_patterns
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

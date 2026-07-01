@@ -1,0 +1,6 @@
+# GENERATED — DO NOT EDIT
+openapi: 3.1.0
+info:
+  title: Athena API (stub)
+  version: 0.1.0
+paths: {}

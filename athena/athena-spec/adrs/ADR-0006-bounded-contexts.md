@@ -24,6 +24,19 @@ Phase 3:        athena-core becomes orchestration-only or shrinks
 Phase 4:        consumers import bounded contexts directly
 ```
 
+## Phase 3 — Core Facade Extraction (addendum)
+
+Thin packages split `athena-core` surface without moving logic:
+
+| Package | Re-exports from `athena-core` |
+|---------|-------------------------------|
+| `athena-core-runtime` | `bootstrap_athena_core`, `CoreContext` |
+| `athena-core-events` | `EventBus`, `DomainEvent`, generated `EVENT_REGISTRY` |
+| `athena-core-engine` | `IndicatorEngine`, `StrategyEngine`, `PatternPipeline` |
+| `athena-core-metadata` | `INDICATOR_CATALOG`, `PATTERN_CATALOG`, `STRATEGY_CATALOG` |
+
+Consumers migrate to these facades before modules move out of `athena-core`.
+
 ## Dependency Rules
 
 - `athena-common` — no athena package deps

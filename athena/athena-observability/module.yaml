@@ -1,0 +1,25 @@
+name: athena-observability
+owner: platform-team
+bounded_context: observability
+version: "0.1.0"
+description: Metrics, tracing, logging, telemetry, and health
+dependencies:
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes: []
+  consumes: []
+interfaces: []
+api:
+  modules:
+    - athena_observability.metrics
+    - athena_observability.tracing
+    - athena_observability.health
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

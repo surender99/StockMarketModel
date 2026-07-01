@@ -14,8 +14,10 @@ PIP := $(VENV)/bin/pip
 endif
 
 PACKAGES := athena-os athena-common athena-domain athena-core \
+	athena-core-runtime athena-core-events athena-core-engine athena-core-metadata \
 	athena-data athena-indicators athena-patterns athena-strategies \
 	athena-risk athena-portfolio athena-execution athena-math athena-research \
+	athena-metadata athena-observability athena-market athena-brokers \
 	athena-platform athena-sdk athena-ai athena-cli athena-dashboard athena-testing
 
 install:
@@ -30,6 +32,10 @@ install:
 		-e "../athena-risk[dev]" -e "../athena-portfolio[dev]" \
 		-e "../athena-execution[dev]" -e "../athena-math[dev]" \
 		-e "../athena-research[dev]" -e "../athena-platform[dev]"
+	$(PIP) install -e "../athena-core-runtime[dev]" -e "../athena-core-events[dev]" \
+		-e "../athena-core-engine[dev]" -e "../athena-core-metadata[dev]"
+	$(PIP) install -e "../athena-metadata[dev]" -e "../athena-observability[dev]" \
+		-e "../athena-market[dev]" -e "../athena-brokers[dev]"
 	$(PIP) install -e "../athena-sdk[dev]" -e "../athena-ai[dev]" -e "../athena-cli[dev]" -e "../athena-dashboard[dev]"
 	$(PIP) install -e "../athena-testing[dev]"
 
@@ -49,6 +55,14 @@ test: fix-editable-shadows
 	cd athena-execution && ../athena-core/$(PY) -m pytest -q
 	cd athena-math && ../athena-core/$(PY) -m pytest -q
 	cd athena-research && ../athena-core/$(PY) -m pytest -q
+	cd athena-core-runtime && ../athena-core/$(PY) -m pytest -q
+	cd athena-core-events && ../athena-core/$(PY) -m pytest -q
+	cd athena-core-engine && ../athena-core/$(PY) -m pytest -q
+	cd athena-core-metadata && ../athena-core/$(PY) -m pytest -q
+	cd athena-metadata && ../athena-core/$(PY) -m pytest -q
+	cd athena-observability && ../athena-core/$(PY) -m pytest -q
+	cd athena-market && ../athena-core/$(PY) -m pytest -q
+	cd athena-brokers && ../athena-core/$(PY) -m pytest -q
 	cd athena-platform && ../athena-core/$(PY) -m pytest -q
 	cd athena-sdk && ../athena-core/$(PY) -m pytest -q
 	cd athena-ai && ../athena-core/$(PY) -m pytest -q
@@ -63,7 +77,7 @@ deps-check:
 	$(PY) scripts/check_dependencies.py
 
 codegen:
-	$(PY) scripts/generate_events.py
+	$(PY) codegen/run_all.py
 
 graph:
 	$(PY) scripts/generate_dependency_graph.py --dot

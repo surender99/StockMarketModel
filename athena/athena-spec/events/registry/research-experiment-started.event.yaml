@@ -1,6 +1,8 @@
 name: ResearchExperimentStarted
 publisher: Research
-consumers: [Reproducibility, Events]
+consumers:
+- Reproducibility
+- Events
 version: 1
 compatibility: additive
 description: Research experiment execution started
@@ -8,3 +10,16 @@ payload:
   project_id: string
   experiment_id: string
   hypothesis_id: string
+schema:
+  type: object
+  required:
+  - project_id
+  - experiment_id
+  - hypothesis_id
+  properties:
+    project_id:
+      type: string
+    experiment_id:
+      type: string
+    hypothesis_id:
+      type: string

@@ -1,0 +1,78 @@
+# Rich module manifest schema — ADR-0007
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: AthenaRichModuleManifest
+description: Canonical manifest for Athena packages (module.yaml)
+type: object
+required:
+  - name
+  - owner
+  - bounded_context
+  - version
+properties:
+  name:
+    type: string
+    description: Package directory name (e.g. athena-indicators)
+  owner:
+    type: string
+    description: Owning team or role
+  bounded_context:
+    type: string
+    description: DDD bounded context identifier (ADR-0006)
+  version:
+    type: string
+    pattern: "^\\d+\\.\\d+\\.\\d+"
+  description:
+    type: string
+  dependencies:
+    type: object
+    properties:
+      packages:
+        type: array
+        items:
+          type: string
+    additionalProperties: false
+  events:
+    type: object
+    properties:
+      publishes:
+        type: array
+        items:
+          type: string
+      consumes:
+        type: array
+        items:
+          type: string
+    additionalProperties: false
+  interfaces:
+    type: array
+    items:
+      type: string
+    description: Protocol or contract module paths
+  api:
+    type: object
+    properties:
+      modules:
+        type: array
+        items:
+          type: string
+      openapi:
+        type: [string, "null"]
+    additionalProperties: false
+  database:
+    type: object
+    properties:
+      schemas:
+        type: array
+        items:
+          type: string
+    additionalProperties: false
+  quality:
+    type: object
+    properties:
+      fitness_tests:
+        type: boolean
+      min_coverage:
+        type: number
+        minimum: 0
+        maximum: 1
+    additionalProperties: false

@@ -1,6 +1,8 @@
 name: IngestFailed
 publisher: Data
-consumers: [Observability, RetryJobs]
+consumers:
+- Observability
+- RetryJobs
 version: 1
 compatibility: additive
 description: Historical ingest failed
@@ -8,3 +10,16 @@ payload:
   symbol: string
   error: string
   source: string
+schema:
+  type: object
+  required:
+  - symbol
+  - error
+  - source
+  properties:
+    symbol:
+      type: string
+    error:
+      type: string
+    source:
+      type: string

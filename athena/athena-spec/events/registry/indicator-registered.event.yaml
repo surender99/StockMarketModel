@@ -1,6 +1,7 @@
 name: IndicatorRegistered
 publisher: Indicator
-consumers: [PluginRegistry]
+consumers:
+- PluginRegistry
 version: 1
 compatibility: additive
 description: New indicator plugin registered
@@ -8,3 +9,16 @@ payload:
   indicator_id: string
   version: string
   author: string
+schema:
+  type: object
+  required:
+  - indicator_id
+  - version
+  - author
+  properties:
+    indicator_id:
+      type: string
+    version:
+      type: string
+    author:
+      type: string

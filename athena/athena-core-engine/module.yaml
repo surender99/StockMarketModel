@@ -1,0 +1,25 @@
+name: athena-core-engine
+owner: platform-team
+bounded_context: engine
+version: "0.1.0"
+description: Core domain engine facades — Phase 3 extraction
+dependencies:
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes: []
+  consumes: []
+interfaces:
+  - athena_core.domain.indicators.engine
+  - athena_core.domain.strategy.engine
+api:
+  modules:
+    - athena_core_engine
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

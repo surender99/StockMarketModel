@@ -1,0 +1,24 @@
+name: athena-metadata
+owner: platform-team
+bounded_context: metadata
+version: "0.1.0"
+description: Unified metadata registry wrapping core and spec catalogs
+dependencies:
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes: []
+  consumes: []
+interfaces: []
+api:
+  modules:
+    - athena_metadata.registry
+    - athena_metadata.indicators
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

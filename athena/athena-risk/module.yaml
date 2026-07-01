@@ -1,12 +1,25 @@
 name: athena-risk
+owner: risk-team
+bounded_context: risk
 version: "0.1.0"
-layer: domain
 description: Risk analytics bounded context
 dependencies:
-  - athena-os
-  - athena-common
-  - athena-core
-publishes_events: []
-consumes_events: []
-public_apis:
-  - athena_risk
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes: []
+  consumes:
+    - PortfolioRebalanced
+interfaces:
+  - athena_domain.contracts.protocols.RiskEngine
+api:
+  modules:
+    - athena_risk
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

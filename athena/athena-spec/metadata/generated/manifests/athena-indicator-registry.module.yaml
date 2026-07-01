@@ -1,0 +1,24 @@
+# GENERATED — DO NOT EDIT
+name: athena-indicator-registry
+owner: Platform
+bounded_context: indicators
+version: 0.1.0
+description: Central registry for technical indicator plugins and metadata.
+dependencies:
+  packages:
+  - athena-os
+  - athena-core
+events:
+  publishes: []
+  consumes: []
+interfaces: []
+api:
+  modules:
+  - athena_core.domain.features.indicator_plugins
+  - athena_indicators.IndicatorEngineFacade
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

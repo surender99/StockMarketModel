@@ -1,0 +1,4 @@
+// GENERATED — DO NOT EDIT
+syntax = "proto3";
+package athena.v1;
+// Stub — wire from interface catalog in future phase

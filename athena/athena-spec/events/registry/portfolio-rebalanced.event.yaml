@@ -1,6 +1,8 @@
 name: PortfolioRebalanced
 publisher: Portfolio
-consumers: [Risk, Audit]
+consumers:
+- Risk
+- Audit
 version: 1
 compatibility: additive
 description: Portfolio rebalance completed
@@ -8,3 +10,16 @@ payload:
   portfolio_id: string
   turnover: float
   position_count: integer
+schema:
+  type: object
+  required:
+  - portfolio_id
+  - turnover
+  - position_count
+  properties:
+    portfolio_id:
+      type: string
+    turnover:
+      type: number
+    position_count:
+      type: integer

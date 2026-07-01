@@ -1,12 +1,22 @@
 name: athena-common
+owner: platform-team
+bounded_context: foundation
 version: "0.1.0"
-layer: foundation
 description: Shared domain types and generated event contracts
 dependencies:
-  - none
-publishes_events: []
-consumes_events: []
-public_apis:
-  - athena_common.types
-  - athena_common.timeframe
-  - athena_common.enums
+  packages: []
+events:
+  publishes: []
+  consumes: []
+interfaces: []
+api:
+  modules:
+    - athena_common.types
+    - athena_common.timeframe
+    - athena_common.enums
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

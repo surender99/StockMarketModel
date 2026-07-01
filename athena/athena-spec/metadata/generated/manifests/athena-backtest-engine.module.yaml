@@ -1,0 +1,24 @@
+# GENERATED — DO NOT EDIT
+name: athena-backtest-engine
+owner: Platform
+bounded_context: execution-/-backtest
+version: 0.1.0
+description: Event-driven backtest engine with slippage and cost models.
+dependencies:
+  packages:
+  - athena-execution
+  - athena-core
+events:
+  publishes: []
+  consumes: []
+interfaces: []
+api:
+  modules:
+  - athena_core.application.backtest_manager
+  - athena_execution.ExecutionEngineFacade
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

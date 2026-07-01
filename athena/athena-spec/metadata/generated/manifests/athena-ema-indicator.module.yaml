@@ -1,0 +1,22 @@
+# GENERATED — DO NOT EDIT
+name: athena-ema-indicator
+owner: Quant
+bounded_context: indicators-/-ema
+version: 0.1.0
+description: Exponential moving average indicator with configurable periods.
+dependencies:
+  packages:
+  - athena-indicators
+events:
+  publishes: []
+  consumes: []
+interfaces: []
+api:
+  modules:
+  - athena_core.domain.indicators.ema
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

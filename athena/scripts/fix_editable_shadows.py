@@ -25,6 +25,14 @@ NAMES = (
     "athena_cli",
     "athena_dashboard",
     "athena_testing",
+    "athena_core_runtime",
+    "athena_core_events",
+    "athena_core_engine",
+    "athena_core_metadata",
+    "athena_metadata",
+    "athena_observability",
+    "athena_market",
+    "athena_brokers",
 )
 
 

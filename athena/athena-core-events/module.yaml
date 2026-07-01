@@ -1,0 +1,24 @@
+name: athena-core-events
+owner: platform-team
+bounded_context: events
+version: "0.1.0"
+description: Core domain events and generated contracts facade
+dependencies:
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes: []
+  consumes: []
+interfaces:
+  - athena_core.domain.events
+api:
+  modules:
+    - athena_core_events
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

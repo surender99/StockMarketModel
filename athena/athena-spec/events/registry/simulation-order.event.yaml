@@ -1,6 +1,8 @@
 name: SimulationOrder
 publisher: Execution
-consumers: [TradeJournal, Portfolio]
+consumers:
+- TradeJournal
+- Portfolio
 version: 1
 compatibility: additive
 description: Simulated order lifecycle event
@@ -10,3 +12,22 @@ payload:
   side: string
   quantity: integer
   status: string
+schema:
+  type: object
+  required:
+  - order_id
+  - symbol
+  - side
+  - quantity
+  - status
+  properties:
+    order_id:
+      type: string
+    symbol:
+      type: string
+    side:
+      type: string
+    quantity:
+      type: integer
+    status:
+      type: string

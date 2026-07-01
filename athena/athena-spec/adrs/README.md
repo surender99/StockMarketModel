@@ -10,5 +10,6 @@ Canonical ADRs for the Athena platform. Use [ADR-Template.md](../templates/ADR-T
 | [ADR-0004](ADR-0004-consolidated-monorepo.md) | Consolidated monorepo packages | Accepted |
 | [ADR-0005](ADR-0005-athena-os.md) | AthenaOS infrastructure layer | Accepted |
 | [ADR-0006](ADR-0006-bounded-contexts.md) | Bounded context facade packages | Accepted |
+| [ADR-0007](ADR-0007-rich-module-manifests.md) | Rich module manifests | Accepted |
 
 See also [decision-log/](../decision-log/) for process and scope decisions (DEC-*).

@@ -43,7 +43,9 @@ Every APS document must include the traceability block defined in [APS/_TEMPLATE
 | `athena-os` | Infrastructure layer (event bus, config, plugins, logging) |
 | `athena-domain` | Engine interface contracts (Protocol) |
 | `athena-core` | Domain and application logic |
+| `athena-core-runtime`, `athena-core-events`, `athena-core-engine`, `athena-core-metadata` | Core facades (Phase 3 extraction) |
 | `athena-data`, `athena-indicators`, `athena-patterns`, `athena-strategies`, `athena-risk`, `athena-portfolio`, `athena-execution` | Bounded-context facades (re-export core) |
+| `athena-metadata`, `athena-observability`, `athena-market`, `athena-brokers` | Extension facades (metadata, ops, market, brokers) |
 | `athena-platform` | Production runtime assembly |
 | `athena-math` | Statistics/math utilities (independent from trading logic) |
 | `athena-research` | Research workspace (non-production) |

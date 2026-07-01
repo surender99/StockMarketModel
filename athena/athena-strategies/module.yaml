@@ -1,12 +1,28 @@
 name: athena-strategies
+owner: strategies-team
+bounded_context: strategies
 version: "0.1.0"
-layer: domain
 description: Strategy engine bounded context
 dependencies:
-  - athena-os
-  - athena-common
-  - athena-core
-publishes_events: []
-consumes_events: []
-public_apis:
-  - athena_strategies
+  packages:
+    - athena-os
+    - athena-common
+    - athena-core
+events:
+  publishes:
+    - StrategyEvaluated
+    - SignalGenerated
+  consumes:
+    - IndicatorCalculated
+    - PatternDetected
+interfaces:
+  - athena_domain.contracts.protocols.StrategyEngine
+api:
+  modules:
+    - athena_strategies
+  openapi: null
+database:
+  schemas: []
+quality:
+  fitness_tests: true
+  min_coverage: 0.0

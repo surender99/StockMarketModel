@@ -36,6 +36,20 @@ def _load_events(registry_dir: Path) -> list[dict[str, Any]]:
     return events
 
 
+def _payload_schema(payload: dict[str, Any]) -> dict[str, Any]:
+    properties = {k: {"type": _json_type(str(v))} for k, v in payload.items()}
+    return {
+        "type": "object",
+        "required": list(payload.keys()),
+        "properties": properties,
+    }
+
+
+def _json_type(spec: str) -> str:
+    mapping = {"string": "string", "integer": "integer", "float": "number", "boolean": "boolean"}
+    return mapping.get(spec.strip().lower(), "string")
+
+
 def _render_event(event: dict[str, Any]) -> str:
     name = str(event["name"])
     version = int(event.get("version", 1))
@@ -43,6 +57,7 @@ def _render_event(event: dict[str, Any]) -> str:
     consumers = event.get("consumers", [])
     payload = event.get("payload", {})
     description = str(event.get("description", ""))
+    schema = event.get("schema") or _payload_schema(payload)
 
     fields: list[str] = []
     for field_name, type_spec in payload.items():
@@ -50,6 +65,7 @@ def _render_event(event: dict[str, Any]) -> str:
         fields.append(f"    {field_name}: {py_type}")
 
     consumer_repr = ", ".join(repr(c) for c in consumers)
+    schema_repr = repr(schema)
     doc = description.replace('"', "'")
     lines = [
         "@dataclass(frozen=True, slots=True)",
@@ -60,6 +76,7 @@ def _render_event(event: dict[str, Any]) -> str:
         f"    VERSION: ClassVar[int] = {version}",
         f"    PUBLISHER: ClassVar[str] = {publisher!r}",
         f"    CONSUMERS: ClassVar[tuple[str, ...]] = ({consumer_repr})",
+        f"    SCHEMA: ClassVar[dict[str, Any]] = {schema_repr}",
     ]
     if fields:
         lines.append("")
@@ -78,11 +95,9 @@ def generate(registry_dir: Path, output: Path) -> str:
     event_blocks = [_render_event(e) for e in events]
     registry_map = {str(e["name"]): f"{e['name']}Event" for e in events}
 
-    header = '''"""AUTO-GENERATED — do not edit by hand.
-
-Source: athena-spec/events/registry/*.event.yaml
-Regenerate: make codegen  OR  python athena/scripts/generate_events.py
-"""
+    header = '''# GENERATED — DO NOT EDIT
+# Source: athena-spec/events/registry/*.event.yaml
+# Regenerate: make codegen  OR  python athena/scripts/generate_events.py
 
 from __future__ import annotations
 
