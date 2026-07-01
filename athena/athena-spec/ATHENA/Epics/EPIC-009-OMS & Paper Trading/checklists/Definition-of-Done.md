@@ -1,0 +1,5 @@
+- Architecture approved
+- Code complete
+- Tests passing
+- Benchmarks met
+- Documentation updated

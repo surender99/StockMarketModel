@@ -12,6 +12,10 @@ ATHENA
 ├── Golden-Datasets/   Small fixtures for tests and validation
 ├── Benchmarks/          Performance targets and test references
 ├── Prompts/             AI coding agent prompts (index)
+├── Epics/               Delivery epics EPIC-001 … EPIC-015
+├── Features/            Feature packages (75) under epics
+├── Stories/             User stories (32) by domain
+├── Tasks/               Engineering tasks (32) by domain
 ├── Milestones/          Delivery milestones MS-1 … MS-17 (engineering + IPs)
 ├── Reviews/             CTO and revision review archives
 ├── events/              Event catalog (publisher/subscriber contracts)
@@ -80,10 +84,14 @@ See [DEPENDENCY-RULES.md](DEPENDENCY-RULES.md) and [ADR-0005](../adrs/ADR-0005-a
 22. [../interfaces/](../interfaces/README.md) — ATH-004 interface catalog + standards
 23. [../database/](../database/00-README.md) — ATH-005 database catalog
 24. [../implementation-packages/](../implementation-packages/ATH-IP-Starter-Pack/README.md) — ATH-IP starter IPs
-25. [Milestones/](Milestones/README.md) — MS-1 … MS-17 milestone delivery specs
-26. [APS/](APS/README.md) — domain implementation specs (Backtesting, Portfolio, …)
-27. [ADR/](ADR/README.md) — accepted architecture decisions
-28. [Golden-Datasets/](Golden-Datasets/README.md) — reproducible test inputs
+25. [Epics/](Epics/README.md) — EPIC-001 … EPIC-015 delivery epics
+26. [Features/](Features/README.md) — feature packages under epics
+27. [Stories/](Stories/README.md) — user stories
+28. [Tasks/](Tasks/README.md) — engineering tasks
+29. [Milestones/](Milestones/README.md) — MS-1 … MS-17 milestone delivery specs
+30. [APS/](APS/README.md) — domain implementation specs (Backtesting, Portfolio, …)
+31. [ADR/](ADR/README.md) — accepted architecture decisions
+32. [Golden-Datasets/](Golden-Datasets/README.md) — reproducible test inputs
 
 ## Relationship to Legacy Paths
 
@@ -134,4 +142,6 @@ Existing documents under `athena-spec/` remain authoritative. This tree adds **i
 
 **Milestone series:** [MILESTONE-SERIES-INDEX.md](../MILESTONE-SERIES-INDEX.md)
 
-**Source documents:** `References/PHASE1 -ATHENA FOUNDATION APS.docx` through `References/PHASE15 - Enterprise Governance...docx`, `References/ATH-000*.zip`, and `References/ATH-001*.zip` … `ATH-005*.zip`, `ATH-IP-Starter-Pack.zip`, `ATH-Milestone-*.zip` (not committed; content captured in spec).
+**Delivery hierarchy:** [DELIVERY-HIERARCHY-INDEX.md](../DELIVERY-HIERARCHY-INDEX.md)
+
+**Source documents:** `References/PHASE1 -ATHENA FOUNDATION APS.docx` through `References/PHASE15 - Enterprise Governance...docx`, `References/ATH-000*.zip`, and `References/ATH-001*.zip` … `ATH-005*.zip`, `ATH-IP-Starter-Pack.zip`, `ATH-Milestone-*.zip`, `ATH-*-MASTER.zip` (not committed; content captured in spec).

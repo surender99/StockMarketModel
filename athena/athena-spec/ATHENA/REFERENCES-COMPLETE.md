@@ -114,6 +114,18 @@ All **References planning packages (REL-000 … REL-020)**, **References product
 ---
 
 
+
+## New References Integrated (2026-07-01 batch — Delivery Hierarchy)
+
+| File | Type | Action |
+|------|------|--------|
+| `ATH-EPIC-MASTER.zip` | Epics | 15 epics → `ATHENA/Epics/` |
+| `ATH-FEATURE-MASTER.zip` | Features | 75 features → `ATHENA/Features/` |
+| `ATH-IMPLEMENTATION-PACKAGES-MASTER.zip` | Implementation Packages | 33 IPs → `implementation-packages/` |
+| `ATH-STORY-MASTER.zip` | Stories | 32 stories → `ATHENA/Stories/` |
+| `ATH-TASK-MASTER.zip` | Tasks | 32 tasks → `ATHENA/Tasks/` |
+
+**Index:** [DELIVERY-HIERARCHY-INDEX.md](../DELIVERY-HIERARCHY-INDEX.md) · **Sign-off:** [DELIVERY-HIERARCHY-COMPLETE.md](../DELIVERY-HIERARCHY-COMPLETE.md)
 ## New References Integrated (2026-06-30 batch 3 — Milestones)
 
 | File | Type | Action |
