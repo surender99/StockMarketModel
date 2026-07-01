@@ -32,3 +32,8 @@ References/**/*.docx
 
 # Athena package archives (source trees are tracked; zips are local-only)
 athena/**/*.zip
+
+# Agent zip extraction scratch dirs (specs committed under athena-spec/)
+.tmp-extract/
+.tmp-extract-batch2/
+.tmp-milestone-*/

@@ -1,4 +1,7 @@
-.PHONY: install test lint clean deps-check codegen graph docs
+.PHONY: install test lint clean deps-check codegen graph docs fix-editable-shadows
+
+fix-editable-shadows:
+	-$(PY) scripts/fix_editable_shadows.py
 
 VENV := athena-core/.venv
 PY := $(VENV)/Scripts/python
@@ -31,13 +34,12 @@ install:
 	$(PIP) install -e "../athena-testing[dev]"
 
 # Hatch editable installs leave stale shadow dirs if force-reinstall was used; remove them.
-	-$(PY) -c "from pathlib import Path; sp=Path('$(VENV)/Lib/site-packages'); names=('athena_core','athena_os','athena_common','athena_domain','athena_data','athena_indicators','athena_patterns','athena_strategies','athena_risk','athena_portfolio','athena_execution','athena_math','athena_research','athena_platform'); import shutil; [shutil.rmtree(sp/n, ignore_errors=True) for n in names if (sp/f'_editable_impl_{n}.pth').exists() and (sp/n).is_dir()]"
+	-$(PY) scripts/fix_editable_shadows.py
 
-test:
+test: fix-editable-shadows
 	cd athena-os && ../athena-core/$(PY) -m pytest -q
 	cd athena-common && ../athena-core/$(PY) -m pytest -q
 	cd athena-domain && ../athena-core/$(PY) -m pytest -q
-	cd athena-core && $(PY) -m pytest -q
 	cd athena-data && ../athena-core/$(PY) -m pytest -q
 	cd athena-indicators && ../athena-core/$(PY) -m pytest -q
 	cd athena-patterns && ../athena-core/$(PY) -m pytest -q
@@ -52,6 +54,9 @@ test:
 	cd athena-ai && ../athena-core/$(PY) -m pytest -q
 	cd athena-cli && ../athena-core/$(PY) -m pytest -q
 	cd athena-dashboard && ../athena-core/$(PY) -m pytest -q
+	$(MAKE) fix-editable-shadows
+	cd athena-core && $(PY) -m pytest -q
+	$(MAKE) fix-editable-shadows
 	cd athena-testing && ../athena-core/$(PY) -m pytest -q
 
 deps-check:
