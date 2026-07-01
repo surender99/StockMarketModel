@@ -61,6 +61,7 @@ This index tracks integration of the Athena References package series and Releas
 | **MS-16** | Ecosystem Platform | implementation-package | ✅ Complete |
 | **MS-17** | Athena Enterprise & Productization | implementation-package | ✅ Complete |
 | **ADR-0006** | Bounded Context Packages | Facade-first extraction, athena-platform | ✅ Complete |
+| **M1–M17** | Engineering → Enterprise Milestones | 170 IPs across 17 milestone zips | ✅ Spec + MVP code — [Milestones/ATHENA/Milestones/](ATHENA/Milestones/00-README.md) |
 | **PHASE 10** | Machine Learning Platform (MLP) | 148 APS — training, registry, drift, prediction | ✅ Complete |
 | **PHASE 11** | Autonomous Quant Intelligence (AQIP) | 110 APS — multi-agent research orchestration | ✅ Complete |
 | **PHASE 12** | Visualization & UX (VDSUX) | 106 APS — dashboards, charts, decision support | ✅ Complete |
@@ -184,7 +185,7 @@ This index tracks integration of the Athena References package series and Releas
 | **ATH-IP Starter Pack** | [implementation-packages/](implementation-packages/ATH-IP-Starter-Pack/README.md) | — | ✅ 3 starter IPs |
 | **athena-os** | `athena/athena-os/` | [ADR-0005](adrs/ADR-0005-athena-os.md) | ✅ MVP — infrastructure layer |
 | **athena-testing** | `athena/athena-testing/` | — | ✅ MVP — golden datasets, benchmarks |
-| **MS-01–17 Milestones** | [ATHENA/Milestones/](ATHENA/Milestones/README.md) | — | ✅ 17 milestone archives |
+| **MS-01–17 Milestones** | [ATHENA/Milestones/](ATHENA/Milestones/00-README.md) | [ADR-0006](adrs/ADR-0006-bounded-contexts.md) | ✅ Spec + MVP code |
 | **APS traceability** | `ATHENA/APS/TRACEABILITY-INDEX.md` | [ATH-005](ATH-005-DOCUMENTATION-STANDARD.md) | ✅ Template + 12 sample APS |
 
 ---

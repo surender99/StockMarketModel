@@ -46,10 +46,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["athena_core"]
+only-include = ["src/athena_core"]
 
 [tool.hatch.build.targets.wheel.sources]
-"src" = ""
+"src/athena_core" = "athena_core"
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/athena_core/domain/data" = "athena_core/domain/data"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

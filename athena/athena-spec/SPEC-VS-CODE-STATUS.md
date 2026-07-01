@@ -1,7 +1,33 @@
 # Spec vs Code Status
 
 > **Purpose:** Distinguish **spec integration complete** (References → `athena-spec`) from **code implementation complete** (running software in `athena-core` and sibling packages).  
-> **Updated:** 2026-06-30 — PHASE 1–15 + ATH-000A–D + REL-000–020 integration.
+> **Updated:** 2026-06-30 — PHASE 1–15 + ATH-000A–D + REL-000–020 + **Milestones M1–M17**.
+
+---
+
+## Milestones M1–M17 — Spec vs Code
+
+| MS | Platform | Spec | Code | Tests |
+|----|----------|------|------|-------|
+| **M1** | Engineering Platform | ✅ | **MVP** | `test_milestones.py`, validators |
+| **M2** | AthenaOS | ✅ | **MVP** | `athena-os/tests/` |
+| **M3** | Data Platform | ✅ | **MVP** | `athena-data`, core data domain |
+| **M4** | Indicators | ✅ | **MVP** | `athena-indicators` facade |
+| **M5** | Patterns | ✅ | **Partial** | `athena-patterns` facade |
+| **M6** | Strategies | ✅ | **MVP** | `athena-strategies` facade |
+| **M7** | Backtesting | ✅ | **MVP** | `athena-execution` facade |
+| **M8** | Portfolio & Risk | ✅ | **MVP** | `athena-portfolio`, `athena-risk` |
+| **M9** | OMS Paper Trading | ✅ | **MVP** | `paper_trading_engine.py` |
+| **M10** | Live Trading | ✅ | **Stub** | `production_manager.py` |
+| **M11** | AI Research | ✅ | **MVP** | `athena-ai`, QREP catalog |
+| **M12** | Dashboard | ✅ | **MVP** | `athena-dashboard` |
+| **M13** | DevOps | ✅ | **Partial** | CI/Makefile |
+| **M14** | Security | ✅ | **MVP** | `athena-os/security.py` |
+| **M15** | Governance | ✅ | **Partial** | metrics, observability stubs |
+| **M16** | Ecosystem/SDK | ✅ | **MVP** | `athena-sdk` |
+| **M17** | Enterprise Product | ✅ | **MVP** | `athena-platform` bootstrap |
+
+**Sign-off:** [MILESTONE-1-ENGINEERING-PLATFORM-COMPLETE.md](MILESTONE-1-ENGINEERING-PLATFORM-COMPLETE.md) … [MILESTONE-17-ATHENA-ENTERPRISE-PRODUCTIZATION-COMPLETE.md](MILESTONE-17-ATHENA-ENTERPRISE-PRODUCTIZATION-COMPLETE.md)
 
 ---
 
@@ -97,14 +123,18 @@ Packages **01–03, 05, 07–08, 10, 12–15** are spec-integrated with MVP code
 
 | Package | Passed | Skipped |
 |---------|--------|---------|
-| athena-core | 354 | 10 |
+| athena-core | 355 | 10 |
+| athena-os | 12 | 0 |
+| athena-common | 5 | 0 |
+| athena-testing (milestones) | 31 | 3 |
 | athena-sdk | 6 | 0 |
 | athena-ai | 21 | 0 |
 | athena-cli | 4 | 0 |
 | athena-dashboard | 6 | 0 |
-| **Total** | **391** | **10** |
+| athena-testing (other) | 11 | 0 |
+| **Total** | **451+** | **13** |
 
-Phase 9 adds `tests/test_qrep_aps.py` (7 tests) in athena-core. Phase 3–8 APS tests in `test_indicator_aps.py`, `test_pattern_aps.py`, `test_strategy_aps.py`, `test_phase678_aps.py`, `test_phase6_simulation.py`, `test_portfolio_intelligence_depth.py`.
+Milestone traceability: `athena-testing/tests/test_milestones.py` (31 passed, 3 skipped when optional packages not installed).
 
 ---
 
