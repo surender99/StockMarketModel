@@ -67,6 +67,7 @@ This index tracks integration of the Athena References package series and Releas
 | **DEL-IMP** | Implementation Packages Master | 33 packages | ✅ Complete |
 | **DEL-STO** | Stories Master | 32 packages | ✅ Complete |
 | **DEL-TAS** | Tasks Master | 32 packages | ✅ Complete |
+| **PR-REQ** | Product Phase Requirements (Paper Trader) | 10 phases | ✅ Complete |
 | **DEL-EPI** | Epics Master | 15 packages | ✅ Complete |
 | **DEL-FEA** | Features Master | 75 packages | ✅ Complete |
 | **DEL-IMP** | Implementation Packages Master | 33 packages | ✅ Complete |
@@ -143,6 +144,7 @@ This index tracks integration of the Athena References package series and Releas
 | DEL-IP | [implementation-packages/](implementation-packages/README.md) | [DELIVERY-HIERARCHY-COMPLETE.md](DELIVERY-HIERARCHY-COMPLETE.md) |
 | DEL-Sto | [ATHENA/Stories/](ATHENA/Stories/README.md) | [DELIVERY-HIERARCHY-COMPLETE.md](DELIVERY-HIERARCHY-COMPLETE.md) |
 | DEL-Tas | [ATHENA/Tasks/](ATHENA/Tasks/README.md) | [DELIVERY-HIERARCHY-COMPLETE.md](DELIVERY-HIERARCHY-COMPLETE.md) |
+| PR-REQ | [ATHENA/Phase-Requirements/](ATHENA/Phase-Requirements/README.md) | [PHASE-REQUIREMENTS-COMPLETE.md](PHASE-REQUIREMENTS-COMPLETE.md) |
 | MS-01 | [ATHENA/Milestones/Milestone-01-Engineering-Platform/](ATHENA/Milestones/Milestone-01-Engineering-Platform/README.md) | [MILESTONE-1-COMPLETE.md](MILESTONE-1-COMPLETE.md) |
 | MS-02 | [ATHENA/Milestones/Milestone-02-AthenaOS-Implementation/](ATHENA/Milestones/Milestone-02-AthenaOS-Implementation/README.md) | [MILESTONE-2-COMPLETE.md](MILESTONE-2-COMPLETE.md) |
 | MS-03 | [ATHENA/Milestones/Milestone-03-Data-Platform/](ATHENA/Milestones/Milestone-03-Data-Platform/README.md) | [MILESTONE-3-COMPLETE.md](MILESTONE-3-COMPLETE.md) |
@@ -207,6 +209,7 @@ This index tracks integration of the Athena References package series and Releas
 | **athena-os** | `athena/athena-os/` | [ADR-0005](adrs/ADR-0005-athena-os.md) | ✅ MVP — infrastructure layer |
 | **athena-testing** | `athena/athena-testing/` | — | ✅ MVP — golden datasets, benchmarks |
 | **MS-01–17 Milestones** | [ATHENA/Milestones/](ATHENA/Milestones/00-README.md) | [ADR-0006](adrs/ADR-0006-bounded-contexts.md) | ✅ Spec + MVP code |
+| **Product phase requirements** | [PHASE-REQUIREMENTS-INDEX.md](PHASE-REQUIREMENTS-INDEX.md) | — | ✅ 10 Paper Trader phases |
 | **Delivery hierarchy** | [DELIVERY-HIERARCHY-INDEX.md](DELIVERY-HIERARCHY-INDEX.md) | — | ✅ 5 MASTER archives |
 | **APS traceability** | `ATHENA/APS/TRACEABILITY-INDEX.md` | [ATH-005](ATH-005-DOCUMENTATION-STANDARD.md) | ✅ Template + 12 sample APS |
 

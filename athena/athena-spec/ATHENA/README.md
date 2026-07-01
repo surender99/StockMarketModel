@@ -12,6 +12,7 @@ ATHENA
 ├── Golden-Datasets/   Small fixtures for tests and validation
 ├── Benchmarks/          Performance targets and test references
 ├── Prompts/             AI coding agent prompts (index)
+├── Phase-Requirements/  Product phases PR-01 … PR-10 (Paper Trader)
 ├── Epics/               Delivery epics EPIC-001 … EPIC-015
 ├── Features/            Feature packages (75) under epics
 ├── Stories/             User stories (32) by domain
@@ -144,4 +145,6 @@ Existing documents under `athena-spec/` remain authoritative. This tree adds **i
 
 **Delivery hierarchy:** [DELIVERY-HIERARCHY-INDEX.md](../DELIVERY-HIERARCHY-INDEX.md)
 
-**Source documents:** `References/PHASE1 -ATHENA FOUNDATION APS.docx` through `References/PHASE15 - Enterprise Governance...docx`, `References/ATH-000*.zip`, and `References/ATH-001*.zip` … `ATH-005*.zip`, `ATH-IP-Starter-Pack.zip`, `ATH-Milestone-*.zip`, `ATH-*-MASTER.zip` (not committed; content captured in spec).
+**Product phases:** [PHASE-REQUIREMENTS-INDEX.md](../PHASE-REQUIREMENTS-INDEX.md)
+
+**Source documents:** `References/PHASE1 -ATHENA FOUNDATION APS.docx` through `References/PHASE15 - Enterprise Governance...docx`, `References/ATH-000*.zip`, and `References/ATH-001*.zip` … `ATH-005*.zip`, `ATH-IP-Starter-Pack.zip`, `ATH-Milestone-*.zip`, `ATH-*-MASTER.zip`, `ATH-PHASE-REQUIREMENTS.zip` (not committed; content captured in spec).

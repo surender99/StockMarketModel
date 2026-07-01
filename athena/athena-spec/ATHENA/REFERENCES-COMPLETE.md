@@ -115,6 +115,14 @@ All **References planning packages (REL-000 … REL-020)**, **References product
 
 
 
+
+## New References Integrated (2026-07-01 batch — Product Phase Requirements)
+
+| File | Type | Action |
+|------|------|--------|
+| `ATH-PHASE-REQUIREMENTS.zip` | Product requirements | 10 phases → [ATHENA/Phase-Requirements/](../ATHENA/Phase-Requirements/README.md) |
+
+**Index:** [PHASE-REQUIREMENTS-INDEX.md](../PHASE-REQUIREMENTS-INDEX.md) · **Sign-off:** [PHASE-REQUIREMENTS-COMPLETE.md](../PHASE-REQUIREMENTS-COMPLETE.md)
 ## New References Integrated (2026-07-01 batch — Delivery Hierarchy)
 
 | File | Type | Action |
