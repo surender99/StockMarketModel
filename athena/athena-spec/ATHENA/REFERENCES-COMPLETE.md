@@ -117,6 +117,20 @@ All **References planning packages (REL-000 … REL-020)**, **References product
 
 
 
+
+## New References Integrated (2026-07-02 batch — Intelligence Suite)
+
+| File | Type | Action |
+|------|------|--------|
+| `ATH-INTELLIGENCE-SUITE(1).zip` | Suite umbrella | 5 domains → [ATHENA/Intelligence-Suite/Suite/](../ATHENA/Intelligence-Suite/Suite/) |
+| `ATH-AI-INTELLIGENCE.zip` | AI Intelligence | 10 modules → [ATHENA/Intelligence-Suite/AI-Intelligence/](../ATHENA/Intelligence-Suite/AI-Intelligence/) |
+| `ATH-MARKET-INTELLIGENCE.zip` | Market Intelligence | 10 modules → [ATHENA/Intelligence-Suite/Market-Intelligence/](../ATHENA/Intelligence-Suite/Market-Intelligence/) |
+| `ATH-PATTERN-INTELLIGENCE.zip` | Pattern Intelligence | 7 modules → [ATHENA/Intelligence-Suite/Pattern-Intelligence/](../ATHENA/Intelligence-Suite/Pattern-Intelligence/) |
+| `ATH-TRADE-INTELLIGENCE.zip` | Trade Intelligence | 10 modules → [ATHENA/Intelligence-Suite/Trade-Intelligence/](../ATHENA/Intelligence-Suite/Trade-Intelligence/) |
+
+**Total:** 5 suite domains + 37 domain modules
+
+**Index:** [INTELLIGENCE-SUITE-INDEX.md](../INTELLIGENCE-SUITE-INDEX.md) · **Sign-off:** [INTELLIGENCE-SUITE-COMPLETE.md](../INTELLIGENCE-SUITE-COMPLETE.md)
 ## New References Integrated (2026-07-01 batch — Research Master Roadmap)
 
 | File | Type | Action |
